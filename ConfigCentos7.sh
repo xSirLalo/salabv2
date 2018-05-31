@@ -35,12 +35,12 @@ systemctl start mariadb
 systemctl status mariadb
 systemctl is-enabled mariadb.service
 
-# Configurar Mysql con una contraseña y asignar todos las opciones en Si(Y).
+#	Configurar Mysql con una contraseña y asignar todos las opciones en Si(Y).
 mysql_secure_installation
 
 cd /var/www/html
 git clone https://github.com/xsirlalo/salabv2
-
+a
 mysql -u root -p
 
 show databases;
@@ -48,8 +48,21 @@ create database salabv2;
 create user 'salab'@'localhost';
 set password for salab@localhost = password('salab2018');
 grant all on salabv2.* to salab@localhost;
-GRANT ALL PRIVILEGES ON *.* TO 'administrador' IDENTIFIED BY 'sudovimetc' WITH GRANT OPTION;
+grant all privileges on *.* to 'administrador' identified by 'sudovimetc' with grant option;
 quit
 
-# para importar la base de datos al servidor Mysql necesario la configuracion de usuario y contraseña
-mysql -u root -p salabv2 < /var/www/html/bd_salabv2.sql
+#	para importar la base de datos al servidor Mysql necesario la configuracion de usuario y contraseña
+mysql -u root -p salabv2 < /var/www/html/salabv2/bd_salabv2.sql
+
+#	Agregar al Final del archivo 
+#	vim /etc/httpd/conf/httpd.conf
+## Inicio
+echo '
+<Directory /var/www/html/salabv2>
+	Options -Indexes +Multiviews +FollowSymLinks
+		DirectoryIndex index.php index.html
+	AllowOverride All
+	Allow from All
+</Directory>
+	'> /etc/httpd/conf/httpd.conf
+## Fin

@@ -127,8 +127,9 @@ class Controllab extends CI_Controller
         $this->guardar();
         }else{
         $data = array(
-            'noControl' => $this->input->post('noControl'),
-            'idEstatus' => $this->input->post('idEstatus'),
+            'noControl'   => $this->input->post('noControl'),
+            'idEstatus'   => $this->input->post('idEstatus'),
+            'fechaFin' => date('Y-m-d H:i:s')
         );
         $this->model_controllab->actualizar($id, $data);
         redirect( base_url(). 'controllab');

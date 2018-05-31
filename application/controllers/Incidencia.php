@@ -117,8 +117,9 @@ class Incidencia extends CI_Controller
         $this->modificar();
         }else{
         $data = array(
-            'comentario' => $this->input->post('comentario'),
-            'idEstatus'   => $this->input->post('idEstatus'),
+            'comentario'        => $this->input->post('comentario'),
+            'idEstatus'         => $this->input->post('idEstatus'),
+            'fechaModificacion' => date('Y-m-d H:i:s')
         );
         $this->model_incidencia->actualizar($id, $data);
         redirect( base_url(). 'incidencia');

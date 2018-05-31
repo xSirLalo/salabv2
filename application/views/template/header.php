@@ -140,8 +140,8 @@ redirect('login');
 </div>
 <!-- End Modal -->
 
-	<div class="container">
-		<div class="jumbotron">
+	<div class="container"><!--container-->
+		<div class="jumbotron"><!--jumbotron-->
 			<div class="page-header"><p class="h1 text-center"><?=$titulo?></p></div>
 			<!-- Control de Mensajes de error -->		
 				<div class="container">

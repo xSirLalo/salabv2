@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Versión del servidor:         10.1.31-MariaDB - mariadb.org binary distribution
+-- Versión del servidor:         10.1.30-MariaDB - mariadb.org binary distribution
 -- SO del servidor:              Win32
 -- HeidiSQL Versión:             9.5.0.5196
 -- --------------------------------------------------------
@@ -29,7 +29,6 @@ CREATE TABLE IF NOT EXISTS `alumno` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla salabv2.alumno: ~0 rows (aproximadamente)
-DELETE FROM `alumno`;
 /*!40000 ALTER TABLE `alumno` DISABLE KEYS */;
 /*!40000 ALTER TABLE `alumno` ENABLE KEYS */;
 
@@ -51,7 +50,6 @@ CREATE TABLE IF NOT EXISTS `asignatura` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla salabv2.asignatura: ~0 rows (aproximadamente)
-DELETE FROM `asignatura`;
 /*!40000 ALTER TABLE `asignatura` DISABLE KEYS */;
 /*!40000 ALTER TABLE `asignatura` ENABLE KEYS */;
 
@@ -63,7 +61,6 @@ CREATE TABLE IF NOT EXISTS `aula` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla salabv2.aula: ~0 rows (aproximadamente)
-DELETE FROM `aula`;
 /*!40000 ALTER TABLE `aula` DISABLE KEYS */;
 /*!40000 ALTER TABLE `aula` ENABLE KEYS */;
 
@@ -74,8 +71,7 @@ CREATE TABLE IF NOT EXISTS `carrera` (
   PRIMARY KEY (`idCarrera`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla salabv2.carrera: ~0 rows (aproximadamente)
-DELETE FROM `carrera`;
+-- Volcando datos para la tabla salabv2.carrera: ~9 rows (aproximadamente)
 /*!40000 ALTER TABLE `carrera` DISABLE KEYS */;
 INSERT INTO `carrera` (`idCarrera`, `nombre_ca`) VALUES
 	(1, 'INGENIERIA EN SISTEMAS COMPUTACIONALES'),
@@ -113,7 +109,6 @@ CREATE TABLE IF NOT EXISTS `computadora` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla salabv2.computadora: ~0 rows (aproximadamente)
-DELETE FROM `computadora`;
 /*!40000 ALTER TABLE `computadora` DISABLE KEYS */;
 /*!40000 ALTER TABLE `computadora` ENABLE KEYS */;
 
@@ -121,7 +116,7 @@ DELETE FROM `computadora`;
 CREATE TABLE IF NOT EXISTS `controllab` (
   `idControlLab` int(11) NOT NULL AUTO_INCREMENT,
   `fechaInicio` datetime(6) DEFAULT NULL,
-  `fechaFin` datetime(6) DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(6),
+  `fechaFin` datetime(6) DEFAULT NULL,
   `noControl` bigint(10) NOT NULL,
   `idComputadora` int(11) DEFAULT NULL,
   `idEstatus` int(11) NOT NULL,
@@ -133,7 +128,6 @@ CREATE TABLE IF NOT EXISTS `controllab` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla salabv2.controllab: ~0 rows (aproximadamente)
-DELETE FROM `controllab`;
 /*!40000 ALTER TABLE `controllab` DISABLE KEYS */;
 /*!40000 ALTER TABLE `controllab` ENABLE KEYS */;
 
@@ -159,7 +153,6 @@ CREATE TABLE IF NOT EXISTS `dispositivo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla salabv2.dispositivo: ~0 rows (aproximadamente)
-DELETE FROM `dispositivo`;
 /*!40000 ALTER TABLE `dispositivo` DISABLE KEYS */;
 /*!40000 ALTER TABLE `dispositivo` ENABLE KEYS */;
 
@@ -170,8 +163,7 @@ CREATE TABLE IF NOT EXISTS `estatus` (
   PRIMARY KEY (`idEstatus`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla salabv2.estatus: ~0 rows (aproximadamente)
-DELETE FROM `estatus`;
+-- Volcando datos para la tabla salabv2.estatus: ~7 rows (aproximadamente)
 /*!40000 ALTER TABLE `estatus` DISABLE KEYS */;
 INSERT INTO `estatus` (`idEstatus`, `nombre_estatus`) VALUES
 	(1, 'ACTIVO'),
@@ -204,7 +196,6 @@ CREATE TABLE IF NOT EXISTS `horario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla salabv2.horario: ~0 rows (aproximadamente)
-DELETE FROM `horario`;
 /*!40000 ALTER TABLE `horario` DISABLE KEYS */;
 /*!40000 ALTER TABLE `horario` ENABLE KEYS */;
 
@@ -215,7 +206,7 @@ CREATE TABLE IF NOT EXISTS `incidencia` (
   `descripcion` varchar(255) DEFAULT NULL,
   `comentario` varchar(255) DEFAULT NULL,
   `fechaAlta` datetime(6) DEFAULT NULL,
-  `fechaModificacion` datetime(6) DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(6),
+  `fechaModificacion` datetime(6) DEFAULT NULL,
   `categoria` varchar(45) DEFAULT NULL,
   `idUsuario` int(11) NOT NULL,
   `idEstatus` int(11) NOT NULL DEFAULT '5',
@@ -227,7 +218,6 @@ CREATE TABLE IF NOT EXISTS `incidencia` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla salabv2.incidencia: ~0 rows (aproximadamente)
-DELETE FROM `incidencia`;
 /*!40000 ALTER TABLE `incidencia` DISABLE KEYS */;
 /*!40000 ALTER TABLE `incidencia` ENABLE KEYS */;
 
@@ -241,7 +231,6 @@ CREATE TABLE IF NOT EXISTS `profesor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla salabv2.profesor: ~0 rows (aproximadamente)
-DELETE FROM `profesor`;
 /*!40000 ALTER TABLE `profesor` DISABLE KEYS */;
 /*!40000 ALTER TABLE `profesor` ENABLE KEYS */;
 
@@ -264,7 +253,6 @@ CREATE TABLE IF NOT EXISTS `reparacion` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla salabv2.reparacion: ~0 rows (aproximadamente)
-DELETE FROM `reparacion`;
 /*!40000 ALTER TABLE `reparacion` DISABLE KEYS */;
 /*!40000 ALTER TABLE `reparacion` ENABLE KEYS */;
 
@@ -275,8 +263,7 @@ CREATE TABLE IF NOT EXISTS `tipodispositivo` (
   PRIMARY KEY (`idTipoDispositivo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla salabv2.tipodispositivo: ~0 rows (aproximadamente)
-DELETE FROM `tipodispositivo`;
+-- Volcando datos para la tabla salabv2.tipodispositivo: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `tipodispositivo` DISABLE KEYS */;
 INSERT INTO `tipodispositivo` (`idTipoDispositivo`, `nombre_tipdis`) VALUES
 	(1, 'MOUSE'),
@@ -292,8 +279,7 @@ CREATE TABLE IF NOT EXISTS `tipousuario` (
   PRIMARY KEY (`idTipoUsuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla salabv2.tipousuario: ~0 rows (aproximadamente)
-DELETE FROM `tipousuario`;
+-- Volcando datos para la tabla salabv2.tipousuario: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `tipousuario` DISABLE KEYS */;
 INSERT INTO `tipousuario` (`idTipoUsuario`, `nombre_tipusr`) VALUES
 	(1, 'ADMIN'),
@@ -317,13 +303,12 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   PRIMARY KEY (`idUsuario`,`idTipoUsuario`),
   KEY `fk_Usuario_TipoUsuario1_idx` (`idTipoUsuario`),
   CONSTRAINT `fk_Usuario_TipoUsuario1` FOREIGN KEY (`idTipoUsuario`) REFERENCES `tipousuario` (`idTipoUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla salabv2.usuario: ~0 rows (aproximadamente)
-DELETE FROM `usuario`;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
 INSERT INTO `usuario` (`idUsuario`, `nombre_usr`, `aPaterno_usr`, `aMaterno_usr`, `email`, `username`, `password`, `telefono`, `fechaCreacion`, `idTipoUsuario`, `idEstatus`) VALUES
-	(1, 'EDUARDO\r\n', 'CAUICH', 'HERRERA', 'lalo_lego@hotmail.com', 'xsirlalo', '21232f297a57a5a743894a0e4a801fc3', '9982366146', '2018-05-31 11:48:02.000000', 1, 1);
+	(1, 'EDUARDO', 'CAUICH', 'HERRERA', 'lalo_lego@hotmail.com', 'xsirlalo', '21232f297a57a5a743894a0e4a801fc3', '9982366146', '2018-05-31 11:48:02.000000', 1, 1);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
