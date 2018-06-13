@@ -10,11 +10,12 @@ class Controllab extends CI_Controller
         $this->load->helper('form');
 		$this->load->model('model_controllab');
         $this->load->model('model_alumno');
+        $this->load->model('model_computadora');
 	}
 
 	public function Index()
 	{
-        $titulo['titulo']          = 'Control de Computadoras en el Lab';
+        $titulo['titulo']          = 'Bitacora de ControlLab';
         
         $config['base_url']        = base_url().'controllab/index/';
         $config['total_rows']      = $this->model_controllab->num_controllabs();
@@ -53,7 +54,7 @@ class Controllab extends CI_Controller
 	}
     public function agregar(){
         $titulo['titulo']     = 'Bienvenid@';
-        $data['totaE']        = $this->model_controllab->computadoras_disponibles();
+        $data['totaE']        = $this->model_controllab->Total_Computadoras();
         $data['estatus']      = $this->model_controllab->Estatus();
         $data['computadoras'] = $this->model_controllab->computadoras();
         $this->load->view("template/header", $titulo);
@@ -93,7 +94,7 @@ class Controllab extends CI_Controller
             $this->load->view('template/footer');
         }else{
             //Consulta el estatus del alumno.
-            $consulta2 = $this->model_controllab->consulta_estatus($data['noControl']);
+            $consulta2 = $this->model_controllab->Cambia_Estatus($data['noControl']);
             if ($consulta2 == 'cambia_status') {
                 redirect('controllab/agregar');
                 }else{
@@ -108,6 +109,7 @@ class Controllab extends CI_Controller
         $titulo['titulo']     = 'Modificar controllab';
         $data['idControlLab'] = $this->uri->segment(3);
         $data['estatus']      = $this->model_controllab->Estatus();
+        $data['Computadoras']  = $this->model_controllab->Computadoras_Disponibles();
         if (!$data['idControlLab']) {
             redirect('home');
         }else{
@@ -118,20 +120,21 @@ class Controllab extends CI_Controller
         $this->load->view('template/footer');
     }
     public function actualizar(){
-        $id = $this->uri->segment(3);
+        $idControlLab = $this->uri->segment(3);
         $this->form_validation->set_error_delimiters('<div class="text-danger">', '</div>');
-        $this->form_validation->set_rules('noControl','Numero de Control','required|trim|numeric');
-        $this->form_validation->set_rules('idEstatus','Estatus','required|trim');
+        $this->form_validation->set_rules('NewComputer','Computadora','numeric');
+        $this->form_validation->set_rules('OldComputer','Computadora','numeric');
         if ($this->form_validation->run() == FALSE){
             //Error
         $this->guardar();
         }else{
-        $data = array(
-            'noControl'   => $this->input->post('noControl'),
-            'idEstatus'   => $this->input->post('idEstatus'),
-            'fechaFin' => date('Y-m-d H:i:s')
+        $NewComputer = array(
+            'idComputadora' => $this->input->post('NewComputer')
         );
-        $this->model_controllab->actualizar($id, $data);
+        $OldComputer = array(
+            'idComputadora' => $this->input->post('OldComputer')
+        );
+        $this->model_controllab->actualizar($idControlLab, $NewComputer, $OldComputer);
         redirect( base_url(). 'controllab');
         }
     }

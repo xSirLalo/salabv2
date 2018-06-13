@@ -16,6 +16,7 @@
         <th>noControl</th>
         <th>idComputadora</th>
         <th>idEstatus</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -28,10 +29,19 @@
             ?>     
             <td><?= $row->idControlLab; ?></td>
             <td><?= $FormatoFechaIncio = date("d/F/Y h:i A", $fechaI); ?></td>
-            <td><?= $FormatoFechaFin = date("d/F/Y h:i A", $fechaF); ?></td>
+            <td>
+            <?php  if($row->asignado==2){ ?>
+                <?= $FormatoFechaFin = date("d/F/Y h:i A", $fechaF); ?>
+            <?php }?>
+            </td>
             <td><?= $row->noControl; ?></td>
             <td><?= $row->comentarios; ?></td>
             <td><?= $row->asignado; ?></td>
+            <td>
+            <?php  if($row->asignado==1){ ?>
+            <a href='<?= base_url().'controllab/modificar/'.$row->idControlLab ?>'><button type='button' class='btn btn-warning' title="Modificar"><span class="glyphicon glyphicon-retweet"></span></button></a>
+            <?php }?>
+            </td>
 		</tr>
 <?php  }	
 

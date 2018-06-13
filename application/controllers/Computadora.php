@@ -92,7 +92,7 @@ class Computadora extends CI_Controller
             //Error
         $this->agregar();
         }else{
-            //Si el campo contro esta Vacio se pondra en 0
+            //Si el campo control esta Vacio se pondra en 0
         $valControl = $this->input->post('control');
         if($valControl==''){$valControl = 0;}
 

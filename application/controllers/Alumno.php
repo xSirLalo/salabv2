@@ -97,7 +97,7 @@ class Alumno extends CI_Controller
 	}
     public function guardar(){
         $this->form_validation->set_error_delimiters('<div class ="text-danger">', '</div>');
-        $this->form_validation->set_rules('noControl','Numero de Control','required|numeric|min_length[8]|is_unique[alumno.noControl]');
+        $this->form_validation->set_rules('noControl','Numero de Control','required|numeric|min_length[8]|is_unique[Alumno.noControl]');
         $this->form_validation->set_rules('nombre_al','Nombre','required|trim|strtoupper');
         $this->form_validation->set_rules('aPaterno_al','Apellido Paterno','required|trim|strtoupper');
         $this->form_validation->set_rules('aMaterno_al','Apellido Materno','required|trim|strtoupper');
@@ -116,7 +116,7 @@ class Alumno extends CI_Controller
         $this->model_alumno->guardar($data);
         $titulo['titulo'] = 'Agregar alumno';
         //Se muestran los equpos disponibles
-        $data['totaE']    = $this->model_controllab->computadoras_disponibles();
+        $data['totaE']    = $this->model_controllab->Total_Computadoras();
         $data['estatus']  = $this->model_controllab->estatus();
         $this->load->view("template/header", $titulo);
         $this->load->view("controllab/agregar", $data);

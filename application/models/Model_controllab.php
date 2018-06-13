@@ -59,9 +59,10 @@ class Model_ControlLab extends CI_Model
             return false;
         }
     }
-    function consulta_estatus($noControl){
+    function Cambia_Estatus($noControl){
         $status = array(
-           'idEstatus' => '2'
+           'idEstatus'   => '2',
+           //'fechaFin' => date('Y-m-d H:i:s') // Finaliza con la hora que termina de ocupar la Computadora
         );
         $control = array(
             'control' => '1'
@@ -70,7 +71,7 @@ class Model_ControlLab extends CI_Model
         $this->db->where('idEstatus', 1);
         $query = $this->db->get('ControlLab');
         foreach ($query->result() as $fila) {
-        if ($fila->fechaFin==NULL && $fila->idEstatus == 1) {
+        if ($fila->fechaFin=='0000-00-00 00:00:00' || $fila->idEstatus == 1) {
         $this->db->where('noControl', $noControl);
         $this->db->update('ControlLab', $status);
         $this->db->where('idComputadora', $fila->idComputadora);
@@ -102,7 +103,7 @@ class Model_ControlLab extends CI_Model
             return 'error';
         }
     }
-    function Computadoras_disponibles(){   
+    function Total_Computadoras(){   
         $this->db->from('Computadora');
         $this->db->where('Control','1');
         $this->db->where('idAula','1');
@@ -111,9 +112,36 @@ class Model_ControlLab extends CI_Model
         $count = $query->result();
             return count($count);
     }
+
+    function Computadoras_Disponibles(){   
+        $this->db->from('Computadora');
+        $this->db->where('Control','1');
+        $this->db->where('idAula','1');
+        $this->db->where('idEstatus','3'); //Computadoras disponibles con el estatus Alta con el ID 3
+        $query = $this->db->get();
+        return $query -> result();
+    }
+    function actualizar($idControlLab, $NewComputer, $OldComputer){
+        $off = array('control' => '2');
+        $on = array('control' => '1');
+
+        $this->db->where('idControlLab', $idControlLab);
+        $this->db->update('ControlLab', $NewComputer);
+
+        $this->db->where('idComputadora', $NewComputer['idComputadora']);
+        $this->db->update('Computadora', $off);
+
+        $this->db->where('idComputadora', $OldComputer['idComputadora']);
+        $this->db->update('Computadora', $on);
+        $this->session->set_flashdata('success', "<div class='alert alert-info alert-dismissible fade in'>
+                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                <strong>Info!</strong> Cambio de Computadora Correctamente!
+                </div>
+            ");
+    }
     function consulta_alumno($noControl){
         $this->db->where('noControl', $noControl);
-        $query = $this->db->get('alumno');
+        $query = $this->db->get('Alumno');
         if ($query->num_rows() >= 1){
             foreach ($query->result() as $fila) {
                 $datos[] = $fila;
@@ -132,8 +160,8 @@ class Model_ControlLab extends CI_Model
     function reporte($fechaInicio,$fechaFin){
         $this->db->select('Carrera.idCarrera, Carrera.nombre_ca, count(*) as total');
         $this->db->from('ControlLab');
-        $this->db->join('alumno', 'alumno.noControl = ControlLab.noControl');
-        $this->db->join('Carrera', 'Carrera.idCarrera = alumno.idCarrera');
+        $this->db->join('Alumno', 'Alumno.noControl = ControlLab.noControl');
+        $this->db->join('Carrera', 'Carrera.idCarrera = Alumno.idCarrera');
         $this->db->where('fechaInicio >=', $fechaInicio);
         $this->db->where('fechaFin <= date_add("'.$fechaFin.'", interval 1 day)');
         $this->db->group_by('Carrera.idCarrera');
@@ -144,6 +172,16 @@ class Model_ControlLab extends CI_Model
             return FALSE;
         }
 
+    }
+    function modificar($idControlLab){
+        $this->db->where('idControlLab', $idControlLab);
+        $this->db->join('Computadora', 'Computadora.idComputadora = ControlLab.idComputadora');
+        $query = $this->db->get('ControlLab');
+        if ($query->num_rows() > 0){
+            return $query;
+        }else{
+            return false;
+        }
     }
 }
 

@@ -104,7 +104,7 @@ class Model_Alumno extends CI_Model
 
     // Select record
     $this->db->select('noControl,nombre_al,aPaterno_al,aMaterno_al,idCarrera');
-    $q = $this->db->get('alumno');
+    $q = $this->db->get('Alumno');
     $response = $q->result_array();
 
     return $response;
