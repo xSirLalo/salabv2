@@ -27,7 +27,7 @@
     <?php echo form_close(); ?>
         <div class="col-sm-2 text-right">
             <div class="btn-group btn-group-md">
-                <a href="<?php echo base_url(); ?>controllab" ><button type='button' class='btn btn-default' title="Regresar a la lista"><span class="glyphicon glyphicon-share-alt"></span></button></a>
+                <a href="<?php echo base_url(); ?>controllab/bitacora" ><button type='button' class='btn btn-default' title="Regresar a la lista"><span class="glyphicon glyphicon-share-alt"></span></button></a>
             </div>
         </div>
   </div>

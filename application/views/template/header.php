@@ -9,14 +9,24 @@ $idTipoUsuario = ($this->session->userdata['logged_in']['idTipoUsuario']);
 } else {
 redirect('login');
 }
-?><!DOCTYPE html>
+?>
+<?php
+  $bg = array('pinlayer1.jpg', 'pinlayer2.jpg', 'pinlayer3.jpg', 'pinlayer4.jpg', 'pinlayer5.jpg', 'pinlayer6.png' , 'pinlayer7.jpg' ); // array of filenames
+
+  $i = rand(0, count($bg)-1); // generate random number size of the array
+  $selectedBg = "$bg[$i]"; // set variable equal to which random filename was chosen
+?>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <style type="text/css" media="screen">
 	body, html {
-    height: 100%;
+    /* height: 100%; */
+    background-image: url(<?php echo base_url(); ?>assets/img/<?php echo $selectedBg; ?>);
+    background-position: center;
+    background-size: cover;
     background-repeat: no-repeat;
-    background: url(<?php echo base_url(); ?>assets/img/pinlayer4.jpg);
+    background-attachment: fixed;
     /*background-image: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));*/
 }
 </style>
@@ -41,7 +51,7 @@ redirect('login');
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/libraries/bootstrap-3.3.7/css/bootstrap.min.css">
 </head>
 <body data-spy="scroll" data-target="myNavbar">
-	<nav id="" class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<nav id="" class="navbar navbar-default" role="navigation">
 	  <div class="container-fluid">
 	    <div class="navbar-header">
 	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -55,34 +65,37 @@ redirect('login');
 
 	      <ul class="nav navbar-nav">
 		      <li class="active"><a href="<?php echo base_url();?>">Home</a></li>
-		      <li class=""><a href="<?php echo base_url();?>controllab/agregar">Control</a></li>
+		      <li class=""><a href="<?php echo base_url();?>controllab">Control</a></li>
 			<li class="dropdown">
 		        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Menu
 		        <span class="caret"></span></a>
 		        <ul class="dropdown-menu">
+				<li><a href="<?php echo base_url(); ?>controllab" 
+					<?php if($this->uri->segment(1)=="controllab"){echo 'class="p-3 mb-2 bg-primary text-white"';}?> >Control Lab</a></li>
 				<li><a href="<?php echo base_url(); ?>alumno" 
 					<?php if($this->uri->segment(1)=="alumno"){echo 'class="p-3 mb-2 bg-info text-white"';}?> >Alumnos</a></li>
+					<li role="separator" class="divider"></li>
 				<li><a href="<?php echo base_url(); ?>profesor" 
-					<?php if($this->uri->segment(1)=="profesor"){echo 'class="p-3 mb-2 bg-info text-white"';}?> >Profesores</a></li>
+					<?php if($this->uri->segment(1)=="profesor"){echo 'class="p-3 mb-2 bg-info text-white"';}?> >1.- Profesores</a></li>
 				<li><a href="<?php echo base_url(); ?>asignatura" 
-					<?php if($this->uri->segment(1)=="asignatura"){echo 'class="p-3 mb-2 bg-info text-white"';}?> >Asignaturas</a></li>
+					<?php if($this->uri->segment(1)=="asignatura"){echo 'class="p-3 mb-2 bg-info text-white"';}?> >2.- Asignaturas</a></li>
 				<li><a href="<?php echo base_url(); ?>horario" 
-					<?php if($this->uri->segment(1)=="horario"){echo 'class="p-3 mb-2 bg-info text-white"';}?> >Horarios</a></li>
+					<?php if($this->uri->segment(1)=="horario"){echo 'class="p-3 mb-2 bg-info text-white"';}?> >3.- Horarios</a></li>
+					<li role="separator" class="divider"></li>
 				<li><a href="<?php echo base_url(); ?>computadora" 
 					<?php if($this->uri->segment(1)=="computadora"){echo 'class="p-3 mb-2 bg-info text-white"';}?> >Computadoras</a></li>
 				<li><a href="<?php echo base_url(); ?>dispositivo" 
 					<?php if($this->uri->segment(1)=="dispositivo"){echo 'class="p-3 mb-2 bg-info text-white"';}?> >Dispositivos</a></li>
-
+					<li role="separator" class="divider"></li>
+				
+				<li><a href="<?php echo base_url(); ?>incidencia" 
+					<?php if($this->uri->segment(1)=="incidencia"){echo 'class="p-3 mb-2 bg-warning text-white"';}?> >Incidencias</a></li>
+					
 				<?php if($idTipoUsuario==1) { ?>
 				<li><a href="<?php echo base_url(); ?>usuario" 
 					<?php if($this->uri->segment(1)=="usuario"){echo 'class="p-3 mb-2 bg-danger text-white"';}?> >Usuarios</a></li>
 				<?php } ?>
-				
-				<li><a href="<?php echo base_url(); ?>incidencia" 
-					<?php if($this->uri->segment(1)=="incidencia"){echo 'class="p-3 mb-2 bg-warning text-white"';}?> >Incidencias</a></li>
-					<li role="separator" class="divider"></li>
-				<li><a href="<?php echo base_url(); ?>controllab/agregar" 
-					<?php if($this->uri->segment(1)=="controllab"){echo 'class="p-3 mb-2 bg-primary text-white"';}?> >Control Lab</a></li>
+
 		        </ul>
       		</li>
 

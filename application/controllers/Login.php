@@ -62,12 +62,13 @@
         $this->load->view('register');
             } else {
                 $data = array(
-                'nombre_usr' => $this->input->post('nombre_usr'),
-                'aPaterno_usr' => $this->input->post('aPaterno_usr'),
-                'aMaterno_usr' => $this->input->post('aMaterno_usr'),
-                'telefono' => $this->input->post('telefono'),
-                'email' => $this->input->post('email'),
-                'password' => md5($this->input->post('password'))
+                'nombre_usr'    => $this->input->post('nombre_usr'),
+                'aPaterno_usr'  => $this->input->post('aPaterno_usr'),
+                'aMaterno_usr'  => $this->input->post('aMaterno_usr'),
+                'telefono'      => $this->input->post('telefono'),
+                'email'         => $this->input->post('email'),
+                'password'      => md5($this->input->post('password')),
+                'fechaCreacion' => date('Y-m-d H:i:s')
                 );
 
                 $result = $this->model_login->registration_insert($data);

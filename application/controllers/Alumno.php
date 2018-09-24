@@ -119,7 +119,7 @@ class Alumno extends CI_Controller
         $data['totaE']    = $this->model_controllab->Total_Computadoras();
         $data['estatus']  = $this->model_controllab->estatus();
         $this->load->view("template/header", $titulo);
-        $this->load->view("controllab/agregar", $data);
+        $this->load->view("controllab/index", $data);
         $this->load->view("template/footer");
         }
     }

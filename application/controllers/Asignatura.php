@@ -75,7 +75,7 @@ class Asignatura extends CI_Controller
     public function guardar(){
         $this->form_validation->set_error_delimiters('<div class="text-danger">', '</div>');
         $this->form_validation->set_rules('nombre_as','Nombre de Asignatura','required|trim|strtoupper');
-        $this->form_validation->set_rules('clave','Clave','required|strtoupper|is_unique[asignatura.clave]');
+        $this->form_validation->set_rules('clave','Clave','required|strtoupper|is_unique[Asignatura.clave]');
         $this->form_validation->set_rules('idCarrera','Carrera','required');
         $this->form_validation->set_rules('idProfesor','Profesor','required');
         if ($this->form_validation->run() == FALSE){
@@ -86,7 +86,8 @@ class Asignatura extends CI_Controller
             'nombre_as'  => $this->input->post('nombre_as'),
             'clave'      => $this->input->post('clave'),
             'idCarrera'  => $this->input->post('idCarrera'),
-            'idProfesor' => $this->input->post('idProfesor')
+            'idProfesor' => $this->input->post('idProfesor'),
+            'idEstatus' => 3
         );
         $this->model_asignatura->guardar($data);
         redirect( base_url(). 'asignatura');
@@ -128,7 +129,7 @@ class Asignatura extends CI_Controller
         redirect( base_url(). 'asignatura');
         }
     }
-    public function eliminar()
+    public function baja()
     {
         $idAsignatura = $this->uri->segment(3);
         $delete       = $this->model_asignatura->eliminar($idAsignatura);

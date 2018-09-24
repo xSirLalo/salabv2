@@ -42,7 +42,7 @@ class Model_Asignatura extends CI_Model
         return false;
         }
     }
-    function eliminar($idAsignatura){
+    function baja($idAsignatura){
     if(!$this->db->where('idAsignatura', $idAsignatura)) {
         # Delete Failed
         $this->session->set_flashdata('error', "<div class='alert alert-danger alert-dismissible fade in'>

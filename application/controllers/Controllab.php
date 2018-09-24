@@ -15,9 +15,18 @@ class Controllab extends CI_Controller
 
 	public function Index()
 	{
+        $titulo['titulo']     = 'Bienvenid@';
+        $data['totaE']        = $this->model_controllab->Total_Computadoras();
+        $data['estatus']      = $this->model_controllab->Estatus();
+        $data['computadoras'] = $this->model_controllab->computadoras();
+        $this->load->view("template/header", $titulo);
+        $this->load->view("controllab/Index", $data);
+        $this->load->view("template/footer");
+	}
+    public function bitacora(){
         $titulo['titulo']          = 'Bitacora de ControlLab';
         
-        $config['base_url']        = base_url().'controllab/index/';
+        $config['base_url']        = base_url().'controllab/bitacora/';
         $config['total_rows']      = $this->model_controllab->num_controllabs();
         $config['per_page']        = 18 ;
         $config['uri_segment']     = 3 ;
@@ -44,37 +53,31 @@ class Controllab extends CI_Controller
         $this->pagination->initialize($config);
 
         $result             = $this->model_controllab->get_pagination($config['per_page']);
+        $data['totaE']      = $this->model_controllab->Total_Computadoras();
         $data['resultado']  = $result;
         $data['pagination'] = $this->pagination->create_links();
 
-		$this->load->view('template/header', $titulo);
-		$this->load->view('controllab/index', $data);
-		$this->load->view('template/footer');
-
-	}
-    public function agregar(){
-        $titulo['titulo']     = 'Bienvenid@';
-        $data['totaE']        = $this->model_controllab->Total_Computadoras();
-        $data['estatus']      = $this->model_controllab->Estatus();
-        $data['computadoras'] = $this->model_controllab->computadoras();
-        $this->load->view("template/header", $titulo);
-        $this->load->view("controllab/agregar", $data);
-        $this->load->view("template/footer");
+        $this->load->view('template/header', $titulo);
+        $this->load->view('controllab/bitacora', $data);
+        $this->load->view('template/footer');
     }
     public function guardar(){
 
         $this->form_validation->set_error_delimiters('<div class="text-danger">', '</div>');
-        $this->form_validation->set_rules('noControl','Numero de Control','required|trim|numeric|min_length[8]');
+        $this->form_validation->set_rules('noControl','Numero de Control','required|trim|min_length[8]');
         //$this->form_validation->set_rules('idComputadora','Computadora','trim');
+        
         //Obtiene una el id de una computadora al alzar
         $consulta0 = $this->model_controllab->computadoras();
+
         if ($this->form_validation->run() == FALSE){
             //Error
         $this->agregar();
         }else{
+            //Solo queremos el ID de la computadora a ocupar.
         foreach ($consulta0 as $fila){
             $computadora = $fila->idComputadora;
-        }
+        }        
         $data = array(
             'noControl'     => $this->input->post('noControl'),
             'idComputadora' => $computadora,
@@ -96,10 +99,10 @@ class Controllab extends CI_Controller
             //Consulta el estatus del alumno.
             $consulta2 = $this->model_controllab->Cambia_Estatus($data['noControl']);
             if ($consulta2 == 'cambia_status') {
-                redirect('controllab/agregar');
+                redirect('controllab');
                 }else{
                 $this->model_controllab->guardar($data,$data['idComputadora']);
-                    redirect('controllab/agregar');
+                    redirect('controllab');
                 }
             }
         }

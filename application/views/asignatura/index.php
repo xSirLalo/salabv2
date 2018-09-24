@@ -41,7 +41,7 @@
             <td>
             <a href='<?= base_url().'asignatura/modificar/'.$row->idAsignatura ?>'><button type='button' class='btn btn-warning' title="Modificar"><span class="glyphicon glyphicon-pencil"></span></button></a>
             <?php  if($row->idEstatus==3){ ?>
-              <a href="#" data-href='<?= base_url().'asignatura/eliminar/'.$row->idAsignatura ?>' data-toggle="modal" data-target="#confirm-delete"><button type='button' class='btn btn-danger' title="Dar de baja"><span class="glyphicon glyphicon-paste"></span></button></a>
+              <a href="#" data-href='<?= base_url().'asignatura/baja/'.$row->idAsignatura ?>' data-toggle="modal" data-target="#confirm-delete"><button type='button' class='btn btn-danger' title="Dar de baja"><span class="glyphicon glyphicon-paste"></span></button></a>
             <?php }?>
             </td>
 		</tr>

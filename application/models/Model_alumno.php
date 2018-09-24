@@ -37,7 +37,7 @@ class Model_Alumno extends CI_Model
         } else {
         $this->session->set_flashdata('success', "<div class='alert alert-info alert-dismissible fade in'>
                 <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                <strong>Info!</strong> Indicates a neutral informative change or action.
+                <strong>Info!</strong> Alumno agregado correctamente.
                 </div>
             ");
         return false;
@@ -48,7 +48,7 @@ class Model_Alumno extends CI_Model
         $this->db->update('Alumno', $data);
         $this->session->set_flashdata('success', "<div class='alert alert-info alert-dismissible fade in'>
                 <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                <strong>Info!</strong> Indicates a neutral informative change or action.
+                <strong>Info!</strong> Alumno agregado correctamente.
                 </div>
             ");
     }

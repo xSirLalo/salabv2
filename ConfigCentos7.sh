@@ -3,6 +3,7 @@ sed -i 's/^SELINUX=.*/SELINUX=permissive/g' /etc/sysconfig/selinux
 sed -i 's/^SELINUX=.*/SELINUX=permissive/g' /etc/selinux/config
 
 yum groupinstall "Development Tools" -y
+yum install epel-release
 yum update
 
 systemctl stop firewalld
@@ -11,16 +12,19 @@ yum install iptables-services
 service iptables save
 systemctl enable iptables
 systemctl start iptables
-cp /etc/sysconfig/iptables /etc/sysconfig/iptables.orig 
+cp /etc/sysconfig/iptables /etc/sysconfig/iptables.orig
 
-yum install epel-release net-tools vim nmap git wget perl-Digest-MD5
+#Escritorio amigable
+yum -y install @cinnamon-desktop
+yum install cinnamon -y
+
+yum install net-tools vim nmap git wget perl-Digest-MD5
 yum install cpan openssl dnsmasq patch mod_ssl screen lynx nmap htop
-yum install php-pear php-devel php-mysql php-common php-gd php-mbstring php-mcrypt php php-xml php-pear-db
+yum install php-pear php-devel php-mysql php-common php-gd php-mbstring php-mcrypt php php-xml php-pear-db 
 
 # Despues de haber instalado los paquetes anteriores abrir el archivo "php.ini" que esta en el directorio "/etc" y buscar
 # la siguientes lineas y cambiar "short_open_tag = On" y "date.timezone = America/Cancun" ponerla de acuerdo
-# a tu zona horaria. Nota en la linea "short_open_tag" no confundirla con la que tiene ";" ya que ocasionaria errores
-# en la pagina Easyhotspot
+# a tu zona horaria. Nota en la linea "short_open_tag" no confundirla con la que tiene ";"
 vim /etc/php.ini
 
 yum install httpd httpd-devel
@@ -40,7 +44,7 @@ mysql_secure_installation
 
 cd /var/www/html
 git clone https://github.com/xsirlalo/salabv2
-a
+
 mysql -u root -p
 
 show databases;
@@ -66,3 +70,5 @@ echo '
 </Directory>
 	'> /etc/httpd/conf/httpd.conf
 ## Fin
+#
+yum install phpmyadmin
