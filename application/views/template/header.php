@@ -6,6 +6,7 @@ $nombre_usr = ($this->session->userdata['logged_in']['nombre_usr']);
 $aPaterno_usr = ($this->session->userdata['logged_in']['aPaterno_usr']);
 $email = ($this->session->userdata['logged_in']['email']);
 $idTipoUsuario = ($this->session->userdata['logged_in']['idTipoUsuario']);
+$ip = $this->input->ip_address();
 } else {
 redirect('login');
 }
@@ -72,8 +73,8 @@ redirect('login');
 		        <ul class="dropdown-menu">
 				<li><a href="<?php echo base_url(); ?>controllab" 
 					<?php if($this->uri->segment(1)=="controllab"){echo 'class="p-3 mb-2 bg-primary text-white"';}?> >Control Lab</a></li>
-				<li><a href="<?php echo base_url(); ?>alumno" 
-					<?php if($this->uri->segment(1)=="alumno"){echo 'class="p-3 mb-2 bg-info text-white"';}?> >Alumnos</a></li>
+				<li><a href="<?php echo base_url(); ?>incidencia" 
+					<?php if($this->uri->segment(1)=="incidencia"){echo 'class="p-3 mb-2 bg-warning text-white"';}?> >Incidencias</a></li>
 					<li role="separator" class="divider"></li>
 				<li><a href="<?php echo base_url(); ?>profesor" 
 					<?php if($this->uri->segment(1)=="profesor"){echo 'class="p-3 mb-2 bg-info text-white"';}?> >1.- Profesores</a></li>
@@ -87,9 +88,9 @@ redirect('login');
 				<li><a href="<?php echo base_url(); ?>dispositivo" 
 					<?php if($this->uri->segment(1)=="dispositivo"){echo 'class="p-3 mb-2 bg-info text-white"';}?> >Dispositivos</a></li>
 					<li role="separator" class="divider"></li>
-				
-				<li><a href="<?php echo base_url(); ?>incidencia" 
-					<?php if($this->uri->segment(1)=="incidencia"){echo 'class="p-3 mb-2 bg-warning text-white"';}?> >Incidencias</a></li>
+
+				<li><a href="<?php echo base_url(); ?>alumno" 
+					<?php if($this->uri->segment(1)=="alumno"){echo 'class="p-3 mb-2 bg-info text-white"';}?> >Alumnos</a></li>
 					
 				<?php if($idTipoUsuario==1) { ?>
 				<li><a href="<?php echo base_url(); ?>usuario" 
@@ -125,43 +126,56 @@ redirect('login');
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
+        <h1 class="modal-title">Info</h1>
       </div>
 	      <div class="modal-body">
-			<?php
-			echo "Hello <b id='welcome'><i>" . $nombre_usr . "</i> !</b>";
-			echo "<br/>";
-			echo "<br/>";
-			echo "Welcome to Admin Page";
-			echo "<br/>";
-			echo "<br/>";
-			echo "Your Name is " . $nombre_usr;
-			echo "<br/>";
-			echo "Your Email is " . $email;
-			echo "<br/>";
-			echo "Your ID Type is " . $idTipoUsuario;
-			echo "<br/>";
-			?>
-	        <p style="text-align: center"><img src="<?php echo base_url(); ?>assets/img/back.jpg" width="100%" height="100%"/></p>
-	        <p style="text-align: center">Elige un trabajo que te guste y no tendrás que trabajar ni un día de tu vida.</p>
+			
+				<h5>Version de PHP: <?=phpversion();?></h5>
+				<?=($idTipoUsuario==1?'<h5>Software de servidor '.$_SERVER['SERVER_SOFTWARE'].'</h5>':'');?>
+				<div id="JqueryVersion"></div>
+				<h5>Version de CI: <?=CI_VERSION;?></h5>
+				<h5>Ambiente de CI: <?=ENVIRONMENT?></h5>
+				<h5>Sesión CI: <?=$this->config->item('sess_cookie_name');?></h5>
+				<h5>Nombre Servidor: <?=$_SERVER['SERVER_NAME'];?></h5>
+				<h5>IP Servidor: <?=gethostbyname(gethostname());?></h5>
+				<h5>Host: <?=gethostname()?></h5>
+				<h5>Sistema operativo: <?=PHP_OS;?></h5>
+				<h5>Version SO: <?=php_uname('r').' '.php_uname('v');
+				/*
+				'a' about all information below given
+				's' Operating system
+				'n' Host name
+				'r' release name
+				'v' version name
+				'm' machine type*/?></h5>      
+				<h5>Máximo de subida: <?=ini_get('upload_max_filesize');?></h5>
+				<h5>Máximo de solicitud (subida y post): <?=ini_get('post_max_size');?></h5>
+				<h5>Máximo de memoria disponible: <?=ini_get('memory_limit');?></h5>
+				<h5>Fecha y Hora del sistema: <?=date('Y-m-d H:i:s');?></h5>
+				<h5>IP Cliente: <?=$ip?></h5>
+				<h5>MAC?: <?=$_SERVER['REMOTE_ADDR'];?></h5>
+				<h5>Sesión PHP: <?=session_name();?></h5>
+				<h5>Sesión ID: <?=session_id();?></h5>      
+				<h5>Id - Usuario: <?=$idTipoUsuario?> - <?=$nombre_usr?></h5>
+
 	      </div>
 	      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
 </div>
 <!-- End Modal -->
-
+		<!-- Control de Mensajes -->	
+		<div  style="float: left;position: fixed;z-index:9999; ">
+		<?php if ($this->session->flashdata('success')) { ?>
+		        <?php echo $this->session->flashdata('success'); ?>
+		<?php } ?>
+		<?php if ($this->session->flashdata('error')) { ?>
+		        <?php echo $this->session->flashdata('error'); ?>
+		<?php } ?>	
+		</div>
 	<div class="container"><!--container-->
 		<div class="jumbotron"><!--jumbotron-->
 			<div class="page-header"><p class="h1 text-center"><?=$titulo?></p></div>
-			<!-- Control de Mensajes de error -->		
-				<div class="container">
-				<?php if ($this->session->flashdata('success')) { ?>
-				        <?php echo $this->session->flashdata('success'); ?>
-				<?php } ?>
-				<?php if ($this->session->flashdata('error')) { ?>
-				        <?php echo $this->session->flashdata('error'); ?>
-				<?php } ?>	
-				</div>
+				

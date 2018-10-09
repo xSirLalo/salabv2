@@ -10,12 +10,12 @@
 <table id="card-table" class="table">
     <thead>
       <tr class="warning">
-        <th>idControlLab</th>
-        <th>fechaInicio</th>
-        <th>fechaFin</th>
-        <th>noControl</th>
-        <th>idComputadora</th>
-        <th>idEstatus</th>
+        <th>ID</th>
+        <th>Hora Inicio</th>
+        <th>Hora Fin</th>
+        <th>Alumno</th>
+        <th>Computadora</th>
+        <th>Estatus</th>
         <th></th>
       </tr>
     </thead>

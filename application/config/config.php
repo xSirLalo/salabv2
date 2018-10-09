@@ -1,5 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+define('SERVER_NAME_DEV', 'localhost');
+define('SERVER_NAME_EMPRESA', '10.1.25.30');
+define('SERVER_NAME_FINAL', '10.1.25.30');
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +26,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/salabv2';
+//Obtenemos el nombre actual para el servidor donde nos encontramos
+$nombreServerActual = $_SERVER['SERVER_NAME'];
+switch($nombreServerActual)
+{
+    case SERVER_NAME_DEV:
+            $config['base_url']    = "http://localhost/salabv2";
+            break;
+    case SERVER_NAME_EMPRESA:
+            $config['base_url']    = "http://10.1.25.30/salabv2";
+            break;
+    case SERVER_NAME_FINAL:
+            $config['base_url']    = "http://10.1.25.30/salabv2";
+            break;
+    default:
+            $config['base_url']    = "http://localhost/salabv2";
+            break;       
+}
 
 /*
 |--------------------------------------------------------------------------

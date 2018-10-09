@@ -97,7 +97,7 @@ class Alumno extends CI_Controller
 	}
     public function guardar(){
         $this->form_validation->set_error_delimiters('<div class ="text-danger">', '</div>');
-        $this->form_validation->set_rules('noControl','Numero de Control','required|numeric|min_length[8]|is_unique[Alumno.noControl]');
+        $this->form_validation->set_rules('noControl','Numero de Control','required|trim|is_unique[Alumno.noControl]|min_length[6]|max_length[12]');
         $this->form_validation->set_rules('nombre_al','Nombre','required|trim|strtoupper');
         $this->form_validation->set_rules('aPaterno_al','Apellido Paterno','required|trim|strtoupper');
         $this->form_validation->set_rules('aMaterno_al','Apellido Materno','required|trim|strtoupper');
@@ -144,7 +144,7 @@ class Alumno extends CI_Controller
     {
         $id = $this->uri->segment(3);
         $this->form_validation->set_error_delimiters('<div class="text-danger">', '</div>');
-        $this->form_validation->set_rules('noControl','Numero de Control','required|numeric|min_length[8]');
+        $this->form_validation->set_rules('noControl','Numero de Control','required|trim|is_unique[Alumno.noControl]|min_length[6]|max_length[12]');
         $this->form_validation->set_rules('nombre_al','Nombre','required|trim|strtoupper');
         $this->form_validation->set_rules('aPaterno_al','Apellido Paterno','required|trim|strtoupper');
         $this->form_validation->set_rules('aMaterno_al','Apellido Materno','required|trim|strtoupper');

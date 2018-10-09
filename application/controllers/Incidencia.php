@@ -13,7 +13,7 @@ class Incidencia extends CI_Controller
 
 	public function Index()
 	{
-        $titulo['titulo']          = 'Lista de incidenciaes';
+        $titulo['titulo']          = 'Incidencias en Laboratorio';
         
         $config['base_url']        = base_url().'incidencia/index/';
         $config['total_rows']      = $this->model_incidencia->num_incidencias();

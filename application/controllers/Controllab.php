@@ -19,8 +19,10 @@ class Controllab extends CI_Controller
         $data['totaE']        = $this->model_controllab->Total_Computadoras();
         $data['estatus']      = $this->model_controllab->Estatus();
         $data['computadoras'] = $this->model_controllab->computadoras();
+        $data['resultado']  = $this->model_controllab->Todas_Computadoras();
+
         $this->load->view("template/header", $titulo);
-        $this->load->view("controllab/Index", $data);
+        $this->load->view("controllab/index", $data);
         $this->load->view("template/footer");
 	}
     public function bitacora(){
@@ -61,10 +63,18 @@ class Controllab extends CI_Controller
         $this->load->view('controllab/bitacora', $data);
         $this->load->view('template/footer');
     }
-    public function guardar(){
+    public function tablero(){
+        $titulo['titulo']   = 'Control de Computadoras';
+        $data['resultado']  = $this->model_controllab->Todas_Computadoras();
+
+        $this->load->view('template/header', $titulo);
+        $this->load->view('controllab/tablero', $data);
+        $this->load->view('template/footer');
+    }
+    public function sesion_iniciada(){
 
         $this->form_validation->set_error_delimiters('<div class="text-danger">', '</div>');
-        $this->form_validation->set_rules('noControl','Numero de Control','required|trim|min_length[8]');
+        $this->form_validation->set_rules('noControl','Numero de Control','required|trim|min_length[6]|max_length[12]');
         //$this->form_validation->set_rules('idComputadora','Computadora','trim');
         
         //Obtiene una el id de una computadora al alzar
@@ -72,17 +82,17 @@ class Controllab extends CI_Controller
 
         if ($this->form_validation->run() == FALSE){
             //Error
-        $this->agregar();
+        $this->index();
         }else{
             //Solo queremos el ID de la computadora a ocupar.
         foreach ($consulta0 as $fila){
             $computadora = $fila->idComputadora;
-        }        
+        }
         $data = array(
             'noControl'     => $this->input->post('noControl'),
             'idComputadora' => $computadora,
             'fechaInicio'   => date('Y-m-d H:i:s'),
-            'idEstatus'     => 1,
+            'idEstatus'     => 1, // Equipo Activo
         );
         //Consulta si el alumno esta dado de alta de lo contrario se manda agregar como nuevo alumno
         $consulta1 = $this->model_controllab->consulta_alumno($data['noControl']);
@@ -97,11 +107,11 @@ class Controllab extends CI_Controller
             $this->load->view('template/footer');
         }else{
             //Consulta el estatus del alumno.
-            $consulta2 = $this->model_controllab->Cambia_Estatus($data['noControl']);
-            if ($consulta2 == 'cambia_status') {
+            $finaliza = $this->model_controllab->sesion_terminada($data['noControl']);
+            if ($finaliza == 'sesion_terminada') {
                 redirect('controllab');
                 }else{
-                $this->model_controllab->guardar($data,$data['idComputadora']);
+                $this->model_controllab->sesion_iniciada($data,$data['idComputadora']);
                     redirect('controllab');
                 }
             }
@@ -109,10 +119,11 @@ class Controllab extends CI_Controller
     }
     public function modificar()
     {
-        $titulo['titulo']     = 'Modificar controllab';
+        $titulo['titulo']     = 'Cambiar de Equipo';
         $data['idControlLab'] = $this->uri->segment(3);
         $data['estatus']      = $this->model_controllab->Estatus();
         $data['Computadoras']  = $this->model_controllab->Computadoras_Disponibles();
+
         if (!$data['idControlLab']) {
             redirect('home');
         }else{
@@ -129,7 +140,7 @@ class Controllab extends CI_Controller
         $this->form_validation->set_rules('OldComputer','Computadora','numeric');
         if ($this->form_validation->run() == FALSE){
             //Error
-        $this->guardar();
+        $this->sesion_iniciada();
         }else{
         $NewComputer = array(
             'idComputadora' => $this->input->post('NewComputer')

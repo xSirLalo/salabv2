@@ -30,7 +30,7 @@
 
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
-      <button type="submit" class="btn btn-warning" title="Actualizar">Actualizar</button>
+      <button type="submit" class="btn btn-warning" title="Cambiar">Cambiar de Equipo</button>
       <a href="<?php echo base_url(); ?>controllab" class="btn btn-primary" title="Cancelar">Cancelar</a>
     </div>
   </div>

@@ -25,26 +25,30 @@ class Model_ControlLab extends CI_Model
         }
     }
     // FIN DE PAGINACION
-    function guardar($data,$idComputadora){
+    function sesion_iniciada($data,$idComputadora){
         //metodo para comprobar computadoras disponibles y ponerlas ocupadas una vez ingresado el numero de control
-        $control = array(
-            'control' => '2'
-            );
-
-        $this->db->where('idComputadora', $idComputadora);
-        $this->db->where('Control','1');
-        $this->db->where('idAula','1');
-        $this->db->where('idEstatus','3');
+        $c_control = array(
+            'control' => '2' // 2 - Ocupado
+        );
+        $buscar = array(
+            'idComputadora' => $idComputadora,
+            'Control' => 1,
+            'idAula' => 1,
+            'idEstatus' => 3
+        );
+        $this->db->where($buscar);
         $query = $this->db->get('Computadora');
         if ($query->num_rows() > 0){
         foreach ($query->result() as $fila) {
         if ($fila->control == 1) {
         $this->db->insert('ControlLab',$data);
+
+        $this->db->set($c_control);
         $this->db->where('idComputadora', $idComputadora);
-        $this->db->update('Computadora', $control);
+        $this->db->update('Computadora');
         $this->session->set_flashdata('success', "<div class='alert alert-info alert-dismissible fade in'>
                 <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                <strong>Info!</strong> Ocupe la $fila->comentarios
+                <h4 class='alert-heading'>Info!</h4> <p>Ocupe la <b>$fila->comentarios</b></p>
                 </div>
             ");
             return false;
@@ -53,37 +57,48 @@ class Model_ControlLab extends CI_Model
         }else{
         $this->session->set_flashdata('error', "<div class='alert alert-danger alert-dismissible fade in'>
                 <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                <strong>Danger!</strong> No hay Computadoras Disponibles
+                <h4 class='alert-heading'>Advertencia!</h4> <p>No hay Computadoras Disponibles</p>
                 </div>
             ");
             return false;
         }
     }
-    function Cambia_Estatus($noControl){
-        $status = array(
-           'idEstatus'   => '2',
-           //'fechaFin' => date('Y-m-d H:i:s') // Finaliza con la hora que termina de ocupar la Computadora
+    function sesion_terminada($noControl){
+        $c_status = array(
+           'idEstatus'   => 2, // Cambia el Estatus a Equipo Finalizaco
+           'fechaFin'    => date('Y-m-d H:i:s')
         );
-        $control = array(
-            'control' => '1'
+        $c_control = array(
+            'control' => 1 // 1 = Libre
         );
-        $this->db->where('noControl', $noControl);
-        $this->db->where('idEstatus', 1);
-        $query = $this->db->get('ControlLab');
-        foreach ($query->result() as $fila) {
-        if ($fila->fechaFin=='0000-00-00 00:00:00' || $fila->idEstatus == 1) {
-        $this->db->where('noControl', $noControl);
-        $this->db->update('ControlLab', $status);
-        $this->db->where('idComputadora', $fila->idComputadora);
-        $this->db->update('Computadora', $control);
+        $buscar = array(
+            'noControl' => $noControl,
+            'idEstatus' => 1
+        );
+        $this->db->where($buscar);
+        $datos = $this->db->get('ControlLab');
+        foreach ($datos->result() as $dato) {// Inicio For para obtener los datos a partir del numero de control y el idEstatus
+        if ($dato->idEstatus == 1) { // Se actualizan las dos tablas ligadas ControlLab y Computadora
+        $Condicion = "noControl='$noControl' AND idEstatus='$dato->idEstatus'";
+        $Condicion2 = "idComputadora='$dato->idComputadora' AND control='2'";
+        //$this->db->select('ControlLab');
+        $this->db->set($c_status);
+        $this->db->where($Condicion);
+        $this->db->update('ControlLab');
+
+        //$this->db->select('Computadora');
+        $this->db->set($c_control);
+        $this->db->where($Condicion2);
+        $this->db->update('Computadora');
         $this->session->set_flashdata('success', "<div class='alert alert-info alert-dismissible fade in'>
                 <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                <strong>Info!</strong> Vuelva pronto
+                <h4 class='alert-heading'>Info!</h4> <p>Vuelva pronto</p>
                 </div>
             ");
-                return 'cambia_status';
-        } 
+                return 'sesion_terminada';
         }
+
+        }//Fin For
 
     }
     function Computadoras(){   
@@ -103,7 +118,8 @@ class Model_ControlLab extends CI_Model
             return 'error';
         }
     }
-    function Total_Computadoras(){   
+    function Total_Computadoras(){   // Sinceramente este es algo tonto pero en el boton de asignar computadora muestra el total de computadoras
+                                    // disponibles
         $this->db->from('Computadora');
         $this->db->where('Control','1');
         $this->db->where('idAula','1');
@@ -118,9 +134,26 @@ class Model_ControlLab extends CI_Model
         $this->db->where('Control','1');
         $this->db->where('idAula','1');
         $this->db->where('idEstatus','3'); //Computadoras disponibles con el estatus Alta con el ID 3
+        $this->db->order_by('comentarios');
         $query = $this->db->get();
         return $query -> result();
     }
+
+    function Todas_Computadoras(){
+        $UltimoId = "idControlLab IN (SELECT MAX(idControlLab) FROM ControlLab GROUP BY idComputadora)";
+        $this->db->select('*');
+        $this->db->from('ControlLab');
+        $this->db->join('Computadora', 'Computadora.idComputadora = ControlLab.idComputadora');
+        $this->db->where($UltimoId);
+        $this->db->order_by('comentarios');
+        $query = $this->db->get();
+        if ($query->num_rows() > 0){
+            return $query;
+        }else{
+            return false;
+        }
+    }
+
     function actualizar($idControlLab, $NewComputer, $OldComputer){
         $off = array('control' => '2');
         $on = array('control' => '1');
@@ -135,7 +168,7 @@ class Model_ControlLab extends CI_Model
         $this->db->update('Computadora', $on);
         $this->session->set_flashdata('success', "<div class='alert alert-info alert-dismissible fade in'>
                 <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                <strong>Info!</strong> Cambio de Computadora Correctamente!
+                <h4 class='alert-heading'>Info!</h4> <p>Cambio de Computadora Correctamente!</p>
                 </div>
             ");
     }
