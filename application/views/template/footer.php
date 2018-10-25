@@ -33,7 +33,7 @@
 		</div>	<!--jumbotron-->
 	</div>	<!--container-->
 	<footer class="page-footer font-small blue pt-4 mt-4">
-		<div class="footer-copyright navbar-fixed-bottom text-center"">
+		<div class="footer-copyright navbar-fixed-bottom text-center">
 	        © 2018 Copyright:
 	        <a href="https://facebook.com/pckonect" target="_blank" class="text-info"> Eduardo Cauich</a>
 		</div>
@@ -41,7 +41,7 @@
     <!--Tablas responsivas con Stacktable-->
 <script type="text/javascript">
 $('#card-table').cardtable();
-</script>
+</script> 
 
 <!--DETECTAR LA ENTRADA DE MAYUSCULAS-->
 <script type="text/javascript">

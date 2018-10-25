@@ -39,7 +39,7 @@
 </center>
 <?php echo form_close(); ?>
 <br>
-
+<?php if($resultado){ ?>
 <?php foreach($resultado->result() as $row){ ?>
 <div class="contenedor">
     <?php  if($totaE!=0){ if($row->control==2){ ?>
@@ -58,4 +58,4 @@
     <?php }?>   
     </div>
  </div>	
-<?php } ?>
+<?php } } ?>

@@ -118,6 +118,7 @@ class Alumno extends CI_Controller
         //Se muestran los equpos disponibles
         $data['totaE']    = $this->model_controllab->Total_Computadoras();
         $data['estatus']  = $this->model_controllab->estatus();
+        $data['resultado']  = $this->model_controllab->Todas_Computadoras();
         $this->load->view("template/header", $titulo);
         $this->load->view("controllab/index", $data);
         $this->load->view("template/footer");
@@ -144,7 +145,7 @@ class Alumno extends CI_Controller
     {
         $id = $this->uri->segment(3);
         $this->form_validation->set_error_delimiters('<div class="text-danger">', '</div>');
-        $this->form_validation->set_rules('noControl','Numero de Control','required|trim|is_unique[Alumno.noControl]|min_length[6]|max_length[12]');
+        $this->form_validation->set_rules('noControl','Numero de Control','required|trim|min_length[6]|max_length[12]');
         $this->form_validation->set_rules('nombre_al','Nombre','required|trim|strtoupper');
         $this->form_validation->set_rules('aPaterno_al','Apellido Paterno','required|trim|strtoupper');
         $this->form_validation->set_rules('aMaterno_al','Apellido Materno','required|trim|strtoupper');

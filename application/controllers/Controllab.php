@@ -100,7 +100,10 @@ class Controllab extends CI_Controller
             //Vista de Agregar alumno
             $titulo['titulo'] = 'Agregar alumno';
             $data['carreras'] = $this->model_alumno->carreras();
-            $data['computadora'] = '';
+            $data['totaE']        = $this->model_controllab->Total_Computadoras();
+            $data['estatus']      = $this->model_controllab->Estatus();
+            $data['computadoras'] = $this->model_controllab->computadoras();
+            $data['resultado']  = $this->model_controllab->Todas_Computadoras();
 
             $this->load->view('template/header', $titulo);
             $this->load->view('alumno/agregar', $data);
@@ -119,7 +122,7 @@ class Controllab extends CI_Controller
     }
     public function modificar()
     {
-        $titulo['titulo']     = 'Cambiar de Equipo';
+        $titulo['titulo']     = 'Equipo de Computo';
         $data['idControlLab'] = $this->uri->segment(3);
         $data['estatus']      = $this->model_controllab->Estatus();
         $data['Computadoras']  = $this->model_controllab->Computadoras_Disponibles();

@@ -18,11 +18,11 @@ cp /etc/sysconfig/iptables /etc/sysconfig/iptables.orig
 yum -y install @cinnamon-desktop
 yum install cinnamon -y
 
-yum install p7zip unzip zip kernel-devel dkms mc wget htop ntfs-3g unrar vlc
+yum install p7zip unzip zip kernel-devel dkms mc wget htop ntfs-3g
 
-yum install net-tools vim git wget perl-Digest-MD5
+yum install net-tools vim git vsftpd perl-Digest-MD5
 yum install cpan openssl dnsmasq patch mod_ssl screen lynx nmap
-yum install php-pear php-devel php-mysql php-common php-gd php-mbstring php-mcrypt php php-xml php-pear-db 
+yum install php-pear php-devel php-mysql php-common php-gd php-mbstring php-mcrypt php php-xml php-pear-db
 
 # Despues de haber instalado los paquetes anteriores abrir el archivo "php.ini" que esta en el directorio "/etc" y buscar
 # la siguientes lineas y cambiar "short_open_tag = On" y "date.timezone = America/Cancun" ponerla de acuerdo
@@ -74,7 +74,7 @@ echo '
 ## Fin
 #
 
-yum install phpmyadmin
+yum install phpmyadmin shellinabox
 
 sudo yum install libzip tinyxml
 wget http://repo.mysql.com/yum/mysql-tools-community/el/7/x86_64/mysql-workbench-community-6.3.8-1.el7.x86_64.rpm
@@ -113,19 +113,13 @@ firewall-cmd --reload
 -A INPUT -p udp -m state --state NEW -m udp --dport 137 -j ACCEPT
 -A INPUT -p udp -m state --state NEW -m udp --dport 138 -j ACCEPT
 -A INPUT -p tcp -m state --state NEW -m tcp --dport 139 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 445 -j ACCEPT
 -A INPUT -p tcp -m state --state NEW -m tcp --dport 901 -j ACCEPT
-
--A INPUT -p tcp -m state --state NEW -m tcp --dport 137 -j ACCEPT
--A INPUT -p tcp -m state --state NEW -m tcp --dport 138 -j ACCEPT
--A INPUT -p udp -m state --state NEW -m udp --dport 139 -j ACCEPT
--A INPUT -p udp -m state --state NEW -m udp --dport 445 -j ACCEPT
 
 mkdir -p /srv/samba/compartidos
 chmod -R 0775 /srv/samba/compartidos
 chmod -R 770 /srv/samba/compartidos
 chown -R nobody:nobody /srv/samba/compartidos
-
-
 chcon -t samba_share_t /srv/samba/compartidos
 
 vim /etc/samba/smb.conf

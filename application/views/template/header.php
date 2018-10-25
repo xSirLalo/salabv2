@@ -23,7 +23,7 @@ redirect('login');
 <style type="text/css" media="screen">
 	body, html {
     /* height: 100%; */
-    background-image: url(<?php echo base_url(); ?>assets/img/<?php echo $selectedBg; ?>);
+    background-image: url(<?=base_url()?>assets/img/<?=$selectedBg; ?>);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -33,23 +33,23 @@ redirect('login');
 </style>
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Sistema de administracion del Laboratorio de Computo">
+    <meta name="author" content="Ing. Eduardo Enrique Cauich Herrera">
 	<link rel="icon" href="<?=base_url()?>assets/favicon.ico" type="image/ico">
 	<title>SALAB - <?=$titulo?></title>
-	<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-3.3.1.min.js"></script>
-	<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/moment.js"></script>
-	<script type="text/javascript" src="<?php echo base_url(); ?>assets/libraries/bootstrap-3.3.7/js/transition.js"></script>
-	<script type="text/javascript" src="<?php echo base_url(); ?>assets/libraries/bootstrap-3.3.7/js/collapse.js"></script>
-	<script type="text/javascript" src="<?php echo base_url(); ?>assets/libraries/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="<?=base_url()?>assets/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="<?=base_url()?>assets/js/moment.js"></script>
+	<script type="text/javascript" src="<?=base_url()?>assets/libraries/bootstrap-3.3.7/js/transition.js"></script>
+	<script type="text/javascript" src="<?=base_url()?>assets/libraries/bootstrap-3.3.7/js/collapse.js"></script>
+	<script type="text/javascript" src="<?=base_url()?>assets/libraries/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<?=base_url()?>assets/js/bootstrap-datetimepicker.min.js"></script>
 	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="https://code.highcharts.com/modules/data.js"></script>
 	<script src="https://code.highcharts.com/modules/exporting.js"></script>
-	<script type="text/javascript" src="<?php echo base_url(); ?>assets/libraries/stacktable/stacktable.js"></script>
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/libraries/stacktable/stacktable.css">
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/bootstrap-datetimepicker.min.css">
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/libraries/bootstrap-3.3.7/css/bootstrap.min.css">
+	<script type="text/javascript" src="<?=base_url()?>assets/libraries/stacktable/stacktable.js"></script>
+	<link rel="stylesheet" type="text/css" href="<?=base_url()?>assets/libraries/stacktable/stacktable.css">
+	<link rel="stylesheet" type="text/css" href="<?=base_url()?>assets/css/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" type="text/css" href="<?=base_url()?>assets/libraries/bootstrap-3.3.7/css/bootstrap.min.css">
 </head>
 <body data-spy="scroll" data-target="myNavbar">
 	<nav id="" class="navbar navbar-default" role="navigation">
@@ -65,35 +65,35 @@ redirect('login');
 	    <div class="collapse navbar-collapse" id="myNavbar">
 
 	      <ul class="nav navbar-nav">
-		      <li class="active"><a href="<?php echo base_url();?>">Home</a></li>
-		      <li class=""><a href="<?php echo base_url();?>controllab">Control</a></li>
+		      <li class="active"><a href="<?=base_url();?>">Home</a></li>
+		      <li class=""><a href="<?=base_url();?>controllab">Control</a></li>
 			<li class="dropdown">
 		        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Menu
 		        <span class="caret"></span></a>
 		        <ul class="dropdown-menu">
-				<li><a href="<?php echo base_url(); ?>controllab" 
+				<li><a href="<?=base_url()?>controllab" 
 					<?php if($this->uri->segment(1)=="controllab"){echo 'class="p-3 mb-2 bg-primary text-white"';}?> >Control Lab</a></li>
-				<li><a href="<?php echo base_url(); ?>incidencia" 
+				<li><a href="<?=base_url()?>incidencia" 
 					<?php if($this->uri->segment(1)=="incidencia"){echo 'class="p-3 mb-2 bg-warning text-white"';}?> >Incidencias</a></li>
 					<li role="separator" class="divider"></li>
-				<li><a href="<?php echo base_url(); ?>profesor" 
+				<li><a href="<?=base_url()?>profesor" 
 					<?php if($this->uri->segment(1)=="profesor"){echo 'class="p-3 mb-2 bg-info text-white"';}?> >1.- Profesores</a></li>
-				<li><a href="<?php echo base_url(); ?>asignatura" 
+				<li><a href="<?=base_url()?>asignatura" 
 					<?php if($this->uri->segment(1)=="asignatura"){echo 'class="p-3 mb-2 bg-info text-white"';}?> >2.- Asignaturas</a></li>
-				<li><a href="<?php echo base_url(); ?>horario" 
+				<li><a href="<?=base_url()?>horario" 
 					<?php if($this->uri->segment(1)=="horario"){echo 'class="p-3 mb-2 bg-info text-white"';}?> >3.- Horarios</a></li>
 					<li role="separator" class="divider"></li>
-				<li><a href="<?php echo base_url(); ?>computadora" 
+				<li><a href="<?=base_url()?>computadora" 
 					<?php if($this->uri->segment(1)=="computadora"){echo 'class="p-3 mb-2 bg-info text-white"';}?> >Computadoras</a></li>
-				<li><a href="<?php echo base_url(); ?>dispositivo" 
+				<li><a href="<?=base_url()?>dispositivo" 
 					<?php if($this->uri->segment(1)=="dispositivo"){echo 'class="p-3 mb-2 bg-info text-white"';}?> >Dispositivos</a></li>
 					<li role="separator" class="divider"></li>
 
-				<li><a href="<?php echo base_url(); ?>alumno" 
+				<li><a href="<?=base_url()?>alumno" 
 					<?php if($this->uri->segment(1)=="alumno"){echo 'class="p-3 mb-2 bg-info text-white"';}?> >Alumnos</a></li>
 					
 				<?php if($idTipoUsuario==1) { ?>
-				<li><a href="<?php echo base_url(); ?>usuario" 
+				<li><a href="<?=base_url()?>usuario" 
 					<?php if($this->uri->segment(1)=="usuario"){echo 'class="p-3 mb-2 bg-danger text-white"';}?> >Usuarios</a></li>
 				<?php } ?>
 
@@ -104,12 +104,12 @@ redirect('login');
 
 	      <ul class="nav navbar-nav navbar-right">
 			<li class="dropdown">
-		        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> <?php echo $nombre_usr.' '.$aPaterno_usr ?>
+		        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> <?=$nombre_usr.' '.$aPaterno_usr?>
 		        <span class="caret"></span></a>
 		        <ul class="dropdown-menu">
-		          <li><a href='<?php echo base_url(); ?>usuario/modificar/<?php echo $idUsuario ?>'><span class="glyphicon glyphicon-cog"></span> Configuracion</a></li>
+		          <li><a href='<?=base_url()?>usuario/modificar/<?=$idUsuario?>'><span class="glyphicon glyphicon-cog"></span> Configuracion</a></li>
 		          <li role="separator" class="divider"></li>
-		          <li><a href="<?php echo base_url(); ?>login/loguot"><span class=" glyphicon glyphicon-log-in"></span> Cerrar Session</a></li>
+		          <li><a href="<?=base_url()?>login/loguot"><span class=" glyphicon glyphicon-log-in"></span> Cerrar Session</a></li>
 		        </ul>
 		    </li>
 	        
@@ -126,7 +126,7 @@ redirect('login');
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h1 class="modal-title">Info</h1>
+        <h1 class="modal-title">SALAB - Info!</h1>
       </div>
 	      <div class="modal-body">
 			
@@ -160,7 +160,7 @@ redirect('login');
 
 	      </div>
 	      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -169,10 +169,10 @@ redirect('login');
 		<!-- Control de Mensajes -->	
 		<div  style="float: left;position: fixed;z-index:9999; ">
 		<?php if ($this->session->flashdata('success')) { ?>
-		        <?php echo $this->session->flashdata('success'); ?>
+		        <?=$this->session->flashdata('success'); ?>
 		<?php } ?>
 		<?php if ($this->session->flashdata('error')) { ?>
-		        <?php echo $this->session->flashdata('error'); ?>
+		        <?=$this->session->flashdata('error'); ?>
 		<?php } ?>	
 		</div>
 	<div class="container"><!--container-->
