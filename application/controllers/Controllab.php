@@ -13,8 +13,7 @@ class Controllab extends CI_Controller
         $this->load->model('model_computadora');
 	}
 
-	public function Index()
-	{
+	public function Index(){
         $titulo['titulo']     = 'Bienvenid@';
         $data['totaE']        = $this->model_controllab->Total_Computadoras();
         $data['estatus']      = $this->model_controllab->Estatus();
@@ -120,8 +119,7 @@ class Controllab extends CI_Controller
             }
         }
     }
-    public function modificar()
-    {
+    public function modificar(){
         $titulo['titulo']     = 'Equipo de Computo';
         $data['idControlLab'] = $this->uri->segment(3);
         $data['estatus']      = $this->model_controllab->Estatus();
@@ -155,8 +153,7 @@ class Controllab extends CI_Controller
         redirect( base_url(). 'controllab');
         }
     }
-    public function eliminar()
-    {
+    public function eliminar(){
         $idControlLab = $this->uri->segment(3);
         $delete = $this->model_controllab->eliminar($idControlLab);
         if ($delete == false) {
@@ -166,8 +163,7 @@ class Controllab extends CI_Controller
             redirect('controllab');
         }
     }
-    public function reporte()
-    {
+    public function reporte(){
         $titulo['titulo'] = 'Reporte controllab';
         $this->form_validation->set_rules('fechaInicio', 'Fecha Inicial', 'trim|required');
         $this->form_validation->set_rules('fechaFin', 'Fecha Final', 'trim|required');
@@ -187,6 +183,26 @@ class Controllab extends CI_Controller
         $this->load->view('template/header', $titulo);
         $this->load->view('controllab/reporte', $data);
         $this->load->view('template/footer');
+    }
+    public function exportCSV(){
+    // file name
+    $filename = 'botacora_'.date('Ymd').'.csv';
+    header("Content-Description: File Transfer");
+    header("Content-Disposition: attachment; filename=$filename");
+    header("Content-Type: application/csv; ");
+    // get data
+    $usersData = $this->model_controllab->getUserDetails();
+
+    // file creation
+    $file = fopen('php://output', 'w');
+
+    $header = array("ID","Fecha/Hora Inicial","Fecha/Hora Final","noControl","idComputadora");
+    fputcsv($file, $header);
+    foreach ($usersData as $key=>$line){
+     fputcsv($file,$line);
+    }
+    fclose($file);
+    exit;
     }
 }
 

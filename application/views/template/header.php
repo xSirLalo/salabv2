@@ -11,8 +11,8 @@ $ip = $this->input->ip_address();
 redirect('login');
 }
 ?>
-<?php
-  $bg = array('pinlayer1.jpg', 'pinlayer2.jpg', 'pinlayer3.jpg', 'pinlayer4.jpg', 'pinlayer5.jpg', 'pinlayer6.png' , 'pinlayer7.jpg' ); // array of filenames
+<?php //Fondo de pantalla aleatorios...
+   $bg = array('pinlayer1.jpg', 'pinlayer2.jpg', 'pinlayer3.jpg', 'pinlayer4.jpg', 'pinlayer5.jpg', 'pinlayer6.png' , 'pinlayer7.jpg' ); // array of filenames
 
   $i = rand(0, count($bg)-1); // generate random number size of the array
   $selectedBg = "$bg[$i]"; // set variable equal to which random filename was chosen

@@ -2,8 +2,9 @@
   <div class="row">
  <div class="btn-group">
         <a href="<?php echo base_url(); ?>controllab" class='btn btn-primary btn-lg' title="Asignar equipo"><i class="glyphicon glyphicon-check"></i></a>
-        <a href="<?php echo base_url(); ?>controllab/reporte" class='btn btn-primary btn-lg' title="Reporte"><i class="glyphicon glyphicon-stats"></i></a>
-</div> 
+        <a href="<?php echo base_url(); ?>controllab/exportCSV" class='btn btn-primary btn-lg' title="Exportar a Excel"><i class="glyphicon glyphicon-list-alt"></i></a>
+        <a href="<?php echo base_url(); ?>controllab/reporte" class='btn btn-primary btn-lg' title="Graficas"><i class="glyphicon glyphicon-stats"></i></a>
+</div>
   </div>
 </div>
 <br>
@@ -11,8 +12,8 @@
     <thead>
       <tr class="warning">
         <th>ID</th>
-        <th>Hora Inicio</th>
-        <th>Hora Fin</th>
+        <th>Fecha/Hora Inicio</th>
+        <th>Fecha/Hora Fin</th>
         <th>Alumno</th>
         <th>Computadora</th>
         <th>Estatus</th>

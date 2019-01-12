@@ -12,8 +12,7 @@ class Alumno extends CI_Controller
         $this->load->model('model_controllab');
 	}
 
-	public function Index()
-	{
+	public function Index(){
         $titulo['titulo']          = 'Lista de alumnos';
 
         $config['base_url']        = base_url().'alumno/index';
@@ -65,29 +64,7 @@ class Alumno extends CI_Controller
 		$this->load->view('template/footer');
 
 	}
-    // Export data in CSV format
-    public function exportCSV(){
-    // file name
-    $filename = 'alumnos_'.date('Ymd').'.csv';
-    header("Content-Description: File Transfer");
-    header("Content-Disposition: attachment; filename=$filename");
-    header("Content-Type: application/csv; ");
-    // get data
-    $usersData = $this->model_alumno->getUserDetails();
-
-    // file creation
-    $file = fopen('php://output', 'w');
-
-    $header = array("noControl","nombre_al","aPaterno_al","aMaterno_al","idCarrera");
-    fputcsv($file, $header);
-    foreach ($usersData as $key=>$line){
-     fputcsv($file,$line);
-    }
-    fclose($file);
-    exit;
-    }
-	public function agregar()
-	{
+	public function agregar(){
 		$titulo['titulo'] = 'Agregar alumno';
         $data['carreras'] = $this->model_alumno->Carreras();
 
@@ -124,8 +101,7 @@ class Alumno extends CI_Controller
         $this->load->view("template/footer");
         }
     }
-	public function modificar()
-	{
+	public function modificar(){
         $titulo['titulo']  = 'Modificar alumno';
         $data['noControl'] = $this->uri->segment(3);
         $data['carreras']  = $this->model_alumno->Carreras();
@@ -141,8 +117,7 @@ class Alumno extends CI_Controller
 		$this->load->view('template/footer');
 	}
 
-    public function actualizar()
-    {
+    public function actualizar(){
         $id = $this->uri->segment(3);
         $this->form_validation->set_error_delimiters('<div class="text-danger">', '</div>');
         $this->form_validation->set_rules('noControl','Numero de Control','required|trim|min_length[6]|max_length[12]');
@@ -165,9 +140,7 @@ class Alumno extends CI_Controller
         redirect( base_url(). 'alumno');
         }
     }
-
-    public function eliminar()
-    {
+    public function eliminar(){
         $noControl = $this->uri->segment(3);
         $delete    = $this->model_alumno->eliminar($noControl);
         if ($delete == false) {
@@ -176,6 +149,27 @@ class Alumno extends CI_Controller
         else{
             redirect('alumno');
         }
+    }
+    // Export data in CSV format
+    public function exportCSV(){
+    // file name
+    $filename = 'alumnos_'.date('Ymd').'.csv';
+    header("Content-Description: File Transfer");
+    header("Content-Disposition: attachment; filename=$filename");
+    header("Content-Type: application/csv; ");
+    // get data
+    $usersData = $this->model_alumno->getUserDetails();
+
+    // file creation
+    $file = fopen('php://output', 'w');
+
+    $header = array("noControl","nombre_al","aPaterno_al","aMaterno_al","idCarrera");
+    fputcsv($file, $header);
+    foreach ($usersData as $key=>$line){
+     fputcsv($file,$line);
+    }
+    fclose($file);
+    exit;
     }
 }
 

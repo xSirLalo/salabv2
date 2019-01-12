@@ -39,8 +39,8 @@ class Model_ControlLab extends CI_Model
         $this->db->where($buscar);
         $query = $this->db->get('Computadora');
         if ($query->num_rows() > 0){
-        foreach ($query->result() as $fila) {
-        if ($fila->control == 1) {
+        foreach ($query->result() as $columna) {
+        if ($columna->control == 1) {
         $this->db->insert('ControlLab',$data);
 
         $this->db->set($c_control);
@@ -48,7 +48,7 @@ class Model_ControlLab extends CI_Model
         $this->db->update('Computadora');
         $this->session->set_flashdata('success', "<div class='alert alert-info alert-dismissible fade in'>
                 <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                <h4 class='alert-heading'>Info!</h4> <p>Ocupe la <b>$fila->comentarios</b></p>
+                <h4 class='alert-heading'>Info!</h4> <p>Ocupe la <b>$columna->comentarios</b></p>
                 </div>
             ");
             return false;
@@ -76,11 +76,11 @@ class Model_ControlLab extends CI_Model
             'idEstatus' => 1
         );
         $this->db->where($buscar);
-        $datos = $this->db->get('ControlLab');
-        foreach ($datos->result() as $dato) {// Inicio For para obtener los datos a partir del numero de control y el idEstatus
-        if ($dato->idEstatus == 1) { // Se actualizan las dos tablas ligadas ControlLab y Computadora
-        $Condicion = "noControl='$noControl' AND idEstatus='$dato->idEstatus'";
-        $Condicion2 = "idComputadora='$dato->idComputadora' AND control='2'";
+        $columnas = $this->db->get('ControlLab');
+        foreach ($columnas->result() as $columna) {// Inicio For para obtener los datos a partir del numero de control y el idEstatus
+        if ($columna->idEstatus == 1) { // Se actualizan las dos tablas ligadas ControlLab y Computadora
+        $Condicion = "noControl='$noControl' AND idEstatus='$columna->idEstatus'";
+        $Condicion2 = "idComputadora='$columna->idComputadora' AND control='2'";
         //$this->db->select('ControlLab');
         $this->db->set($c_status);
         $this->db->where($Condicion);
@@ -118,8 +118,7 @@ class Model_ControlLab extends CI_Model
             return 'error';
         }
     }
-    function Total_Computadoras(){   // Sinceramente este es algo tonto pero en el boton de asignar computadora muestra el total de computadoras
-                                    // disponibles
+    function Total_Computadoras(){   // Sinceramente este es algo tonto pero en el boton de asignar computadora muestra el total de computadoras disponibles
         $this->db->from('Computadora');
         $this->db->where('Control','1');
         $this->db->where('idAula','1');
@@ -215,6 +214,17 @@ class Model_ControlLab extends CI_Model
         }else{
             return false;
         }
+    }
+    function getUserDetails(){
+
+    $response = array();
+
+    // Select record
+    $this->db->select('idControlLab,fechaInicio,fechaFin,noControl,idComputadora');
+    $q = $this->db->get('ControlLab');
+    $response = $q->result_array();
+
+    return $response;
     }
 }
 
