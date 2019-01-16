@@ -25,7 +25,7 @@ class Controllab extends CI_Controller
         $this->load->view("template/footer");
 	}
     public function bitacora(){
-        $titulo['titulo']          = 'Bitacora de ControlLab';
+        $titulo['titulo']          = 'Bitacora del ControlLab';
         
         $config['base_url']        = base_url().'controllab/bitacora/';
         $config['total_rows']      = $this->model_controllab->num_controllabs();
@@ -165,6 +165,7 @@ class Controllab extends CI_Controller
     }
     public function reporte(){
         $titulo['titulo'] = 'Reporte controllab';
+        $this->form_validation->set_error_delimiters('<div class ="text-danger">', '</div>');
         $this->form_validation->set_rules('fechaInicio', 'Fecha Inicial', 'trim|required');
         $this->form_validation->set_rules('fechaFin', 'Fecha Final', 'trim|required');
         if ($this->form_validation->run() == FALSE) {

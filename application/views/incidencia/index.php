@@ -2,7 +2,7 @@
   <div class="row">
         <div class="col-md-6">
             <div class="btn-group btn-group-md">
-                <a href="<?php echo base_url(); ?>incidencia/agregar" ><button type='button' class='btn btn-success' title="Agregar incidencia"><span class="glyphicon glyphicon-pushpin"></span> Agregar incidencia</button></a>
+                <a href="<?php echo base_url(); ?>incidencia/agregar" ><button type='button' class='btn btn-primary' title="Agregar incidencia"><span class="glyphicon glyphicon-pushpin"></span> Agregar incidencia</button></a>
             </div>
         </div>
         <div class="col-md-6 text-right">

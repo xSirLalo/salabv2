@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-4">
         <div class="btn-group btn-group-md">
-            <a href="<?php echo base_url(); ?>horario/agregar" ><button type='button' class='btn btn-success' title="Agregar horario"><span class=" glyphicon glyphicon-copy"></span> Agregar horario</button></a>
+            <a href="<?php echo base_url(); ?>horario/agregar" ><button type='button' class='btn btn-primary' title="Agregar horario"><span class=" glyphicon glyphicon-copy"></span> Agregar horario</button></a>
         </div>
     </div>
     <div class="col-md-8 text-right">

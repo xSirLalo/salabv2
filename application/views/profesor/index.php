@@ -2,7 +2,7 @@
   <div class="row">
         <div class="col-md-6">
             <div class="btn-group btn-group-md">
-                <a href="<?php echo base_url(); ?>profesor/agregar" ><button type='button' class='btn btn-success' title="Agregar profesor"><span class="glyphicon glyphicon-plus"></span> Agregar profesor</button></a>
+                <a href="<?php echo base_url(); ?>profesor/agregar" ><button type='button' class='btn btn-primary' title="Agregar profesor"><span class="glyphicon glyphicon-plus"></span> Agregar profesor</button></a>
             </div>
         </div>
         <div class="col-md-6 text-right">

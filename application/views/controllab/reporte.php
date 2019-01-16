@@ -1,60 +1,60 @@
-<style type="text/css">
-    ${demo.css}
-</style>
-<!--<form action="<?php base_url(); ?>" method="get" name="fechas" id="fechas" autocomplete="off">-->
 <div class="container-fluid">
-  <div class="row">
     <?php echo form_open('controllab/reporte', 'class="form-horizontal" role="form" id="form1" autocomplete="off"'); ?>
-        <div class="col-sm-3">
-                <div class='input-group date' id='datetimepicker6'><!-- Date input -->
-                        <input class="form-control" id="fechaInicio" name="fechaInicio" placeholder="YYYY/MM/DD" type="text"/> 
-                        <span class="input-group-addon" id="start-date"><span class="glyphicon glyphicon-calendar"></span></span>
-                </div><?php echo form_error('fechaInicio'); ?>
+    <div class='col-md-4'>
+        <div class="form-group">
+            <div class='input-group date' id='datetimepicker6'>
+                <input type='text' class="form-control" id="fechaInicio" name="fechaInicio" placeholder="YYYY/MM/DD"/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div><?php echo form_error('fechaInicio'); ?>
         </div>
-        <div class="col-sm-3">
-                <div class='input-group date' id='datetimepicker7'><!-- Date input -->
-                        <input class="form-control" id="fechaFin" name="fechaFin" placeholder="YYYY/MM/DD" type="text" />
-                        <span class="input-group-addon" id="start-date"><span class="glyphicon glyphicon-calendar"></span></span>
-                </div><?php echo form_error('fechaFin'); ?>
+    </div>
+    <div class='col-md-4'>
+        <div class="form-group">
+            <div class='input-group date' id='datetimepicker7'>
+                <input type='text' class="form-control" id="fechaFin" name="fechaFin" placeholder="YYYY/MM/DD" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div><?php echo form_error('fechaFin'); ?>
         </div>
-        <div class="col-sm-4">
-                <div class="input-group"><!-- Date button input -->
-                    <div class="input-group-button">
-                        <button class="btn btn-info" type="submit">Consultar</button>
-                    </div>
-                </div>
-        </div>
-    <?php echo form_close(); ?>
-        <div class="col-sm-2 text-right">
-            <div class="btn-group btn-group-md">
-                <a href="<?php echo base_url(); ?>controllab/bitacora" ><button type='button' class='btn btn-default' title="Regresar a la lista"><span class="glyphicon glyphicon-share-alt"></span></button></a>
+    </div>
+    <div class="col-md-4">
+         <div class="btn-group btn-group-justified">
+            <div class="btn-group">
+                <button class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-search"></i> Consultar</button>
             </div>
+                <a href="<?php echo base_url(); ?>controllab/bitacora" class='btn btn-info' title="Bitacora"><i class="glyphicon glyphicon-list"></i> Bitacora</a>
         </div>
-  </div>
+    </div>
+    <?php echo form_close(); ?>
 </div>
 <br>
-
 <?php if (!empty($_REQUEST) && form_error('fechaFin')==FALSE): ?>
-<table id="datatable" class="table table-sm">
-  <thead>
-    <tr>
-      <th scope="col"></th>
-        <?php if($resultado){
-              foreach($resultado->result() as $row){ ?>
-              <th><?= $row->nombre_ca; ?></th>
-        <?php } }?>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">Alumnos</th>
-        <?php if($resultado){
-              foreach($resultado->result() as $row){ ?>
-              <td><?= $row->total; ?></td>
-        <?php } }?>
-    </tr>
-  </tbody>
-</table>
+<div class="table-responsive">
+    <table id="datatable" class="table">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+            <?php if($resultado){
+                  foreach($resultado->result() as $row){ ?>
+                  <th><?= $row->nombre_ca; ?></th>
+            <?php } }?>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Alumnos</th>
+            <?php if($resultado){
+                  foreach($resultado->result() as $row){ ?>
+                  <td><?= $row->total; ?></td>
+            <?php } }?>
+        </tr>
+      </tbody>
+    </table>
+</div>
+<hr>
 <div id="barras" style="min-width: 310px; height: 512px; margin: 0 auto"></div>
 <hr>
 <div id="pastel" style="min-width: 310px; height: 512px; margin: 0 auto"></div>

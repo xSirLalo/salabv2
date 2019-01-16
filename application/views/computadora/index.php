@@ -1,13 +1,11 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-sm-6">
         <div class="btn-group">
-            <div class="btn-group btn-group-md">
-                <a href="<?php echo base_url(); ?>computadora/agregar" type='button' class='btn btn-success' title="Agregar computadora" ><span class="glyphicon glyphicon-plus"></span> Agregar computadora</a>
-            </div>
+           <a href="<?php echo base_url(); ?>computadora/agregar" type='button' class='btn btn-primary' title="Agregar computadora" ><span class="glyphicon glyphicon-plus"></span> Agregar computadora</a>
         </div>
     </div>
-    <div class="col-md-8 text-right">
+    <div class="col-sm-6">
         <div class="btn-group">
             <?php echo form_open(base_url().'computadora/index', 'class="form-horizontal" role="form" id="form"');
                 echo "<select type='button' class='btn btn-default' name='idAula' id='idAula'>";
@@ -27,7 +25,7 @@
                             if($selectvalue == $row->idEstatus){$selected = 'selected';}
                             echo '<option value="'.$row->idEstatus.'" '.$selected.'>'.$row->nombre_estatus."</option>";}
                     echo "</select>";
-                    echo "<button type='submit' class='btn btn-default' title='Filtrar'><span class='glyphicon glyphicon-search'></span></button>";
+                    echo "<button type='submit' class='btn btn-default' title='Filtrar'><span class='glyphicon glyphicon-search'></span> Buscar</button>";
             echo form_close();?>
         </div>
     </div>

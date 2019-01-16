@@ -67,12 +67,13 @@ create database salabv2;
 create user 'salab'@'localhost';
 set password for salab@localhost = password('salab2018');
 grant all on salabv2.* to salab@localhost;
+
 #Usuario para conexiones externas 
 grant all privileges on *.* to 'administrador' identified by 'sudovimetc' with grant option;
 show databases;
 quit
 
-#	para importar la base de datos al servidor Mysql necesario la configuracion de usuario y contraseña
+#	Para importar la base de datos al servidor Mysql necesario la configuracion de usuario y contraseña
 mysql -u root -p salabv2 < /var/www/html/salabv2/salabv2.sql
 
 #	Agregar al Final del archivo o ejecutar el echo

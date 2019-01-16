@@ -1,23 +1,21 @@
 <div class="container-fluid">
   <div class="row">
- <div class="btn-group">
-        <a href="<?php echo base_url(); ?>controllab" class='btn btn-primary btn-lg' title="Asignar equipo"><i class="glyphicon glyphicon-check"></i></a>
-        <a href="<?php echo base_url(); ?>controllab/exportCSV" class='btn btn-primary btn-lg' title="Exportar a Excel"><i class="glyphicon glyphicon-list-alt"></i></a>
-        <a href="<?php echo base_url(); ?>controllab/reporte" class='btn btn-primary btn-lg' title="Graficas"><i class="glyphicon glyphicon-stats"></i></a>
-</div>
+     <div class="btn-group btn-group-justified">
+            <a href="<?php echo base_url(); ?>controllab" class='btn btn-primary btn-lg' title="Asignar equipo"><i class="glyphicon glyphicon-play"></i></a>
+            <a href="<?php echo base_url(); ?>controllab/exportCSV" class='btn btn-success btn-lg' title="Exportar a Excel"><i class="glyphicon glyphicon-download-alt"></i></a>
+            <a href="<?php echo base_url(); ?>controllab/reporte" class='btn btn-info btn-lg' title="Graficas"><i class="glyphicon glyphicon-stats"></i></a>
+    </div>
   </div>
 </div>
 <br>
 <table id="card-table" class="table">
     <thead>
       <tr class="warning">
-        <th>ID</th>
-        <th>Fecha/Hora Inicio</th>
-        <th>Fecha/Hora Fin</th>
-        <th>Alumno</th>
-        <th>Computadora</th>
-        <th>Estatus</th>
-        <th></th>
+        <th class="text-center">Fecha/Hora Inicio</th>
+        <th class="text-center">Fecha/Hora Fin</th>
+        <th class="text-center">noControl</th>
+        <th class="text-center">Computadora</th>
+        <th class="text-center">Opciones</th>
       </tr>
     </thead>
     <tbody>
@@ -28,20 +26,18 @@
             $fechaI = strtotime($row->fechaInicio);
             $fechaF = strtotime($row->fechaFin);
             ?>     
-            <td><?= $row->idControlLab; ?></td>
-            <td><?= $FormatoFechaIncio = date("d/F/Y h:i A", $fechaI); ?></td>
-            <td>
+            <td class="text-center"><?= $FormatoFechaIncio = date("d/F/Y h:i A", $fechaI); ?></td>
+            <td class="text-center">
             <?php  if($row->asignado==2){ ?>
                 <?= $FormatoFechaFin = date("d/F/Y h:i A", $fechaF); ?>
             <?php }?>
             </td>
-            <td><?= $row->noControl; ?></td>
-            <td><?= $row->comentarios; ?></td>
-            <td><?= $row->asignado; ?></td>
-            <td>
+            <td class="text-center"><?= $row->noControl; ?></td>
+            <td class="text-center"><?= $row->comentarios; ?></td>
+            <td class="text-center">
             <?php  if($totaE!=0){ ?>
             <?php  if($row->asignado==1){ ?>
-            <a href='<?= base_url().'controllab/modificar/'.$row->idControlLab ?>'><button type='button' class='btn btn-warning' title="Cambiar de Equipo"><span class="glyphicon glyphicon-retweet"></span></button></a>
+            <a href='<?= base_url().'controllab/modificar/'.$row->idControlLab ?>'><button type='button' class='btn btn-warning' title="Cambiar de Equipo"><i class="glyphicon glyphicon-retweet"></i></button></a>
             <?php }?>
             <?php }?>
             </td>
