@@ -6,10 +6,17 @@
  */
 body, html {
     height: 100%;
+    /*https://www.w3schools.com/cssref/css_colors.asp*/
+    /*https://www.w3schools.com/css/css3_gradients.asp/*/
+    background-image: linear-gradient(to bottom right, gray, white);
     background-repeat: no-repeat;
-    background: url(../img/pinlayer1.jpg);
-    background-image: linear-gradient(#FFFFFF, #D0D0D0);
+    background-attachment: fixed;
 }
+html {
+    width:100vw;
+    overflow-x:hidden;
+}
+
 
 .card-container.card {
     max-width: 350px;
@@ -33,7 +40,7 @@ body, html {
     /* just in case there no content*/
     padding: 20px 25px 30px;
     margin: 0 auto 25px;
-    margin-top: 50px;
+    margin-top:10px;
     /* shadows and rounded borders */
     -moz-border-radius: 2px;
     -webkit-border-radius: 2px;
@@ -108,9 +115,9 @@ body, html {
 }
 
 .btn.btn-signin {
-    /*background-color: #4d90fe; */
-    /*background-color: rgb(104, 145, 162);
-    /* background-color: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));*/
+    background-color: #4d90fe;
+    background-color: rgb(104, 145, 162);
+    background-color: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));
     padding: 0px;
     font-weight: 700;
     font-size: 14px;
@@ -128,15 +135,9 @@ body, html {
 .btn.btn-signin:hover,
 .btn.btn-signin:active,
 .btn.btn-signin:focus {
-   /* background-color: rgb(12, 97, 33);*/
+    background-color: rgb(15, 100, 100);
 }
 
-.forgot-password {
+.link-help {
     color: rgb(104, 145, 162);
-}
-
-.forgot-password:hover,
-.forgot-password:active,
-.forgot-password:focus{
-    /*color: rgb(12, 97, 33);*/
 }

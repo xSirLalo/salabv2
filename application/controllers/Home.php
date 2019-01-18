@@ -6,7 +6,7 @@ class Home extends CI_Controller {
 	public function index()
 	{
 		$titulo = array(
-			'titulo' => "SALAB "
+			'titulo' => "Sistema de Administracion del Laboratorio de Computo "
 		 );
 		$this->load->view('template/header', $titulo);
 		$this->load->view('home');

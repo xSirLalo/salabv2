@@ -23,7 +23,6 @@
         <th>asunto</th>
         <th>fechaAlta</th>
         <th>fechaModificacion</th>
-        <th>idUsuario</th>
         <th>idEstatus</th>
         <th>Opciones</th>
       </tr>
@@ -40,7 +39,6 @@
             <td><?= $row->asunto; ?></td>
             <td><?= $FormatoFechaAlta = date("d/F/Y h:i A", $fechaA); ?></td>
             <td><?= $FormatoFechaModificacion = date("d/F/Y h:i A", $fechaM); ?></td>
-            <td><?= $row->nombre_usr; ?></td>
             <td><?= $row->nombre_estatus; ?></td>
             <td>
             <button class="btn btn-info" onclick="ver(<?php echo $row->idIncidencia;?>)"><i class="glyphicon glyphicon-folder-open"></i></button>

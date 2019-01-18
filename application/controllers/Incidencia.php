@@ -9,6 +9,7 @@ class Incidencia extends CI_Controller
 		$this->load->library('pagination');
         $this->load->helper('form');
 		$this->load->model('model_incidencia');
+        $this->load->model('model_computadora');
 	}
 
 	public function Index()
@@ -63,6 +64,7 @@ class Incidencia extends CI_Controller
     public function agregar(){
         $titulo['titulo'] = 'Agregar incidencia';
         $data['estatus']  = $this->model_incidencia->Estatus();
+        $data['aulas']  = $this->model_computadora->aulas();
         $this->load->view("template/header", $titulo);
         $this->load->view("incidencia/agregar", $data);
         $this->load->view("template/footer");
@@ -75,6 +77,7 @@ class Incidencia extends CI_Controller
     }
     public function guardar(){
         $this->form_validation->set_error_delimiters('<div class="text-danger">', '</div>');
+        $this->form_validation->set_rules('idAula','Aula','required');
         $this->form_validation->set_rules('asunto','Asunto','required|trim|strtoupper');
         $this->form_validation->set_rules('descripcion','Descripcion','required|trim|strtoupper');
         if ($this->form_validation->run() == FALSE){
@@ -82,6 +85,7 @@ class Incidencia extends CI_Controller
         $this->agregar();
         }else{
         $data = array(
+            'idAula'      => $this->input->post('idAula'),
             'asunto'      => $this->input->post('asunto'),
             'descripcion' => $this->input->post('descripcion'),
             'idUsuario'   => $this->input->post('idUsuario'),

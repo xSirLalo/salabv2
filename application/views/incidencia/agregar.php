@@ -7,7 +7,22 @@ redirect('login');
 }
 ?>
 <?php echo form_open(base_url().'incidencia/guardar', 'class="form-horizontal" role="form" id="form"'); ?>
-
+  <div class="form-group">
+      <label for="idAula" class="col-lg-2 control-label">Aulas</label>
+      <div class="col-lg-10">
+          <?php echo "<select name='idAula' id='idAula' class='form-control' onchange='getNewVal(this);'>";
+            echo "<option value=''>Seleccione una Aula</option>";
+              foreach($aulas as  $row){
+                  $selectvalue = set_value('idAula');
+                  $selected = "";
+                  if($selectvalue == $row->idAula){
+                  $selected = 'selected';
+                  }
+                  echo '<option value="'.$row->idAula.'" '.$selected.'>'.$row->nombre_au."</option>";
+              }
+              echo "</select>"; ?><?php echo form_error('idAula'); ?>
+    </div>
+  </div>
   <div class="form-group">
     <label for="asunto" class="col-lg-2 control-label">Asunto</label>
     <div class="col-lg-10">

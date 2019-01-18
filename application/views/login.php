@@ -1,63 +1,32 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>SALAB</title>
-    <link rel="icon" href="<?=base_url()?>assets/favicon.ico" type="image/ico">
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/libraries/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/libraries/bootstrap-3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/login.css" media="all">
-</head>
-<body>
-
-    <div class="container">
-        <div class="card card-container">
-            <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+<div class="container">
+    <div class="card card-container">
+        <div class="main-login main-center">
+            <img id="profile-img" class="profile-img-card" src="<?php echo base_url(); ?>assets/img/avatar_2x.png" />
             <p id="profile-name" class="profile-name-card"></p>
             <?php echo form_open(base_url().'login', 'class="form-signin" accept-charset="UTF-8" role="form" id="form"'); ?>
-
-                <span id="reauth-email" class="reauth-email"></span>
-                <input type="email" id="inputEmail" name="email" class="form-control" 
-                placeholder="Email" value="<?php echo set_value('email'); ?>" required autofocus >
+                <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email" value="<?php echo set_value('email'); ?>" required autofocus >
                 <?php echo form_error('email'); ?>
-
-                <input type="password" data-toggle="tooltip" data-trigger="manual" data-title="Caps lock is on" 
-                id="inputPassword" name="password" class="form-control" 
-                placeholder="Password" required>
-                <?php echo form_error('password'); ?>
-
+                <input type="password" data-toggle="tooltip" data-trigger="manual" data-title="Caps lock is on" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
                 <?php
-                echo "<div class='error_msg'>";
+                echo "<div class='text-muted'>";
                 if (isset($error_message)) {
-                echo $error_message;
-                }
-                echo "</div>";
+                    echo $error_message.'';}
+                    echo "</div>";
+                    echo form_error('password');
                 ?>
-
-                <div id="remember" class="checkbox">
-                    <label>
-                        <input type="checkbox" value="remember-me"> Recordar contraseña
-                    </label>
+                <div class="wrapper">
+                    <span class="group-btn  col-lg-6"> 
+                        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+                    </span>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
-            
             <?php echo form_close(); ?>
-            <a href="<?php echo base_url() ?>login/new_user_registration" class="forgot-password">
-                Create an account
-            </a>
-        </div><!-- /card-container -->
-    </div><!-- /container -->
-
-    <footer class="page-footer font-small blue pt-4 mt-4">
-        <div class="footer-copyright navbar-fixed-bottom text-center"">
-            © 2018 Copyright:
-            <a href="https://facebook.com/pckonect" target="_blank" class="text-primary"> Eduardo Cauich</a>
-        </div>
-    </footer>
-
-</body>
-</html>
-<!DOCTYPE html>
+            <div class="text-center">
+                <a href="<?php echo base_url() ?>login/new_user_registration" class="link-help">Create an account </a>|
+                <a href="<?php echo base_url() ?>login/forgot_password" class="link-help">Forgot password</a>
+            </div>
+            </div>
+    </div><!-- /card-container -->
+</div><!-- /container -->
 
 <!--DETECTAR LA ENTRADA DE MAYUSCULAS-->
 <script type="text/javascript">

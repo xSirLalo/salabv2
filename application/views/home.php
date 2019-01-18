@@ -6,7 +6,7 @@ $email = ($this->session->userdata['logged_in']['email']);
 redirect('login');
 }
 ?>
-<center><span id="liveclock"></span></center>
+<span id="liveclock"></span>
 
 <div class="container">
     
@@ -27,9 +27,9 @@ redirect('login');
      	minutes="0"+minutes
      if (seconds<=9)
      	seconds="0"+seconds
-    //change font size here to your desire
-    myclock="<font color='black' size='12' face='Arial' ><b>"+hours+":"+minutes+":"
-     +seconds+" "+dn+"</b></font>"
+    //Class Bootstrap
+    myclock="<p class='text-info text-center' >"+hours+":"+minutes+":"
+     +seconds+" "+dn+"</p>"
     if (document.layers){
     	document.layers.liveclock.document.write(myclock)
     	document.layers.liveclock.document.close()

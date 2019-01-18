@@ -25,7 +25,7 @@
                             if($selectvalue == $row->idEstatus){$selected = 'selected';}
                             echo '<option value="'.$row->idEstatus.'" '.$selected.'>'.$row->nombre_estatus."</option>";}
                     echo "</select>";
-                    echo "<button type='submit' class='btn btn-default' title='Filtrar'><span class='glyphicon glyphicon-search'></span> Buscar</button>";
+                    echo "<button type='submit' class='btn btn-default' title='Filtrar'><span class='glyphicon glyphicon-search'></span></button>";
             echo form_close();?>
         </div>
     </div>

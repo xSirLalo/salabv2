@@ -21,15 +21,21 @@ redirect('login');
 <html lang="es">
 <head>
 <style type="text/css" media="screen">
-	body, html {
+body, html {
     /* height: 100%; */
-    background-image: url(<?=base_url()?>assets/img/<?=$selectedBg; ?>);
-    background-position: center;
-    background-size: cover;
+    /*background-image: url(<?= base_url()?>assets/img/<?=$selectedBg; ?>);*/
+    background-image: linear-gradient(to top right, Lavender, white);
     background-repeat: no-repeat;
     background-attachment: fixed;
-    /*background-image: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));*/
+    background-position: center;
+    background-size: cover;
+    overflow-y: scroll;    
 }
+html {
+    width:100vw;
+    overflow-x:hidden;
+}
+
 </style>
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -63,10 +69,10 @@ redirect('login');
 	      <a class="navbar-brand" href="#" id="menu-toggle" data-toggle="modal" data-target="#myModal">SALAB</a>
 	    </div>
 	    <div class="collapse navbar-collapse" id="myNavbar">
-
 	      <ul class="nav navbar-nav">
-		      <li class="active"><a href="<?=base_url();?>">Home</a></li>
+		      <li class=""><a href="<?=base_url();?>">Home</a></li>
 		      <li class=""><a href="<?=base_url();?>controllab">Control</a></li>
+		      <li class=""><a href="<?=base_url();?>incidencia">Incidencias (<?=$incidencias?>)</a></li>
 			<li class="dropdown">
 		        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Menu
 		        <span class="caret"></span></a>
@@ -96,11 +102,9 @@ redirect('login');
 				<li><a href="<?=base_url()?>usuario" 
 					<?php if($this->uri->segment(1)=="usuario"){echo 'class="p-3 mb-2 bg-danger text-white"';}?> >Usuarios</a></li>
 				<?php } ?>
-
 		        </ul>
       		</li>
-
-	      </ul>
+	      </ul>     
 
 	      <ul class="nav navbar-nav navbar-right">
 			<li class="dropdown">
@@ -117,7 +121,15 @@ redirect('login');
 	    </div>
 	  </div>
 	</nav>
-
+	<script type="text/javascript"> 
+	$(document).ready(function () {
+	        var url = window.location;
+	        $('ul.nav a[href="'+ url +'"]').parent().addClass('active');
+	        $('ul.nav a').filter(function() {
+	             return this.href == url;
+	        }).parent().addClass('active');
+	    });
+	</script><!--Actividad entre botones Home, Control, Incidencias-->
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
