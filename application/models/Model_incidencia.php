@@ -99,7 +99,7 @@ class Model_Incidencia extends CI_Model
         $query = $this->db->get();
         return $query -> result();
     }
-   function incidencias_no_atendidas(){   // Sinceramente este es algo tonto pero en el boton de asignar computadora muestra el total de computadoras disponibles
+   function incidencias_no_atendidas(){   // 
         $this->db->from('Incidencia');
         $this->db->where('idEstatus','5'); //
         $query = $this->db->get();

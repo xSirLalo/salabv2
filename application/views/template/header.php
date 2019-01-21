@@ -10,6 +10,9 @@ $ip = $this->input->ip_address();
 } else {
 redirect('login');
 }
+$ci =& get_instance();
+$ci->load->model('model_incidencia');
+$incidencias = $ci->model_incidencia->incidencias_no_atendidas();
 ?>
 <?php //Fondo de pantalla aleatorios...
    $bg = array('pinlayer1.jpg', 'pinlayer2.jpg', 'pinlayer3.jpg', 'pinlayer4.jpg', 'pinlayer5.jpg', 'pinlayer6.png' , 'pinlayer7.jpg' ); // array of filenames
@@ -71,8 +74,8 @@ html {
 	    <div class="collapse navbar-collapse" id="myNavbar">
 	      <ul class="nav navbar-nav">
 		      <li class=""><a href="<?=base_url();?>">Home</a></li>
+		      <li class=""><a href="<?=base_url();?>incidencia">Incidencias (<?= $incidencias?>)</a></li>
 		      <li class=""><a href="<?=base_url();?>controllab">Control</a></li>
-		      <li class=""><a href="<?=base_url();?>incidencia">Incidencias (<?=$incidencias?>)</a></li>
 			<li class="dropdown">
 		        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Menu
 		        <span class="caret"></span></a>

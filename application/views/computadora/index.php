@@ -1,3 +1,4 @@
+<?php echo anchor('computadora/generate_pdf', 'Generate PDF Report'); ?>
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-6">

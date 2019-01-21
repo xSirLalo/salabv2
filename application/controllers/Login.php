@@ -28,7 +28,6 @@
             $result = $this->model_login->login($data);
             if ($result == TRUE) {
             $result = $this->model_login->read_user_information($data);
-            $totalI = $this->model_incidencia->incidencias_no_atendidas();
             if ($result != false) {
                 $session_data = array(
                     //Extrae la informacion del usuario

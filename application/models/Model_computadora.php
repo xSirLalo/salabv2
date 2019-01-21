@@ -85,6 +85,12 @@ class Model_Computadora extends CI_Model
         $query = $this->db->get();
         return $query -> result();
     }
+    function Computadoras(){
+        $this->db->from('Computadora');
+        $this->db->order_by("idComputadora", "asc");
+        $query = $this->db->get();
+        return $query -> result();
+    }
     function Estatus(){
         $this->db->from('Estatus');
         $this->db->where( 'idEstatus BETWEEN 3 AND 4', NULL, FALSE );
