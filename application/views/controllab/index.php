@@ -13,8 +13,8 @@
 }
 .centrado{
     position: absolute;
-    top: 28%;
-    left: 55%;
+    top: 25%;
+    left: 50%;
     transform: translate(-50%, -50%);
 }
 .alert-fixed {
@@ -26,11 +26,12 @@
     border-radius:0px
 }
 </style>
+
 <div class="text-center">  
     <?php echo form_open(base_url().'controllab/sesion_iniciada', 'class="form-inline" role="form" id="form"'); ?>
         <div class="form-group">
             <label class="sr-only" for="noControl">Número de Control</label>
-            <input type="text" class="form-control input-lg" id="noControl" name='noControl' value="<?php echo set_value('noControl'); ?>" placeholder="Número de Control" autofocus required>
+            <input type="text" class="form-control input-lg" id="noControl" name='noControl' value="<?php echo set_value('noControl',$this->session->flashdata('noControl')); ?>" placeholder="Número de Control" autofocus required>
         </div>
         <button type="submit" class="btn btn-primary" title="Disponibles <?=$totaE?>"><span style="font-size: 25px" class="glyphicon glyphicon-triangle-right"></span></button>
         <a href="<?php echo base_url(); ?>controllab/bitacora" class="btn btn-info" title="Bitacora"><span style="font-size: 25px" class="glyphicon glyphicon-list"></span></a><?php echo form_error('noControl'); ?>
@@ -42,6 +43,8 @@
     if($resultado){
         echo '<div class="row">';//row
              foreach($resultado->result() as $columna){
+                $windows = exec("ping -n 1 -w 1 $columna->comp_ip", $outcome, $status);
+                // $linux = exec("/bin/ping -q -c1 $columna_c->comp_ip", $outcome, $status);
              echo '<div class="contenedor col-md-2">';//contenedor
                 if($totaE!=0){ 
                     if($columna->control==2){
@@ -53,7 +56,8 @@
                             if($columna->control==2){echo '<b class="text-primary"';}
                             if($columna->idEstatus==3){echo '<b class="text-success"';}
                             if($columna->idEstatus==4){echo '<b class="text-danger"';}
-                        echo '>'.$columna->comentarios.'</b></h2>';
+                            if($status==1){echo '<b class="text-warning"';}
+                        echo '>'.$columna->comp_numero.'</b></h2>';
                         if($columna->control==2){
                     echo '<b>'.$columna->noControl.'</b>';
                      }   
@@ -63,4 +67,3 @@
          echo '</div>';//row
     } //if
 ?>
-

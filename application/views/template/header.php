@@ -52,9 +52,6 @@ html {
 	<script type="text/javascript" src="<?=base_url()?>assets/libraries/bootstrap-3.3.7/js/collapse.js"></script>
 	<script type="text/javascript" src="<?=base_url()?>assets/libraries/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="<?=base_url()?>assets/js/bootstrap-datetimepicker.min.js"></script>
-	<script src="https://code.highcharts.com/highcharts.js"></script>
-	<script src="https://code.highcharts.com/modules/data.js"></script>
-	<script src="https://code.highcharts.com/modules/exporting.js"></script>
 	<script type="text/javascript" src="<?=base_url()?>assets/libraries/stacktable/stacktable.js"></script>
 	<link rel="stylesheet" type="text/css" href="<?=base_url()?>assets/libraries/stacktable/stacktable.css">
 	<link rel="stylesheet" type="text/css" href="<?=base_url()?>assets/css/bootstrap-datetimepicker.min.css">
@@ -190,7 +187,17 @@ html {
 		        <?=$this->session->flashdata('error'); ?>
 		<?php } ?>	
 		</div>
-	<div class="container"><!--container-->
+<style type="text/css">
+	.jumbotron {
+    color: #404040;
+    min-height: 550px !important;
+    background-color: transparent;
+    /*text-align: center;*/
+    margin-top: 25;
+    font-weight: 200;
+}
+</style>
+	<div class="container-fluid"><!--container-->
 		<div class="jumbotron"><!--jumbotron-->
 			<div class="page-header"><p class="h1 text-center"><?=$titulo?></p></div>
 				

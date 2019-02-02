@@ -40,6 +40,7 @@ class Model_Alumno extends CI_Model
                 <strong>Info!</strong> Alumno agregado correctamente.
                 </div>
             ");
+        $this->session->set_flashdata('noControl', $data['noControl']);
         return redirect('controllab');
         }
 	}

@@ -18,7 +18,7 @@ class Controllab extends CI_Controller
         $data['totaE']        = $this->model_controllab->Total_Computadoras();
         $data['estatus']      = $this->model_controllab->Estatus();
         $data['computadoras'] = $this->model_controllab->computadoras();
-        $data['resultado']  = $this->model_controllab->Todas_Computadoras();
+        $data['resultado']    = $this->model_controllab->Todas_Computadoras();
 
         $this->load->view("template/header", $titulo);
         $this->load->view("controllab/index", $data);
@@ -74,22 +74,25 @@ class Controllab extends CI_Controller
 
         $this->form_validation->set_error_delimiters('<div class="text-danger">', '</div>');
         $this->form_validation->set_rules('noControl','Numero de Control','required|trim|min_length[6]|max_length[12]');
-        //$this->form_validation->set_rules('idComputadora','Computadora','trim');
+        //$this->form_validation->set_rules('comp_numero','Computadora','trim');
         
         //Obtiene una el id de una computadora al alzar
-        $consulta0 = $this->model_controllab->computadoras();
+        $columnas = $this->model_controllab->computadoras();
 
         if ($this->form_validation->run() == FALSE){
             //Error
         $this->index();
         }else{
             //Solo queremos el ID de la computadora a ocupar.
-        foreach ($consulta0 as $fila){
-            $computadora = $fila->idComputadora;
+        if (is_array($columnas) || is_object($columnas))
+            {
+            foreach ($columnas as $columna){
+                $computadora = $columna->comp_numero;
+            }
         }
         $data = array(
             'noControl'     => $this->input->post('noControl'),
-            'idComputadora' => $computadora,
+            'comp_numero' => $computadora,
             'fechaInicio'   => date('Y-m-d H:i:s'),
             'idEstatus'     => 1, // Equipo Activo
         );
@@ -97,12 +100,12 @@ class Controllab extends CI_Controller
         $consulta1 = $this->model_controllab->consulta_alumno($data['noControl']);
         if ($consulta1 == 'no_registrado') {
             //Vista de Agregar alumno
-            $titulo['titulo'] = 'Agregar alumno';
-            $data['carreras'] = $this->model_alumno->carreras();
+            $titulo['titulo']     = 'Agregar alumno';
+            $data['carreras']     = $this->model_alumno->carreras();
             $data['totaE']        = $this->model_controllab->Total_Computadoras();
             $data['estatus']      = $this->model_controllab->Estatus();
-            $data['computadoras'] = $this->model_controllab->computadoras();
-            $data['resultado']  = $this->model_controllab->Todas_Computadoras();
+            $data['computadora'] = $this->model_controllab->computadoras();
+            $data['resultado']    = $this->model_controllab->Todas_Computadoras();
 
             $this->load->view('template/header', $titulo);
             $this->load->view('alumno/agregar', $data);
@@ -111,9 +114,9 @@ class Controllab extends CI_Controller
             //Consulta el estatus del alumno.
             $finaliza = $this->model_controllab->sesion_terminada($data['noControl']);
             if ($finaliza == 'sesion_terminada') {
-                redirect('controllab');
+                    redirect('controllab');
                 }else{
-                $this->model_controllab->sesion_iniciada($data,$data['idComputadora']);
+                $this->model_controllab->sesion_iniciada($data,$data['comp_numero']);
                     redirect('controllab');
                 }
             }
@@ -144,10 +147,10 @@ class Controllab extends CI_Controller
         $this->sesion_iniciada();
         }else{
         $NewComputer = array(
-            'idComputadora' => $this->input->post('NewComputer')
+            'comp_numero' => $this->input->post('NewComputer')
         );
         $OldComputer = array(
-            'idComputadora' => $this->input->post('OldComputer')
+            'comp_numero' => $this->input->post('OldComputer')
         );
         $this->model_controllab->actualizar($idControlLab, $NewComputer, $OldComputer);
         redirect( base_url(). 'controllab');
@@ -197,7 +200,7 @@ class Controllab extends CI_Controller
     // file creation
     $file = fopen('php://output', 'w');
 
-    $header = array("ID","Fecha/Hora Inicial","Fecha/Hora Final","noControl","idComputadora");
+    $header = array("ID","Fecha/Hora Inicial","Fecha/Hora Final","noControl","comp_numero");
     fputcsv($file, $header);
     foreach ($usersData as $key=>$line){
      fputcsv($file,$line);

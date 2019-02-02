@@ -92,14 +92,15 @@ class Model_login extends CI_Model {
 		   'smtp_user' => 'xsirlalo@outlook.com',
 		   'smtp_pass' => 'caminando15',
 		   'mailtype' => 'html',
+		   'wordwrap' => FALSE,
 		   'charset' => 'utf-8'
 		);
-		$this->email->initialize($config);
-		$this->email->set_mailtype("html");
 		$this->email->set_newline("\r\n");
+		$this->email->initialize($config);
+		$this->email->clear();
+		$this->email->set_crlf( "\r\n" );
 
 		//Email content
-
 		$this->email->from('xsirlalo@outlook.com', 'Admin');
 		$this->email->to($email);
 		$this->email->subject('SALAB Password reset request');//En el mensaje que llega a tu correo tiene un problema no te lo envia con simbolos = tiene UF-8
@@ -109,11 +110,13 @@ class Model_login extends CI_Model {
 			<h4>Reset your Password</h4>
 			<p>Hola '.$result[0]->nombre_usr.',</p>
 			<p>Has solicitado un reinicio de contraseña.</p>
+			<a href="'.base_url().'login/reset_password?selector='.$selector.'&validator='.bin2hex($token).'">Clic Aqui</a>
 			'.sprintf('<p><a href="%s">Clic Aqui</a></p>', $url, $url).'
 			<footer>Sistema de Administracion del Laboratorio de Computo</footer>
 		</center>
 		';
 		$this->email->message($mail_message);
+
 		//Send email
 		$link = sprintf('<center><h1><a href="%s">Clic Aqui</a></h1></center>', $url, $url);
 		// $this->email->send(); // Esto lo envia directo a correo no tiene un validador si falla la conexion
@@ -127,7 +130,12 @@ class Model_login extends CI_Model {
 		//var_dump($result);
 		//echo $result[0]->nombre_usr .' '. $result[0]->aPaterno_usr .' '. $result[0]->aMaterno_usr;
 		//exit; 
-		return $link;
+		if($this->email->send()) {
+		            echo '<script>alert("Email sent successfully")</script>';
+		            redirect('login','refresh');
+		            } else {$debug = $this->email->print_debugger();}
+		//echo $mail_message;
+		return $debug;
 		} else {
 		return false;
 		}

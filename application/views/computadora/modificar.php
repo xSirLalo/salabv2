@@ -119,7 +119,7 @@
  <span id="group_control" style="display: none;">
     <div class="form-group">
         <label for="control" class="col-lg-2 control-label">Control</label>
-        <div class="col-lg-10">
+        <div class="col-lg-2">
               <label class="radio-inline">
                 <input type="radio" name="control" value="1" <?=($resultado->control == '1' ?'checked':'')?> >LIBRE
               </label>
@@ -127,6 +127,19 @@
                 <input type="radio" name="control" value="2" <?=($resultado->control == '2' ?'checked':'')?> >OCUPADA
               </label><?php echo form_error('control'); ?>
         </div>
+        
+        <div class="col-lg-2">
+          <label for="comp_ip" class="control-label">IP</label>
+          <input type='text' class="form-control" id='comp_ip' name='comp_ip' value="<?=$resultado->comp_ip?>"/>
+          <?php echo form_error('comp_ip'); ?>
+        </div>
+        
+        <div class="col-lg-2">
+          <label for="comp_numero" class="control-label">Computadora N°</label>
+          <input type='text' class="form-control" id='comp_numero' name='comp_numero' value="<?=$resultado->comp_numero?>"/>
+          <?php echo form_error('comp_numero'); ?>
+        </div>
+
     </div>
 </span>
 

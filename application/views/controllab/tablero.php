@@ -39,7 +39,7 @@
             if($row->control==2){echo 'class="text-primary"';}
             if($row->idEstatus==3){echo 'class="text-success"';}
             if($row->idEstatus==4){echo 'class="text-danger"';}
-        ?> ><?= $row->comentarios; ?></b></h2></div>
+        ?> ><?= $row->comp_numero; ?></b></h2></div>
     </div>	
 <?php } ?>
 

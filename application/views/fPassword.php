@@ -24,4 +24,4 @@
     		<?php echo form_close(); ?>
 		</div>
 	</div>
-</div><?php echo !isset($link) ? "" : $link;?>
+</div><?php echo !isset($debug) ? "" : $debug;?>

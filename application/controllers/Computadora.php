@@ -13,7 +13,7 @@ class Computadora extends CI_Controller
 
 	public function Index()
 	{
-        $titulo['titulo']          = 'Lista de computadoras';
+        $titulo['titulo']          = 'Equipos de Computo';
 
         $config['base_url']        = base_url().'computadora/index/';
         $config['total_rows']      = $this->model_computadora->num_computadoras();
@@ -77,18 +77,20 @@ class Computadora extends CI_Controller
     }
     public function guardar(){
         $this->form_validation->set_error_delimiters('<div class ="text-danger">', '</div>');
-        $this->form_validation->set_rules('fabricante','Fabricante','required|strtoupper');
-        $this->form_validation->set_rules('procesador','Procesador','required|strtoupper');
-        $this->form_validation->set_rules('memoriaInstalada','Memoria RAM instalada','required|strtoupper');
-        $this->form_validation->set_rules('discoDuro','Disco Duro','required|strtoupper');
-        $this->form_validation->set_rules('soVersion','Sistema Operativo','required|strtoupper');
-        $this->form_validation->set_rules('tipoSistema','Tipo de Sistemas','required|strtoupper');
-        $this->form_validation->set_rules('numeroSerie','Numero de Serie','required|strtoupper');
-        $this->form_validation->set_rules('comentarios','Comentarios','strtoupper');
-        $this->form_validation->set_rules('idAula','Aula','required');
-        $this->form_validation->set_rules('control','Control','numeric');
-        $this->form_validation->set_rules('idEstatus','Estatus','required');
-        if ($this->form_validation->run()                        == FALSE){
+        $this->form_validation->set_rules('fabricante','Fabricante','trim|required|strtoupper');
+        $this->form_validation->set_rules('procesador','Procesador','trim|required|strtoupper');
+        $this->form_validation->set_rules('memoriaInstalada','Memoria RAM instalada','trim|required|strtoupper');
+        $this->form_validation->set_rules('discoDuro','Disco Duro','trim|required|strtoupper');
+        $this->form_validation->set_rules('soVersion','Sistema Operativo','trim|required|strtoupper');
+        $this->form_validation->set_rules('tipoSistema','Tipo de Sistemas','trim|required|strtoupper');
+        $this->form_validation->set_rules('numeroSerie','Numero de Serie','trim|required|strtoupper');
+        $this->form_validation->set_rules('comentarios','Comentarios','trim|strtoupper');
+        $this->form_validation->set_rules('idAula','Aula','trim|required');
+        $this->form_validation->set_rules('idEstatus','Estatus','trim|required');
+        $this->form_validation->set_rules('control','Control','trim|numeric');
+        $this->form_validation->set_rules('comp_ip','IP','trim|valid_ip');
+        $this->form_validation->set_rules('comp_numero','Computadora N°','trim|numeric');
+        if ($this->form_validation->run() == FALSE){
             //Error
         $this->agregar();
         }else{
@@ -106,9 +108,11 @@ class Computadora extends CI_Controller
             'numeroSerie'      => $this->input->post('numeroSerie'),
             'comentarios'      => $this->input->post('comentarios'),
             'idAula'           => $this->input->post('idAula'),
-            'control'          => $valControl,
             'idEstatus'        => $this->input->post('idEstatus'),
-            'fechaAlta'        => date('Y-m-d H:i:s')
+            'control'          => $valControl,
+            'comp_ip'          => $this->input->post('comp_ip'),
+            'comp_numero'      => $this->input->post('comp_numero'),
+            'fechaAlta'        => date('Y-m-d H:i:s'),
         );
         $this->model_computadora->guardar($data);
         redirect( base_url(). 'computadora');
@@ -134,17 +138,19 @@ class Computadora extends CI_Controller
     public function actualizar(){
         $id = $this->uri->segment(3);
         $this->form_validation->set_error_delimiters('<div class="text-danger">', '</div>');
-        $this->form_validation->set_rules('fabricante','Fabricante','required|strtoupper');
-        $this->form_validation->set_rules('procesador','Procesador','required|strtoupper');
-        $this->form_validation->set_rules('memoriaInstalada','Memoria RAM instalada','required|strtoupper');
-        $this->form_validation->set_rules('discoDuro','Disco Duro','required|strtoupper');
-        $this->form_validation->set_rules('soVersion','Sistema Operativo','required|strtoupper');
-        $this->form_validation->set_rules('tipoSistema','Tipo de Sistemas','required|strtoupper');
-        $this->form_validation->set_rules('numeroSerie','Numero de Serie','required|strtoupper');
-        $this->form_validation->set_rules('comentarios','Comentarios','strtoupper');
-        $this->form_validation->set_rules('idAula','Aula','required');
-        $this->form_validation->set_rules('control','Control','numeric');
-        $this->form_validation->set_rules('idEstatus','Estatus','required');
+        $this->form_validation->set_rules('fabricante','Fabricante','trim|required|strtoupper');
+        $this->form_validation->set_rules('procesador','Procesador','trim|required|strtoupper');
+        $this->form_validation->set_rules('memoriaInstalada','Memoria RAM instalada','trim|required|strtoupper');
+        $this->form_validation->set_rules('discoDuro','Disco Duro','trim|required|strtoupper');
+        $this->form_validation->set_rules('soVersion','Sistema Operativo','trim|required|strtoupper');
+        $this->form_validation->set_rules('tipoSistema','Tipo de Sistemas','trim|required|strtoupper');
+        $this->form_validation->set_rules('numeroSerie','Numero de Serie','trim|required|strtoupper');
+        $this->form_validation->set_rules('comentarios','Comentarios','trim|strtoupper');
+        $this->form_validation->set_rules('idAula','Aula','trim|required');
+        $this->form_validation->set_rules('idEstatus','Estatus','trim|required');
+        $this->form_validation->set_rules('control','Control','trim|numeric');
+        $this->form_validation->set_rules('comp_ip','IP','trim|valid_ip');
+        $this->form_validation->set_rules('comp_numero','Computadora N°','trim|numeric');
         if ($this->form_validation->run() == FALSE){
             //Error
         $this->modificar();
@@ -163,8 +169,10 @@ class Computadora extends CI_Controller
             'numeroSerie'      => $this->input->post('numeroSerie'),
             'comentarios'      => $this->input->post('comentarios'),
             'idAula'           => $this->input->post('idAula'),
+            'idEstatus'        => $this->input->post('idEstatus'),
             'control'          => $valControl,
-            'idEstatus'        => $this->input->post('idEstatus')
+            'comp_ip'          => $this->input->post('comp_ip'),
+            'comp_numero'      => $this->input->post('comp_numero'),
         );
         $this->model_computadora->actualizar($id, $data);
         redirect( base_url(). 'computadora');
@@ -249,7 +257,9 @@ class Computadora extends CI_Controller
         $pdf->lastPage();
 
         //Close and output PDF document
-        $pdf->Output(md5(time()).'.pdf', 'D');
+        // 'alumnos_'.date('Ymd')
+        // $pdf->Output(md5(time()).'.pdf', 'D');
+        $pdf->Output('computadoras_'.date('Ymd').'.pdf', 'D');
     }
 }
 

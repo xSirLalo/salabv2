@@ -11,7 +11,6 @@ class Alumno extends CI_Controller
 		$this->load->model('model_alumno');
         $this->load->model('model_controllab');
 	}
-
 	public function Index(){
         $titulo['titulo']          = 'Lista de alumnos';
 

@@ -33,7 +33,7 @@
             <?php }?>
             </td>
             <td class="text-center"><?= $row->noControl; ?></td>
-            <td class="text-center"><?= $row->comentarios; ?></td>
+            <td class="text-center"><?= $row->comp_numero; ?></td>
             <td class="text-center">
             <?php  if($totaE!=0){ ?>
             <?php  if($row->asignado==1){ ?>

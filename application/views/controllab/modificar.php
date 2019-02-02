@@ -19,10 +19,10 @@
   <div class="form-group">
     <label for="OldComputer" class="col-lg-2 control-label">Computadora Actual</label>
     <div class="col-lg-10">
-      <input type="text" class="form-control" value="<?=$resultado->comentarios?>"
+      <input type="text" class="form-control" value="<?=$resultado->comp_numero?>"
              placeholder="Computadora Actual" readonly>
              <!--Oculto el Campo que muestra el ID de la computadora Actual-->
-      <input type="hidden" id="OldComputer" name="OldComputer" value="<?=$resultado->idComputadora?>">
+      <input type="hidden" id="OldComputer" name="OldComputer" value="<?=$resultado->comp_numero?>">
       <?php echo form_error('OldComputer'); ?>
     </div>
   </div>
@@ -32,12 +32,12 @@
     <div class="col-lg-10">
         <?php echo "<select name='NewComputer' id='NewComputer' class='form-control'>";
             foreach($Computadoras as  $row){
-                $selectvalue = $resultado->idComputadora;
+                $selectvalue = $resultado->comp_numero;
                 $selected = "";
-                if($selectvalue == $row->idComputadora){
+                if($selectvalue == $row->comp_numero){
                 $selected = 'selected'; 
                 }
-                echo '<option value="'.$row->idComputadora.'" '.$selected.'>'.$row->comentarios."</option>";
+                echo '<option value="'.$row->comp_numero.'" '.$selected.'>'.$row->comp_numero."</option>";
             }
             echo "</select>"; ?><?php echo form_error('NewComputer'); ?>
   </div>

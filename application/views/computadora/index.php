@@ -1,9 +1,9 @@
-<?php echo anchor('computadora/generate_pdf', 'Generate PDF Report'); ?>
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-6">
-        <div class="btn-group">
+        <div class="btn-group btn-group-justified">
            <a href="<?php echo base_url(); ?>computadora/agregar" type='button' class='btn btn-primary' title="Agregar computadora" ><span class="glyphicon glyphicon-plus"></span> Agregar computadora</a>
+           <a href="<?php echo base_url(); ?>computadora/generate_pdf" type='button' class='btn btn-danger' title="PDF" ><span class="glyphicon glyphicon-book"></span> PDF</a>
         </div>
     </div>
     <div class="col-sm-6">
@@ -43,7 +43,7 @@
         <th>HDD</th>
         <th>Sistema</th>
         <th>Aula</th>
-        <th>Coment.</th>
+        <th>N°</th>
         <th>Control</th>
         <th>Estatus</th>
         <th>Opciones</th>
@@ -60,7 +60,7 @@
             <td><?= $row->discoDuro; ?></td>
             <td><?= $row->soVersion; ?></td>
             <td><?= $row->nombre_au; ?></td>
-            <td><?= $row->comentarios; ?></td>
+            <td><?= $row->comp_numero; ?></td>
             <td><?= $row->control; ?></td>
             <td><?= $row->idEstatus; ?></td>
 	        <td>

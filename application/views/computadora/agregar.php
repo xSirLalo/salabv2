@@ -121,13 +121,18 @@
  <span id="group_control" style="display: none;">
     <div class="form-group">
         <label for="control" class="col-lg-2 control-label">Control</label>
-        <div class="col-lg-10">
+        <div class="col-lg-2">
               <label class="radio-inline">
                 <input type="radio" name="control" value="1" <?=(set_value('control') == '1' ?'checked':'')?> >LIBRE
               </label>
               <label class="radio-inline">
                 <input type="radio" name="control" value="2" <?=(set_value('control') == '2' ?'checked':'')?> >OCUPADA
               </label><?php echo form_error('control'); ?>
+        </div>
+        <label for="comp_numero" class="col-lg-auto control-label">Numero de Computadora</label>
+        <div class="col-lg-1">
+          <input type='text' class="form-control" id='comp_numero' name='comp_numero' value="<?php echo set_value('comp_numero'); ?>"/>
+          <?php echo form_error('comp_numero'); ?>
         </div>
     </div>
 </span>

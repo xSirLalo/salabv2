@@ -1,3 +1,7 @@
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
 <div class="container-fluid">
     <?php echo form_open('controllab/reporte', 'class="form-horizontal" role="form" id="form1" autocomplete="off"'); ?>
     <div class='col-md-4'>
