@@ -16,7 +16,7 @@ class Alumno extends CI_Controller
 
         $config['base_url']        = base_url().'alumno/index';
         $config['total_rows']      = $this->model_alumno->num_alumnos();
-        $config['per_page']        = 10 ;
+        $config['per_page']        = 50 ;
         $config['uri_segment']     = 3 ;
         $config['num_links']       = 10 ;
 

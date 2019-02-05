@@ -31,7 +31,7 @@
     </script>
 <!--Fin Modal-->
 		</div>	<!--jumbotron-->
-	</div>	<!--container-->
+  </div>
 	<footer class="page-footer font-small blue pt-4 mt-4">
 		<div class="footer-copyright navbar-fixed-bottom text-center">
 	        © 2018 Copyright:

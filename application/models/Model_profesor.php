@@ -10,7 +10,7 @@ class Model_Profesor extends CI_Model
 	}
     //PAGINACION DE INICIO DE LOS ProfesorES
     function num_Profesores(){
-        $this->db->order_by("idProfesor", "desc");
+        //$this->db->order_by("idProfesor", "desc");
         $number = $this->db->query("select count(*) as number from Profesor")->row()->number;
         return intval($number);
     }

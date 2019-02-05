@@ -57,18 +57,20 @@ html {
 	<link rel="stylesheet" type="text/css" href="<?=base_url()?>assets/css/bootstrap-datetimepicker.min.css">
 	<link rel="stylesheet" type="text/css" href="<?=base_url()?>assets/libraries/bootstrap-3.3.7/css/bootstrap.min.css">
 </head>
-<body data-spy="scroll" data-target="myNavbar">
-	<nav id="" class="navbar navbar-default" role="navigation">
+<body>
+	<div class="container">
+	<nav class="navbar navbar-default" role="navigation">
 	  <div class="container-fluid">
 	    <div class="navbar-header">
-	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	      </button>
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
 	      <a class="navbar-brand" href="#" id="menu-toggle" data-toggle="modal" data-target="#myModal">SALAB</a>
 	    </div>
-	    <div class="collapse navbar-collapse" id="myNavbar">
+	    <div id="navbar" class="navbar-collapse collapse">
 	      <ul class="nav navbar-nav">
 		      <li class=""><a href="<?=base_url();?>">Home</a></li>
 		      <li class=""><a href="<?=base_url();?>incidencia">Incidencias (<?= $incidencias?>)</a></li>
@@ -77,30 +79,19 @@ html {
 		        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Menu
 		        <span class="caret"></span></a>
 		        <ul class="dropdown-menu">
-				<li><a href="<?=base_url()?>controllab" 
-					<?php if($this->uri->segment(1)=="controllab"){echo 'class="p-3 mb-2 bg-primary text-white"';}?> >Control Lab</a></li>
-				<li><a href="<?=base_url()?>incidencia" 
-					<?php if($this->uri->segment(1)=="incidencia"){echo 'class="p-3 mb-2 bg-warning text-white"';}?> >Incidencias</a></li>
+				<li><a href="<?=base_url()?>controllab" >Control Lab</a></li>
+				<li><a href="<?=base_url()?>incidencia" >Incidencias</a></li>
 					<li role="separator" class="divider"></li>
-				<li><a href="<?=base_url()?>profesor" 
-					<?php if($this->uri->segment(1)=="profesor"){echo 'class="p-3 mb-2 bg-info text-white"';}?> >1.- Profesores</a></li>
-				<li><a href="<?=base_url()?>asignatura" 
-					<?php if($this->uri->segment(1)=="asignatura"){echo 'class="p-3 mb-2 bg-info text-white"';}?> >2.- Asignaturas</a></li>
-				<li><a href="<?=base_url()?>horario" 
-					<?php if($this->uri->segment(1)=="horario"){echo 'class="p-3 mb-2 bg-info text-white"';}?> >3.- Horarios</a></li>
+				<li><a href="<?=base_url()?>computadora" >Computadoras</a></li>
+				<li><a href="<?=base_url()?>dispositivo" >Dispositivos</a></li>
 					<li role="separator" class="divider"></li>
-				<li><a href="<?=base_url()?>computadora" 
-					<?php if($this->uri->segment(1)=="computadora"){echo 'class="p-3 mb-2 bg-info text-white"';}?> >Computadoras</a></li>
-				<li><a href="<?=base_url()?>dispositivo" 
-					<?php if($this->uri->segment(1)=="dispositivo"){echo 'class="p-3 mb-2 bg-info text-white"';}?> >Dispositivos</a></li>
+				<li><a href="<?=base_url()?>profesor" >1.- Profesores</a></li>
+				<li><a href="<?=base_url()?>asignatura" >2.- Asignaturas</a></li>
+				<li><a href="<?=base_url()?>horario" >3.- Horarios</a></li>
 					<li role="separator" class="divider"></li>
-
-				<li><a href="<?=base_url()?>alumno" 
-					<?php if($this->uri->segment(1)=="alumno"){echo 'class="p-3 mb-2 bg-info text-white"';}?> >Alumnos</a></li>
-					
+				<li><a href="<?=base_url()?>alumno"  >Alumnos</a></li>
 				<?php if($idTipoUsuario==1) { ?>
-				<li><a href="<?=base_url()?>usuario" 
-					<?php if($this->uri->segment(1)=="usuario"){echo 'class="p-3 mb-2 bg-danger text-white"';}?> >Usuarios</a></li>
+				<li><a href="<?=base_url()?>usuario" >Usuarios</a></li>
 				<?php } ?>
 		        </ul>
       		</li>
@@ -111,9 +102,10 @@ html {
 		        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> <?=$nombre_usr.' '.$aPaterno_usr?>
 		        <span class="caret"></span></a>
 		        <ul class="dropdown-menu">
-		          <li><a href='<?=base_url()?>usuario/modificar/<?=$idUsuario?>'><span class="glyphicon glyphicon-cog"></span> Configuracion</a></li>
+		          <li><a href='<?=base_url()?>usuario/modificar/<?=$idUsuario?>'><span class="glyphicon glyphicon-cog"></span> Editar perfil</a></li>
+		          <li><a href='<?=base_url()?>home/opciones'><span class="glyphicon glyphicon-wrench"></span> Opciones</a></li>
 		          <li role="separator" class="divider"></li>
-		          <li><a href="<?=base_url()?>login/loguot"><span class=" glyphicon glyphicon-log-in"></span> Cerrar Session</a></li>
+		          <li><a href="<?=base_url()?>login/loguot"><span class=" glyphicon glyphicon-log-in"></span> Salir</a></li>
 		        </ul>
 		    </li>
 	        
@@ -178,26 +170,25 @@ html {
   </div>
 </div>
 <!-- End Modal -->
-		<!-- Control de Mensajes -->	
-		<div  style="float: left;position: fixed;z-index:9999; ">
-		<?php if ($this->session->flashdata('success')) { ?>
-		        <?=$this->session->flashdata('success'); ?>
-		<?php } ?>
-		<?php if ($this->session->flashdata('error')) { ?>
-		        <?=$this->session->flashdata('error'); ?>
-		<?php } ?>	
-		</div>
 <style type="text/css">
 	.jumbotron {
-    color: #404040;
-    min-height: 550px !important;
-    background-color: transparent;
-    /*text-align: center;*/
+    /*color: #404040;*/
+    min-height: 680px !important;
+    /*background-color: transparent;*/
+    /*text-align: center;
     margin-top: 25;
-    font-weight: 200;
+    font-weight: 200;*/
 }
 </style>
-	<div class="container-fluid"><!--container-->
+		<!-- Control de Mensajes -->	
+		<div  style="margin-top:10px;position: fixed;z-index:9999;border-radius:0px">
+			<?php if ($this->session->flashdata('success')) { ?>
+			        <?=$this->session->flashdata('success'); ?>
+			<?php } ?>
+			<?php if ($this->session->flashdata('error')) { ?>
+			        <?=$this->session->flashdata('error'); ?>
+			<?php } ?>	
+		</div>
 		<div class="jumbotron"><!--jumbotron-->
 			<div class="page-header"><p class="h1 text-center"><?=$titulo?></p></div>
 				

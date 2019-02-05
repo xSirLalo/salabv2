@@ -153,7 +153,6 @@ class Controllab extends CI_Controller
             'comp_numero' => $this->input->post('OldComputer')
         );
         $this->model_controllab->actualizar($idControlLab, $NewComputer, $OldComputer);
-        redirect( base_url(). 'controllab');
         }
     }
     public function eliminar(){

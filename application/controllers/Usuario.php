@@ -103,14 +103,14 @@ class Usuario extends CI_Controller
     }
 	public function modificar()
 	{
-        $titulo['titulo']    = 'Modificar usuario';
+        $titulo['titulo']    = 'Editar perfil';
         $data['idUsuario']   = $this->uri->segment(3);
         $data['tipoUsuario'] = $this->model_usuario->tipoUsuario();
         $data['estatus']     = $this->model_usuario->estatus();
-        if (!$data['idUsuario']) {
-            redirect('home');
+        if ($this->session->userdata['logged_in']['idUsuario'] == $data['idUsuario']) {
+            $data['resultados']  = $this->model_usuario->modificar($data['idUsuario']);    
         }else{
-        $data['resultados']  = $this->model_usuario->modificar($data['idUsuario']);
+            redirect('home');
         }
 		$this->load->view('template/header', $titulo);
 		$this->load->view('usuario/modificar', $data);
@@ -124,9 +124,9 @@ class Usuario extends CI_Controller
         $this->form_validation->set_rules('nombre_usr','Nombre','required|trim|strtoupper');
         $this->form_validation->set_rules('aPaterno_usr','Apellido Paterno','required|trim|strtoupper');
         $this->form_validation->set_rules('aMaterno_usr','Apellido Materno','required|trim|strtoupper');
-        $this->form_validation->set_rules('email','Correo Electronico','required');
-        $this->form_validation->set_rules('emailconf','','required|matches[email]|valid_email');
-        $this->form_validation->set_rules('telefono','Telefono','required');
+        $this->form_validation->set_rules('email','Correo Electronico','required|valid_email');
+        $this->form_validation->set_rules('emailconf','Repetir Correo Electronico','required|matches[email]');
+        $this->form_validation->set_rules('telefono','Telefono','required|numeric');
         $this->form_validation->set_rules('idTipoUsuario','Tipo de Usuario','required');
         $this->form_validation->set_rules('idEstatus','Estatus','required');
         if ($this->form_validation->run() == FALSE){
@@ -154,8 +154,10 @@ class Usuario extends CI_Controller
         //Actualiza la informacion del usuario
         }
         $this->model_usuario->actualizar($id, $data);
-        redirect( base_url(). 'usuario');
+        redirect( base_url());
         }
+
+        
     }
 
     public function eliminar()

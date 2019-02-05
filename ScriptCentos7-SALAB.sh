@@ -1,6 +1,6 @@
 setenforce 0
-sed -i 's/^SELINUX=.*/SELINUX=permissive/g' /etc/sysconfig/selinux
-sed -i 's/^SELINUX=.*/SELINUX=permissive/g' /etc/selinux/config
+sed -i 's/^SELINUX=.*/SELINUX=disabled/g' /etc/sysconfig/selinux
+sed -i 's/^SELINUX=.*/SELINUX=disabled/g' /etc/selinux/config
 
 yum groupinstall "Development Tools" -y
 yum install epel-release
@@ -16,13 +16,15 @@ systemctl enable iptables
 systemctl start iptables
 cp /etc/sysconfig/iptables /etc/sysconfig/iptables.orig
 
-#Utilerias
-yum install p7zip unzip zip kernel-devel dkms mc wget htop ntfs-3g
-yum install net-tools vim git vsftpd perl-Digest-MD5
-yum install cpan openssl dnsmasq patch mod_ssl screen lynx nmap
+#UTILERIAS
+yum install p7zip unzip zip kernel-devel dkms ntfs-3g
+yum install vim git wget net-tools vsftpd mc htop screen lynx nmap
+yum install cpan openssl dnsmasq patch mod_ssl 
 
 #PHP
 yum install php-pear php-devel php-mysql php-common php-gd php-mbstring php-mcrypt php php-xml php-pear-db
+#PEARL
+yum install perl perl-CGI perl-IO-Socket-SSL perl-Digest-MD5 
 
 # Despues de haber instalado los php, abrir el archivo "php.ini" que esta en el directorio "/etc" y buscar
 # las siguientes lineas y cambiar "short_open_tag = On" y "date.timezone = America/Cancun" ponerla de acuerdoa tu zona horaria.
@@ -68,8 +70,12 @@ create user 'salab'@'localhost';
 set password for salab@localhost = password('salab2018');
 grant all on salabv2.* to salab@localhost;
 
-#Usuario para conexiones externas 
-grant all privileges on *.* to 'administrador' identified by 'sudovimetc' with grant option;
+# Puerto y Usuario para conexiones externas 
+
+sudo iptables -A INPUT -p tcp -m state --state NEW -m tcp --dport 3309 -j ACCEPT
+iptables-save
+
+grant all privileges on *.* to 'administrador2' identified by 'sudovimetc' with grant option;
 show databases;
 quit
 
@@ -79,15 +85,16 @@ mysql -u root -p salabv2 < /var/www/html/salabv2/salabv2.sql
 #	Agregar al Final del archivo o ejecutar el echo
 #	vim /etc/httpd/conf/httpd.conf
 #INICIO
-echo '
-<Directory /var/www/html/salabv2>
+echo '<Directory /var/www/html/salabv2>
 	Options -Indexes +Multiviews +FollowSymLinks
 		DirectoryIndex index.php index.html
 	AllowOverride All
 	Allow from All
-</Directory>
-	'> /etc/httpd/conf/httpd.conf
+</Directory>' >> /etc/httpd/conf/httpd.conf
 #FIN
+
+#Si es necesario cambiar la ip a la ip del servidor
+vim /var/www/html/salabv2/application/config/config.php
 
 #PHPMYADMIN
 yum install phpmyadmin
@@ -114,16 +121,96 @@ yum install shellinabox
 
 #Redireccionar la ip del servidor al Sistema Web "SALAB", borrar todo el contenido de welcome.conf y sustituir por lo siguiente
 # vim /etc/httpd/conf.d/welcome.conf
-<VirtualHost *:80>
-	ServerAdmin lalo_lego@hotmail.com
-	Servername localhost
-	ServerAlias salabv2
-	#DocumentRoot /var/www/html/salabv2/
-	RedirectMatch ^/$ http://[IP DEL SERVIDOR]/salabv2/login
-</VirtualHost>
+echo '<VirtualHost *:80>
+        ServerAdmin lalo_lego@hotmail.com
+        Servername localhost
+        ServerAlias salabv2
+        #DocumentRoot /var/www/html/salabv2/
+        RedirectMatch ^/$ http://[IP DEL SERVIDOR]/salabv2/login
+</VirtualHost>'> /etc/httpd/conf.d/welcome.conf
+
+# Crear el archivos con el SElinux disabled
+touch /var/www/cgi-bin/control.cgi
+vim /var/www/cgi-bin/control.cgi
+chmod +x /var/www/cgi-bin/control.cgi
+
+# Contenido del CGI y pegar los siguientes parametros
+# SALAB CONTROL POR POR JAVA Y ESTE ARCHIVO CGI
+###################################
+
+## Ambiente WINDOWS Con XAMMP##
+
+#!"C:\xampp\perl\bin\perl.exe" -w -T
+
+## Ambiente LINUX ###
+
+#!/usr/bin/perl -w
+
+###################################
+
+# INICIO - COPIA Y PEGA #
+#########################
+
+#!/usr/bin/perl -w
+
+use IO::Socket;
+
+#argumento="http://192.168.100.200/cgi-bin/control.pl?pc=2&acc=1"; De Prueba
+
+#Obtiene las variables del enlace
+$argumento=$ENV{"QUERY_STRING"};
+
+#Comparador
+$ban = 1;
+
+#Separa los argumentos del enlacie
+@pares = split(/&/, $argumento);
+@PC = split(/=/, $pares[0]);
+@Acc = split(/=/, $pares[1]);
+
+$ban = 1;
+# Conexion al Servidor de Java donde se encuentre iniciado.
+if($ban == 1){
+$sock = IO::Socket::INET->new(
+    PeerAddr    => "192.168.100.2",
+    PeerPort    =>  3519,
+    Proto       => "tcp",
+    Timeout     =>  1,
+);
+$msj.="OS1--".$PC[1]."--".$Acc[1]."--OS1";
+print $sock $msj;
+$sock->close();
+}
+#print "Location: http://192.168.100.200/salabv2/controllab\n\n"; 
+#Imprimir  variables en texto plano 
+print "Content-type: text/plain \n\n";
+print "$argumento\n";
+print "pc  = $PC[1]\n";
+print "acc = $Acc[1]\n";
+print "$msj";
+
+######################
+# FIN - COPIA Y PEGA #
+
+# Monitoriear Errores 
+screen  tail -f /var/log/httpd/error_log
+
+# Permisos al Archivo CGI
+chmod  0705 /var/www/cgi-bin/control.cgi
+
+# Se procede a reiniciar servidor Apache
+systemctl restart http
+
+touch /var/www/cgi-bin/cambio_equipo.cgi
+vim /var/www/cgi-bin/cambio_equipo.cgi
+chmod +x /var/www/cgi-bin/cambio_equipo.cgi
 
 #SAMBA
 yum install samba samba-client samba-common
+
+setenforce 1
+sed -i 's/^SELINUX=.*/SELINUX=permissive/g' /etc/sysconfig/selinux
+sed -i 's/^SELINUX=.*/SELINUX=permissive/g' /etc/selinux/config
 
 #IPTABLES
 -A INPUT -p udp -m state --state NEW -m udp --dport 137 -j ACCEPT
@@ -131,14 +218,20 @@ yum install samba samba-client samba-common
 -A INPUT -p tcp -m state --state NEW -m tcp --dport 139 -j ACCEPT
 -A INPUT -p tcp -m state --state NEW -m tcp --dport 445 -j ACCEPT
 -A INPUT -p tcp -m state --state NEW -m tcp --dport 901 -j ACCEPT
+
 #FIREWALLD
 firewall-cmd --permanent --zone=public --add-service=samba
 firewall-cmd --reload
 
+groupadd smbgrp
+usermod admin -aG smbgrp
+smbpasswd -a admin
+
 mkdir -p /srv/samba/compartidos
 chmod -R 0775 /srv/samba/compartidos
-chmod -R 770 /srv/samba/compartidos
-chown -R nobody:nobody /srv/samba/compartidos
+chmod -R 0770 /srv/samba/compartidos
+#chown -R nobody:nobody /srv/samba/compartidos
+chown -R root:smbgrp /srv/samba/compartidos
 chcon -t samba_share_t /srv/samba/compartidos
 
 vim /etc/samba/smb.conf
@@ -163,7 +256,7 @@ vim /etc/samba/smb.conf
         writable = yes
         guest ok = yes
         read only = no
-        force user = nobody
+#       force user = nobody
         create mode = 0777
         directory mode = 0777
 #Comprobar la configuracion anterior

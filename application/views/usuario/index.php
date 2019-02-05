@@ -1,3 +1,10 @@
+<?php 
+if ($this->session->userdata['logged_in']['idTipoUsuario'] == 1) {
+    $data['resultados']  = $this->model_usuario->modificar($data['idUsuario']);    
+}else{
+    redirect('home');
+}
+?>
 <div class="container-fluid">
   <div class="row">
         <div class="col-md-6">

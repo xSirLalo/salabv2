@@ -4,7 +4,6 @@
     display: inline-block;
     text-align: center;
 }
- 
 .texto-encima{
     position: absolute;
     top: 10px;
@@ -21,12 +20,11 @@
     position:fixed; 
     top: 0px; 
     left: 0px; 
-    width: 100%;
+    width: 50%;
     z-index:9999; 
     border-radius:0px
 }
 </style>
-
 <div class="text-center">  
     <?php echo form_open(base_url().'controllab/sesion_iniciada', 'class="form-inline" role="form" id="form"'); ?>
         <div class="form-group">
@@ -43,7 +41,7 @@
     if($resultado){
         echo '<div class="row">';//row
              foreach($resultado->result() as $columna){
-                $windows = exec("ping -n 1 -w 1 $columna->comp_ip", $outcome, $status);
+                //$windows = exec("ping -n 1 -w 1 $columna->comp_ip", $outcome, $status);
                 // $linux = exec("/bin/ping -q -c1 $columna_c->comp_ip", $outcome, $status);
              echo '<div class="contenedor col-md-2">';//contenedor
                 if($totaE!=0){ 
@@ -56,7 +54,7 @@
                             if($columna->control==2){echo '<b class="text-primary"';}
                             if($columna->idEstatus==3){echo '<b class="text-success"';}
                             if($columna->idEstatus==4){echo '<b class="text-danger"';}
-                            if($status==1){echo '<b class="text-warning"';}
+                            //if($status==1){echo '<b class="text-warning"';}
                         echo '>'.$columna->comp_numero.'</b></h2>';
                         if($columna->control==2){
                     echo '<b>'.$columna->noControl.'</b>';

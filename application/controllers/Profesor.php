@@ -17,7 +17,7 @@ class Profesor extends CI_Controller
         
         $config['base_url']        = base_url().'profesor/index/';
         $config['total_rows']      = $this->model_profesor->num_profesores();
-        $config['per_page']        = 10 ;
+        $config['per_page']        = 50 ;
         $config['uri_segment']     = 3 ;
         $config['num_links']       = 10 ;
         
