@@ -18,7 +18,7 @@ class Controllab extends CI_Controller
         $data['totaE']        = $this->model_controllab->Total_Computadoras();
         $data['estatus']      = $this->model_controllab->Estatus();
         $data['computadoras'] = $this->model_controllab->computadoras();
-        $data['resultado']    = $this->model_controllab->Todas_Computadoras();
+        $data['Tablero']    = $this->model_controllab->Tablero();
 
         $this->load->view("template/header", $titulo);
         $this->load->view("controllab/index", $data);
@@ -29,7 +29,7 @@ class Controllab extends CI_Controller
         
         $config['base_url']        = base_url().'controllab/bitacora/';
         $config['total_rows']      = $this->model_controllab->num_controllabs();
-        $config['per_page']        = 18 ;
+        $config['per_page']        = 100 ;
         $config['uri_segment']     = 3 ;
         $config['num_links']       = 10 ;
         
@@ -62,14 +62,6 @@ class Controllab extends CI_Controller
         $this->load->view('controllab/bitacora', $data);
         $this->load->view('template/footer');
     }
-    public function tablero(){
-        $titulo['titulo']   = 'Control de Computadoras';
-        $data['resultado']  = $this->model_controllab->Todas_Computadoras();
-
-        $this->load->view('template/header', $titulo);
-        $this->load->view('controllab/tablero', $data);
-        $this->load->view('template/footer');
-    }
     public function sesion_iniciada(){
 
         $this->form_validation->set_error_delimiters('<div class="text-danger">', '</div>');
@@ -91,21 +83,21 @@ class Controllab extends CI_Controller
             }
         }
         $data = array(
-            'noControl'     => $this->input->post('noControl'),
+            'noControl'   => $this->input->post('noControl'),
             'comp_numero' => $computadora,
-            'fechaInicio'   => date('Y-m-d H:i:s'),
-            'idEstatus'     => 1, // Equipo Activo
+            'fechaInicio' => date('Y-m-d H:i:s'),
+            'idEstatus'   => 1, // Equipo Activo
         );
         //Consulta si el alumno esta dado de alta de lo contrario se manda agregar como nuevo alumno
         $consulta1 = $this->model_controllab->consulta_alumno($data['noControl']);
         if ($consulta1 == 'no_registrado') {
             //Vista de Agregar alumno
-            $titulo['titulo']     = 'Agregar alumno';
-            $data['carreras']     = $this->model_alumno->carreras();
-            $data['totaE']        = $this->model_controllab->Total_Computadoras();
-            $data['estatus']      = $this->model_controllab->Estatus();
+            $titulo['titulo']    = 'Agregar alumno';
+            $data['carreras']    = $this->model_alumno->carreras();
+            $data['totaE']       = $this->model_controllab->Total_Computadoras();
+            $data['estatus']     = $this->model_controllab->Estatus();
             $data['computadora'] = $this->model_controllab->computadoras();
-            $data['resultado']    = $this->model_controllab->Todas_Computadoras();
+            $data['resultado']   = $this->model_controllab->Todas_Computadoras();
 
             $this->load->view('template/header', $titulo);
             $this->load->view('alumno/agregar', $data);
@@ -122,11 +114,28 @@ class Controllab extends CI_Controller
             }
         }
     }
+    public function actualizar(){
+        $PC = $this->uri->segment(3);
+        $this->form_validation->set_error_delimiters('<div class="text-danger">', '</div>');
+        $this->form_validation->set_rules('NewComputer','Computadora','numeric');
+        $this->form_validation->set_rules('OldComputer','Computadora','numeric');
+        if ($this->form_validation->run() == FALSE){
+            //Error
+        $this->sesion_iniciada();
+        }else{
+        $Computadora = array(
+            'PC' => $PC,
+            'NewComputer' => $this->input->post('NewComputer'),
+            'OldComputer' => $this->input->post('OldComputer')
+        );
+        $this->model_controllab->actualizar($Computadora);
+        }
+    }
     public function modificar(){
         $titulo['titulo']     = 'Equipo de Computo';
         $data['idControlLab'] = $this->uri->segment(3);
         $data['estatus']      = $this->model_controllab->Estatus();
-        $data['Computadoras']  = $this->model_controllab->Computadoras_Disponibles();
+        $data['Computadoras'] = $this->model_controllab->Computadoras_Disponibles();
 
         if (!$data['idControlLab']) {
             redirect('home');
@@ -137,25 +146,7 @@ class Controllab extends CI_Controller
         $this->load->view('controllab/modificar', $data);
         $this->load->view('template/footer');
     }
-    public function actualizar(){
-        $idControlLab = $this->uri->segment(3);
-        $this->form_validation->set_error_delimiters('<div class="text-danger">', '</div>');
-        $this->form_validation->set_rules('NewComputer','Computadora','numeric');
-        $this->form_validation->set_rules('OldComputer','Computadora','numeric');
-        if ($this->form_validation->run() == FALSE){
-            //Error
-        $this->sesion_iniciada();
-        }else{
-        $NewComputer = array(
-            'comp_numero' => $this->input->post('NewComputer')
-        );
-        $OldComputer = array(
-            'comp_numero' => $this->input->post('OldComputer')
-        );
-        $this->model_controllab->actualizar($idControlLab, $NewComputer, $OldComputer);
-        }
-    }
-    public function eliminar(){
+    public function finalizar_session(){
         $idControlLab = $this->uri->segment(3);
         $delete = $this->model_controllab->eliminar($idControlLab);
         if ($delete == false) {
@@ -175,7 +166,7 @@ class Controllab extends CI_Controller
         } else {
         $fechaInicio = $this->input->post('fechaInicio');
         $fechaFin    = $this->input->post('fechaFin');
-        $result      = $this->model_controllab->reporte($fechaInicio,$fechaFin);
+        $result      = $this->model_controllab->grafica($fechaInicio,$fechaFin);
         //comprueba si las fechas son correctas.
             if($result != FALSE){
                 $data['resultado'] = $result;

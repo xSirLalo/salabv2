@@ -1,6 +1,6 @@
 <?php 
 if ($this->session->userdata['logged_in']['idTipoUsuario'] == 1) {
-    $data['resultados']  = $this->model_usuario->modificar($data['idUsuario']);    
+//    $data['resultado']  = $this->model_usuario->modificar($data['idUsuario']);    
 }else{
     redirect('home');
 }

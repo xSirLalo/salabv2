@@ -1,4 +1,5 @@
 #!/usr/bin/perl -w
+#!"C:\xampp\perl\bin\perl.exe" -w -T
 # Ajustado por por Eduardo Cauich Herrera
 use IO::Socket;
 
@@ -27,7 +28,8 @@ $msj.="OS1--".$PC[1]."--".$Acc[1]."--OS1";
 print $sock $msj;
 $sock->close();
 }
-print "Location: http://192.168.100.200/salabv2/controllab\n\n"; 
+
+print "Location: http://192.168.100.200/salabv2/controllab\n\n";
 #Imprimir  variables en texto plano 
 print "Content-type: text/plain \n\n";
 print "Recibe:\n";

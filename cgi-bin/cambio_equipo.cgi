@@ -1,4 +1,5 @@
 #!/usr/bin/perl -w
+#!"C:\xampp\perl\bin\perl.exe" -w -T
 # Ajustado por por Eduardo Cauich Herrera
 use IO::Socket;
 

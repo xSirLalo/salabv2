@@ -12,7 +12,7 @@
 }
 .centrado{
     position: absolute;
-    top: 25%;
+    top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
@@ -38,26 +38,26 @@
 <br>
 <hr>
 <?php 
-    if($resultado){
+    if($Tablero){
         echo '<div class="row">';//row
-             foreach($resultado->result() as $columna){
+             foreach($Tablero->result() as $PC){
                 //$windows = exec("ping -n 1 -w 1 $columna->comp_ip", $outcome, $status);
                 // $linux = exec("/bin/ping -q -c1 $columna_c->comp_ip", $outcome, $status);
              echo '<div class="contenedor col-md-2">';//contenedor
                 if($totaE!=0){ 
-                    if($columna->control==2){
-                    echo '<a href='.base_url().'controllab/modificar/'.$columna->idControlLab.'>';
+                    if($PC->control==2){
+                    echo '<a href='.base_url().'controllab/modificar/'.$PC->comp_numero.'>';
                 } 
             }    
-            echo '<img src="'.base_url().'assets/img/pc.png" alt="'.$columna->idControlLab.'" width="160" height="160"></a>';
-                echo '<div class="texto-encima centrado"><h2>';// texto-encima centrado
-                            if($columna->control==2){echo '<b class="text-primary"';}
-                            if($columna->idEstatus==3){echo '<b class="text-success"';}
-                            if($columna->idEstatus==4){echo '<b class="text-danger"';}
-                            //if($status==1){echo '<b class="text-warning"';}
-                        echo '>'.$columna->comp_numero.'</b></h2>';
-                        if($columna->control==2){
-                    echo '<b>'.$columna->noControl.'</b>';
+            echo '<img src="'.base_url().'assets/img/pc.png" alt="'.$PC->comp_numero.'" width="160" height="160"></a>';
+                echo '<div class="texto-encima centrado"><h1>';// texto-encima centrado
+                            if($PC->control==2){echo '<b class="text-primary"';}
+                            if($PC->idEstatus==3){echo '<b class="text-success"';}
+                            if($PC->idEstatus==4){echo '<b class="text-danger"';}
+                            if($PC->idEstatus==8){echo '<b class="text-warning"';}
+                        echo '>'.$PC->comp_numero.'</b></h1>';
+                        if($PC->control==2){
+                    //echo '<b>'.$columna->noControl.'</b>';
                      }   
                 echo '</div>';// texto-encima centrado
              echo '</div>';//contenedor

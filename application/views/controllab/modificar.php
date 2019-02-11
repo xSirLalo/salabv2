@@ -1,6 +1,5 @@
 <?php foreach ($resultados->result() as $resultado){ ?>
-<div class="container">
-<?php echo form_open(base_url().'controllab/sesion_terminada/'.$resultado->noControl, 'class="form-horizontal" role="form" id="form"'); ?>
+<?php echo form_open(base_url().'controllab/sesion_iniciada/', 'class="form-horizontal" role="form" id="form"'); ?>
   <div class="form-group">
     <label for="noControl" class="col-lg-2 control-label">Alumno</label>
       <div class="col-lg-10">
@@ -17,10 +16,17 @@
 <?php echo form_open(base_url().'controllab/actualizar/'.$idControlLab, 'class="form-horizontal" role="form" id="form"'); ?>
 
   <div class="form-group">
+    <label for="idControlLab" class="col-lg-2 control-label">idControlLab</label>
+    <div class="col-lg-10">
+      <input type="text" class="form-control" id="idControlLab" name="idControlLab" value="<?=$resultado->idControlLab?>" readonly>
+      <?php echo form_error('idControlLab'); ?>
+    </div>
+  </div>
+
+  <div class="form-group">
     <label for="OldComputer" class="col-lg-2 control-label">Computadora Actual</label>
     <div class="col-lg-10">
-      <input type="text" class="form-control" value="<?=$resultado->comp_numero?>"
-             placeholder="Computadora Actual" readonly>
+      <input type="text" class="form-control" value="<?=$resultado->comp_numero?>" placeholder="Computadora Actual" readonly>
              <!--Oculto el Campo que muestra el ID de la computadora Actual-->
       <input type="hidden" id="OldComputer" name="OldComputer" value="<?=$resultado->comp_numero?>">
       <?php echo form_error('OldComputer'); ?>
@@ -49,6 +55,5 @@
       <a href="<?php echo base_url(); ?>controllab" class="btn btn-primary" title="Volver a Inicio">Volver</a>
     </div>
   </div><!--Fin Grupo de Botones-->
-</div>
 <?php echo form_close(); ?>
 <?php } ?>

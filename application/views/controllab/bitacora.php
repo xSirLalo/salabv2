@@ -37,7 +37,7 @@
             <td class="text-center">
             <?php  if($totaE!=0){ ?>
             <?php  if($row->asignado==1){ ?>
-            <a href='<?= base_url().'controllab/modificar/'.$row->idControlLab ?>'><button type='button' class='btn btn-warning' title="Cambiar de Equipo"><i class="glyphicon glyphicon-retweet"></i></button></a>
+            <a href='<?= base_url().'controllab/modificar/'.$row->comp_numero ?>'><button type='button' class='btn btn-warning' title="Cambiar de Equipo"><i class="glyphicon glyphicon-retweet"></i></button></a>
             <?php }?>
             <?php }?>
             </td>

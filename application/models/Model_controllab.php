@@ -7,7 +7,7 @@ class Model_ControlLab extends CI_Model
     {
         parent::__construct();
     }
-    //PAGINACION DE INICIO DEL ControlLab
+    //PAGINACION DE INICIO DE LA BITACORA
     function num_ControlLabs(){
         $this->db->order_by("idControlLab", "desc");
         $number = $this->db->query("select count(*) as number from ControlLab")->row()->number;
@@ -25,6 +25,19 @@ class Model_ControlLab extends CI_Model
         }
     }
     // FIN DE PAGINACION
+    function consulta_alumno($noControl){
+        $this->db->where('noControl', $noControl);
+        $query = $this->db->get('Alumno');
+        if ($query->num_rows() >= 1){
+            foreach ($query->result() as $fila) {
+                $datos[] = $fila;
+            }
+            return $datos;
+        }else{
+            return 'no_registrado';
+        }
+    }
+
     function sesion_iniciada($data,$comp_numero){
         //metodo para comprobar computadoras disponibles y ponerlas ocupadas una vez ingresado el numero de control
         $control_c = array(
@@ -32,30 +45,34 @@ class Model_ControlLab extends CI_Model
         );
         $buscar = array(
             'Computadora.comp_numero' => $comp_numero,
-            'Computadora.Control'     => 1,
+            'Computadora.control'     => 1,
             'Computadora.idAula'      => 1,
             'Computadora.idEstatus'   => 3
         );
         $this->db->where($buscar);
         $query = $this->db->get('Computadora');
-        if ($query->num_rows() > 0){
+        if ($query->num_rows() > 0) {
             foreach ($query->result() as $columna_c) {
-                if ($columna_c->control == 1) {
-                $this->db->insert('ControlLab',$data);
-
-                $this->db->set($control_c);
-                $this->db->where('comp_numero', $comp_numero);
-                $this->db->update('Computadora');
-                $this->session->set_flashdata('success', "<div class='alert alert-info alert-dismissible fade in'>
-                        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                        <h4 class='alert-heading'>Info!</h4> <p>Ocupe la <b>$columna_c->comp_numero</b></p>
-                        </div>");
-                        if ($this->opciones()) {
-                            redirect( base_url() . '/cgi-bin/control.cgi?pc='.$columna_c->comp_numero.'&acc=1');
-                        }
-                    return true;
+            //ping a equipos para verificar conexion al servidor de bloqueo y desbloqueo de JAVA
+            //$windows = exec("ping -n 1 -w 1 $columna_c->comp_ip", $outcome, $status);
+            //$linux = exec("/bin/ping -q -c1 $columna_c->comp_ip", $outcome, $status);
+            //if($status==0) {
+                    if ($columna_c->control == 1) {
+                    $this->db->insert('ControlLab',$data);
+                    $this->db->set($control_c);
+                    $this->db->where('comp_numero', $comp_numero);
+                    $this->db->update('Computadora');
+                    $this->session->set_flashdata('success', "<div class='alert alert-info alert-dismissible fade in'>
+                            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                            <h4 class='alert-heading'>Info!</h4> <p>Ocupe la <b>$columna_c->comp_numero</b></p>
+                            </div>");
+                            if ($this->opciones()) {
+                                redirect( base_url() . '/cgi-bin/control.cgi?pc='.$columna_c->comp_numero.'&acc=1');
+                            }
+                        return true;
                     }
-            }
+                //}
+            }//Fin FOR Computadora
         }else{
         $this->session->set_flashdata('error', "<div class='alert alert-danger alert-dismissible fade in'>
                 <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
@@ -110,25 +127,50 @@ class Model_ControlLab extends CI_Model
         }//Fin FOR ControlLab
 
     }
-    function actualizar($idControlLab, $NewComputer, $OldComputer){
+    function Tablero(){   
+        $this->db->from('Computadora');
+        
+        $query = $this->db->get();
+        if ($query->num_rows() > 0){
+            return $query;
+        }else{
+            return false;
+        }
+    }
+    function actualizar($Computadora){
         $off = array('control' => '2');
         $on  = array('control' => '1');
+        $New = array('comp_numero' => $Computadora['NewComputer']);
 
-        $this->db->where('idControlLab', $idControlLab);
-        $this->db->update('ControlLab', $NewComputer);
+        $this->db->where('comp_numero', $Computadora['PC']);
+        $this->db->update('ControlLab', $New);
 
-        $this->db->where('comp_numero', $NewComputer['comp_numero']);
+        $this->db->where('comp_numero', $Computadora['NewComputer']);
         $this->db->update('Computadora', $off);
 
-        $this->db->where('comp_numero', $OldComputer['comp_numero']);
+        $this->db->where('comp_numero', $Computadora['OldComputer']);
         $this->db->update('Computadora', $on);
+
         $this->session->set_flashdata('success', "<div class='alert alert-info alert-dismissible fade in'>
                 <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
                 <h4 class='alert-heading'>Info!</h4> <p>Cambio de Computadora Correctamente!</p>
                 </div>");
             if ($this->opciones()) {
-                redirect( base_url() . '/cgi-bin/cambio_equipo.cgi?cambio_equipo.cgi?OldComputer='.$OldComputer['comp_numero'].'&AccionO=0&NewComputer='.$NewComputer['comp_numero'].'&AccionN=1');
+                redirect( base_url() . '/cgi-bin/cambio_equipo.cgi?OldComputer='.$Computadora['OldComputer'].'&AccionO=0&NewComputer='.$Computadora['NewComputer'].'&AccionN=1');
+            }else{
+                redirect(base_url() . 'controllab');
             }
+    }
+    function modificar($comp_numero){
+        $status  = array('ControlLab.idEstatus' => '1');
+        $this->db->where($status);
+        $this->db->where('ControlLab.comp_numero', $comp_numero);
+        $query = $this->db->get('ControlLab');
+        if ($query->num_rows() > 0){
+            return $query;
+        }else{
+            return false;
+        }
     }
     function opciones(){
         $this->db->from('Opciones');
@@ -141,53 +183,7 @@ class Model_ControlLab extends CI_Model
             return false;
         }
     }
-    function sesion_iniciada_control($data,$comp_numero){ // Utilizacion por IP pero me Mame 
-        //metodo para comprobar computadoras disponibles y ponerlas ocupadas una vez ingresado el numero de control
-        $control_c = array(
-            'Computadora.control'     => '2' // 2 - Ocupado
-        );
-        $buscar = array(
-            'Computadora.comp_numero' => $comp_numero,
-            'Computadora.control'     => 1,
-            'Computadora.idAula'      => 1,
-            'Computadora.idEstatus'   => 3
-        );
-        $this->db->where($buscar);
-        $query = $this->db->get('Computadora');
-        if ($query->num_rows() > 0) {
-            foreach ($query->result() as $columna_c) {
-            //ping a equipos para verificar conexion al servidor de bloqueo y desbloqueo de JAVA
-            //$windows = exec("ping -n 1 -w 1 $columna_c->comp_ip", $outcome, $status);
-            //$linux = exec("/bin/ping -q -c1 $columna_c->comp_ip", $outcome, $status);
-            if($status==0) {
-                    if ($columna_c->control == 1) {
-                    $this->db->insert('ControlLab',$data);
-                    $this->db->set($control_c);
-                    $this->db->where('comp_numero', $comp_numero);
-                    $this->db->update('Computadora');
-                    $this->session->set_flashdata('success', "<div class='alert alert-info alert-dismissible fade in'>
-                            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                            <h4 class='alert-heading'>Info!</h4> <p>Ocupe la <b>$columna_c->comp_numero, $columna_c->comp_ip</b></p>
-                            </div>");
-                        //redirect( "http://".$_SERVER['HTTP_HOST'] . '/cgi-bin/control.pl?pc='.$columna_c->comp_numero.'&acc=1');
-                        return true;
-                    }
-                }else{
-                $this->session->set_flashdata('error', "<div class='alert alert-warning alert-dismissible fade in'>
-                        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                        <h4 class='alert-heading'>Advertencia!</h4> <p>Sin conexion a EQUIPO: $columna_c->comp_numero</p>
-                        </div>");
-                    return false;
-                }
-            }//Fin FOR Computadora
-        }else{
-        $this->session->set_flashdata('error', "<div class='alert alert-danger alert-dismissible fade in'>
-                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                <h4 class='alert-heading'>Advertencia!</h4> <p>No hay Computadoras Disponibles</p>
-                </div>");
-            return false;
-        }
-    }
+ 
     function Computadoras(){   
         $this->db->from('Computadora');
         $this->db->where('Control','1');
@@ -224,8 +220,7 @@ class Model_ControlLab extends CI_Model
         $query = $this->db->get();
         return $query -> result();
     }
-
-    function Todas_Computadoras(){
+    function Todas_Computadoras(){ // Poco ortodoxo xd
         $UltimoId = "idControlLab IN (SELECT MAX(idControlLab) FROM ControlLab GROUP BY comp_numero)";
         $this->db->select('*');
         $this->db->from('ControlLab');
@@ -239,26 +234,13 @@ class Model_ControlLab extends CI_Model
             return false;
         }
     }
-    function consulta_alumno($noControl){
-        $this->db->where('noControl', $noControl);
-        $query = $this->db->get('Alumno');
-        if ($query->num_rows() >= 1){
-            foreach ($query->result() as $fila) {
-                $datos[] = $fila;
-            }
-            return $datos;
-        }else{
-            return 'no_registrado';
-        }
-    }
-
     function Estatus(){
         $this->db->from('Estatus');
         $this->db->order_by("idEstatus", "asc");
         $query = $this->db->get();
         return $query -> result();
     }
-    function reporte($fechaInicio,$fechaFin){
+    function grafica($fechaInicio,$fechaFin){
         $this->db->select('Carrera.idCarrera, Carrera.nombre_ca, count(*) as total');
         $this->db->from('ControlLab');
         $this->db->join('Alumno', 'Alumno.noControl = ControlLab.noControl');
@@ -273,16 +255,6 @@ class Model_ControlLab extends CI_Model
             return FALSE;
         }
 
-    }
-    function modificar($idControlLab){
-        $this->db->where('idControlLab', $idControlLab);
-        $this->db->join('Computadora', 'Computadora.comp_numero = ControlLab.comp_numero');
-        $query = $this->db->get('ControlLab');
-        if ($query->num_rows() > 0){
-            return $query;
-        }else{
-            return false;
-        }
     }
     function getUserDetails(){
 
