@@ -73,14 +73,13 @@
         visibility: hidden;
     }
 
-    body.modal-open .modal .modal-lg .modal-header,
-    body.modal-open .modal .modal-lg .modal-body {
+    body.modal-open .modal .modal-header .modal-title,
+    body.modal-open .modal .modal-body {
         visibility: visible; /* make visible modal body and header */
-        position:absolute;
-        left:0;
-        top:0;
-        width: 100%;
-        height: 100%;
+    }
+    .modal-dialog {
+        width: 100% !important;
+        margin: 0;
     }
 }
 
@@ -148,7 +147,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h3 class="modal-title">Horario</h3>
       </div>
-      <div class="modal-body modal-lg form">
+      <div class="modal-body">
             <form action="#" id="form">
                 <table class="table table-bordered">
                     <thead>
@@ -167,7 +166,7 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" onclick="js:window.print()">print modal content</button>
+            <button type="button" class="btn btn-default" onclick="js:window.print()">Imprimir</button>
             <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
           </div>
         </div><!-- /.modal-content -->
