@@ -13,33 +13,7 @@ class Horario extends CI_Controller
 
 	public function Index()
 	{
-        $titulo['titulo']          = 'Lista de horarios';
-        
-        $config['base_url']        = base_url().'horario/index/';
-        $config['total_rows']      = $this->model_horario->num_horarios();
-        $config['per_page']        = 10 ;
-        $config['uri_segment']     = 3 ;
-        $config['num_links']       = 10 ;
-        
-        $config['full_tag_open']   = '<ul class="pagination">';
-        $config['full_tag_close']  = '</ul>';
-        $config['first_link']      = false;
-        $config['last_link']       = false;
-        $config['first_tag_open']  = '<li>';
-        $config['first_tag_close'] = '</li>';
-        $config['prev_link']       = '&laquo';
-        $config['prev_tag_open']   = '<li class="prev">';
-        $config['prev_tag_close']  = '</li>';
-        $config['next_link']       = '&raquo';
-        $config['next_tag_open']   = '<li>';
-        $config['next_tag_close']  = '</li>';
-        $config['last_tag_open']   = '<li>';
-        $config['last_tag_close']  = '</li>';
-        $config['cur_tag_open']    = '<li class="active"><a href="#">';
-        $config['cur_tag_close']   = '</a></li>';
-        $config['num_tag_open']    = '<li>';
-        $config['num_tag_close']   = '</li>';
-        $this->pagination->initialize($config);
+        $titulo['titulo']          = 'Horarios de las Aulas';
         // Datos para filtrar
         $data['aulas']               = $this->model_horario->Aulas();
         $data['asignaturas']         = $this->model_horario->Asignaturas();
@@ -66,16 +40,30 @@ class Horario extends CI_Controller
 		$this->load->view('template/header', $titulo);
 		$this->load->view('horario/index', $data);
 		$this->load->view('template/footer');
-
 	}
+    public function ajax_ver($id)
+    {
+        //$data['datos'] = $this->model_horario->get_by_id($id);
+        $data = $this->model_horario->get_by_id($id);
+        echo json_encode($data);
+    }
     public function agregar(){
-        $titulo['titulo']   = 'Agregar horario';
+        $titulo['titulo']   = 'Nuevo Horario';
         $data['aulas']      = $this->model_horario->Aulas();
         $data['asignaturas'] = $this->model_horario->Asignaturas();
         $this->load->view("template/header", $titulo);
         $this->load->view("horario/agregar", $data);
         $this->load->view("template/footer");
     }
+
+    public function tablero(){
+        $data['resultado']  = $this->model_horario->horarios();
+        $titulo['titulo']   = 'Horario del Laboratorio';
+        $this->load->view("template/header", $titulo);
+        $this->load->view("horario/tablero", $data);
+        $this->load->view("template/footer");
+    }
+
     public function guardar(){
         $this->form_validation->set_error_delimiters('<div class="text-danger">', '</div>');
         $this->form_validation->set_rules('horaInicio','Hora Inicial','required');
@@ -89,7 +77,7 @@ class Horario extends CI_Controller
         }else{
         //Los dias se guardan en un array seprado con comas y un espacio
         $dias = implode(", ",$this->input->post('dia'));
-        // Se asigna profesor y carrera de manera que autimatica al seleccionar una asignatura
+        // Se asigna profesor y carrera de manera que automatica al seleccionar una asignatura
         $idAs = $this->input->post('idAsignatura');
         $consulta0 = $this->model_horario->asig($idAs);
         foreach ($consulta0->result() as $fila){
@@ -105,10 +93,16 @@ class Horario extends CI_Controller
             'idCarrera'    => $carrera,
             'idProfesor'   => $profesor,
         );
-        $this->model_horario->guardar($data);
-        redirect( base_url(). 'horario');
+        $comprobar = $this->model_horario->guardar2($data);
+        //redirect( base_url(). 'horario');
+        if ($comprobar == true) {
+            redirect('horario');
+        }else{
+            $this->agregar();
+        }
         }
     }
+
     public function modificar()
     {
         $titulo['titulo']   = 'Modificar horario';

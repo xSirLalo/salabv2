@@ -75,6 +75,7 @@ class Incidencia extends CI_Controller
         $data = $this->model_incidencia->get_by_id($id);
         echo json_encode($data);
     }
+    
     public function guardar(){
         $this->form_validation->set_error_delimiters('<div class="text-danger">', '</div>');
         $this->form_validation->set_rules('idAula','Aula','required');

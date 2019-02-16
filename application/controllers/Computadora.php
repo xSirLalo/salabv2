@@ -198,7 +198,7 @@ class Computadora extends CI_Controller
         // set document information
         $pdf->SetCreator(PDF_CREATOR);
         $pdf->SetAuthor('https://www.roytuts.com');
-        $pdf->SetTitle('Sales Information for Products');
+        $pdf->SetTitle('Equipos de Computo');
         $pdf->SetSubject('Report generated using Codeigniter and TCPDF');
         $pdf->SetKeywords('TCPDF, PDF, MySQL, Codeigniter');
 
@@ -236,12 +236,12 @@ class Computadora extends CI_Controller
 
         $this->table->set_template($template);
 
-        $this->table->set_heading('Product Id', 'Price', 'Sale Price', 'Sales Count', 'Sale Date');
+        $this->table->set_heading('ID', 'Serie', 'Fecha', 'Estatus', 'Aula');
         
         $salesinfo = $this->model_computadora->computadoras();
             
         foreach ($salesinfo as $sf):
-            $this->table->add_row($sf->idComputadora, $sf->numeroSerie, $sf->fechaAlta, $sf->idEstatus, $sf->comentarios);
+            $this->table->add_row($sf->idComputadora, $sf->numeroSerie, $sf->fechaAlta, $sf->idEstatus, $sf->aula);
         endforeach;
         
         $html = $this->table->generate();

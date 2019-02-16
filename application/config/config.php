@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 define('SERVER_NAME_DEV', 'localhost');
-define('SERVER_NAME_TEST', '192.168.100.200');
+define('SERVER_NAME_TEST', '192.168.8.200');
 define('SERVER_NAME_PRODUCTION', '10.1.25.30');
 
 /*
@@ -34,7 +34,7 @@ switch($nombreServerActual)
             $config['base_url']    = "http://localhost/salabv2";
             break;
     case SERVER_NAME_TEST:
-            $config['base_url']    = "http://192.168.100.200/salabv2";
+            $config['base_url']    = "http://192.168.8.200/salabv2";
             break;
     case SERVER_NAME_PRODUCTION:
             $config['base_url']    = "http://10.1.25.30/salabv2";

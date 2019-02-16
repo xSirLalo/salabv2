@@ -75,7 +75,7 @@ grant all on salabv2.* to salab@localhost;
 sudo iptables -A INPUT -p tcp -m state --state NEW -m tcp --dport 3309 -j ACCEPT
 iptables-save
 
-grant all privileges on *.* to 'administrador2' identified by 'sudovimetc' with grant option;
+grant all privileges on *.* to 'administrador' identified by 'sudovimetc' with grant option;
 show databases;
 quit
 

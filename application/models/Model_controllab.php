@@ -256,12 +256,12 @@ class Model_ControlLab extends CI_Model
         }
 
     }
-    function getUserDetails(){
+    function obtenerDetallesControlLab(){
 
     $response = array();
 
     // Select record
-    $this->db->select('idControlLab,fechaInicio,fechaFin,noControl,comp_numero');
+    $this->db->select('idControlLab, DATE_FORMAT(fechaInicio, "%d-%m-%Y %h:%i %p") as fechaInicial, DATE_FORMAT(fechaFin, "%d-%m-%Y %h:%i %p") as fechaFinal, noControl, comp_numero');
     $q = $this->db->get('ControlLab');
     $response = $q->result_array();
 

@@ -1,9 +1,10 @@
-#!/usr/bin/perl -w
 #!"C:\xampp\perl\bin\perl.exe" -w -T
+#!/usr/bin/perl -w
+
 # Ajustado por por Eduardo Cauich Herrera
 use IO::Socket;
 
-#argumento="http://192.168.100.200/cgi-bin/control.cgi?pc=2&acc=0"; De Prueba
+#argumento="http://192.168.8.200/salabv2/cgi-bin/control.cgi?pc=2&acc=1"; De Prueba
 #Obtiene las variables del enlace
 $argumento=$ENV{"QUERY_STRING"};
 
@@ -19,7 +20,7 @@ $ban = 1;
 # Conexion al Servidor de Java donde se encuentre iniciado.
 if($ban == 1){
 $sock = IO::Socket::INET->new(
-    PeerAddr    => "192.168.100.2",
+    PeerAddr    => "192.168.8.200",
     PeerPort    =>  3519,
     Proto       => "tcp",
     Timeout     =>  1,
@@ -29,7 +30,7 @@ print $sock $msj;
 $sock->close();
 }
 
-print "Location: http://192.168.100.200/salabv2/controllab\n\n";
+print "Location: http://192.168.8.200/salabv2/controllab\n\n";
 #Imprimir  variables en texto plano 
 print "Content-type: text/plain \n\n";
 print "Recibe:\n";

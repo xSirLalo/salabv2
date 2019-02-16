@@ -146,7 +146,7 @@ class Controllab extends CI_Controller
         $this->load->view('controllab/modificar', $data);
         $this->load->view('template/footer');
     }
-    public function finalizar_session(){
+    public function sin_usar(){
         $idControlLab = $this->uri->segment(3);
         $delete = $this->model_controllab->eliminar($idControlLab);
         if ($delete == false) {
@@ -185,14 +185,14 @@ class Controllab extends CI_Controller
     header("Content-Disposition: attachment; filename=$filename");
     header("Content-Type: application/csv; ");
     // get data
-    $usersData = $this->model_controllab->getUserDetails();
+    $controllabData = $this->model_controllab->obtenerDetallesControlLab();
 
     // file creation
     $file = fopen('php://output', 'w');
 
-    $header = array("ID","Fecha/Hora Inicial","Fecha/Hora Final","noControl","comp_numero");
+    $header = array("ID", "Fecha/Hora Inicial", "Fecha/Hora Final", "noControl", "Computadora");
     fputcsv($file, $header);
-    foreach ($usersData as $key=>$line){
+    foreach ($controllabData as $key=>$line){
      fputcsv($file,$line);
     }
     fclose($file);

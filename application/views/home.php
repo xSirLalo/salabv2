@@ -22,14 +22,12 @@ redirect('login');
      var hours=Digital.getHours()
      var minutes=Digital.getMinutes()
      var seconds=Digital.getSeconds()
-     var dn="Hrs"
      if (minutes<=9)
      	minutes="0"+minutes
      if (seconds<=9)
      	seconds="0"+seconds
     //Class Bootstrap
-    myclock="<p class='text-info text-center' >"+hours+":"+minutes+":"
-     +seconds+" "+dn+"</p>"
+    myclock="<p class='text-info text-center' >"+hours+":"+minutes+":"+seconds+"</p>"
     if (document.layers){
     	document.layers.liveclock.document.write(myclock)
     	document.layers.liveclock.document.close()

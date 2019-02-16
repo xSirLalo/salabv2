@@ -1,9 +1,10 @@
 #!/usr/bin/perl -w
 #!"C:\xampp\perl\bin\perl.exe" -w -T
+
 # Ajustado por por Eduardo Cauich Herrera
 use IO::Socket;
 
-#$argumento="http://192.168.100.200/cgi-bin/cambio_equipo.cgi?OldComputer=6&AccionO=0&NewComputer=12&AccionN=1"; De Prueba
+#$argumento="http://192.168.100.200/salabv2/cgi-bin/cambio_equipo.cgi?OldComputer=6&AccionO=0&NewComputer=12&AccionN=1"; De Prueba
 #Obtiene las variables del enlace
 $argumento=$ENV{"QUERY_STRING"};
 
