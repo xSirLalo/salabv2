@@ -2,7 +2,6 @@
   <div class="row">
      <div class="btn-group btn-group-justified">
             <a href="<?php echo base_url(); ?>controllab" class='btn btn-primary btn-lg' title="Asignar equipo"><i class="glyphicon glyphicon-play"></i></a>
-            <a href="<?php echo base_url(); ?>controllab/exportCSV" class='btn btn-success btn-lg' title="Exportar a Excel"><i class="glyphicon glyphicon-download-alt"></i></a>
             <a href="<?php echo base_url(); ?>controllab/reporte" class='btn btn-info btn-lg' title="Graficas"><i class="glyphicon glyphicon-stats"></i></a>
     </div>
   </div>

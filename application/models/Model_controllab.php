@@ -64,7 +64,7 @@ class Model_ControlLab extends CI_Model
                     $this->db->update('Computadora');
                     $this->session->set_flashdata('success', "<div class='alert alert-info alert-dismissible fade in'>
                             <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                            <h4 class='alert-heading'>Info!</h4> <p>Ocupe la <b>$columna_c->comp_numero</b></p>
+                            <strong>Bienvenid@!</strong> <p>Ocupe la <b>$columna_c->comp_numero</b></p>
                             </div>");
                             if ($this->opciones()) {
                                 redirect( base_url() . '/cgi-bin/control.cgi?pc='.$columna_c->comp_numero.'&acc=1');
@@ -76,7 +76,7 @@ class Model_ControlLab extends CI_Model
         }else{
         $this->session->set_flashdata('error', "<div class='alert alert-danger alert-dismissible fade in'>
                 <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                <h4 class='alert-heading'>Advertencia!</h4> <p>No hay Computadoras Disponibles</p>
+                <strong>Advertencia!</strong> <p>No hay Computadoras Disponibles</p>
                 </div>");
             return false;
         }
@@ -114,18 +114,15 @@ class Model_ControlLab extends CI_Model
                 $this->db->update('Computadora');
                 $this->session->set_flashdata('success', "<div class='alert alert-info alert-dismissible fade in'>
                         <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                        <h4 class='alert-heading'>Info!</h4> <p>Vuelva pronto</p>
+                        <strong>¡Adios!</strong> <p>Vuelva pronto</p>
                         </div>");
                         if ($this->opciones()) {
                             redirect( base_url() . '/cgi-bin/control.cgi?pc='.$columna_c->comp_numero.'&acc=0');
                         }
                     return 'sesion_terminada';
                 }// Fin FOR Computadora
-
             }// IF 
-
         }//Fin FOR ControlLab
-
     }
     function Tablero(){   
         $this->db->from('Computadora');
@@ -153,7 +150,7 @@ class Model_ControlLab extends CI_Model
 
         $this->session->set_flashdata('success', "<div class='alert alert-info alert-dismissible fade in'>
                 <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                <h4 class='alert-heading'>Info!</h4> <p>Cambio de Computadora Correctamente!</p>
+                <strong>Correcto!</strong> <p>Cambio de Computadora.</p>
                 </div>");
             if ($this->opciones()) {
                 redirect( base_url() . '/cgi-bin/cambio_equipo.cgi?OldComputer='.$Computadora['OldComputer'].'&AccionO=0&NewComputer='.$Computadora['NewComputer'].'&AccionN=1');
@@ -161,6 +158,7 @@ class Model_ControlLab extends CI_Model
                 redirect(base_url() . 'controllab');
             }
     }
+
     function modificar($comp_numero){
         $status  = array('ControlLab.idEstatus' => '1');
         $this->db->where($status);
@@ -172,6 +170,7 @@ class Model_ControlLab extends CI_Model
             return false;
         }
     }
+
     function opciones(){
         $this->db->from('Opciones');
         $this->db->where('opt_java', '1');
@@ -201,6 +200,7 @@ class Model_ControlLab extends CI_Model
             return 'error';
         }
     }
+
     function Total_Computadoras(){   // Sinceramente este es algo tonto pero en el boton de asignar computadora muestra el total de computadoras disponibles
         $this->db->from('Computadora');
         $this->db->where('Control','1');
@@ -220,7 +220,8 @@ class Model_ControlLab extends CI_Model
         $query = $this->db->get();
         return $query -> result();
     }
-    function Todas_Computadoras(){ // Poco ortodoxo xd
+
+    function Todas_Computadoras(){ // Poco ortodoxo xd YA NO SE USA!
         $UltimoId = "idControlLab IN (SELECT MAX(idControlLab) FROM ControlLab GROUP BY comp_numero)";
         $this->db->select('*');
         $this->db->from('ControlLab');
@@ -255,16 +256,5 @@ class Model_ControlLab extends CI_Model
             return FALSE;
         }
 
-    }
-    function obtenerDetallesControlLab(){
-
-    $response = array();
-
-    // Select record
-    $this->db->select('idControlLab, DATE_FORMAT(fechaInicio, "%d-%m-%Y %h:%i %p") as fechaInicial, DATE_FORMAT(fechaFin, "%d-%m-%Y %h:%i %p") as fechaFinal, noControl, comp_numero');
-    $q = $this->db->get('ControlLab');
-    $response = $q->result_array();
-
-    return $response;
     }
 }

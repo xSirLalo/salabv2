@@ -91,12 +91,6 @@ class Model_Asignatura extends CI_Model
             return false;
         }
     }
-    function Carreras(){   
-        $this->db->from('Carrera');
-        $this->db->order_by("idCarrera", "desc");
-        $query = $this->db->get();
-        return $query -> result();
-    }
     function Profesores(){   
         $this->db->from('Profesor');
         $this->db->order_by("idProfesor", "desc");
