@@ -126,7 +126,7 @@ class Model_ControlLab extends CI_Model
     }
     function Tablero(){   
         $this->db->from('Computadora');
-        
+        $this->db->order_by('Computadora.comp_numero', 'asc');
         $query = $this->db->get();
         if ($query->num_rows() > 0){
             return $query;
