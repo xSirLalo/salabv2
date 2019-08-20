@@ -134,11 +134,18 @@ touch /var/www/cgi-bin/control.cgi
 vim /var/www/cgi-bin/control.cgi
 chmod +x /var/www/cgi-bin/control.cgi
 
+
+
+
+
 # Contenido del CGI y pegar los siguientes parametros
 # SALAB CONTROL POR POR JAVA Y ESTE ARCHIVO CGI
 ###################################
 
 ## Ambiente WINDOWS Con XAMMP##
+
+
+
 
 #!"C:\xampp\perl\bin\perl.exe" -w -T
 
