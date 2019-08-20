@@ -19,19 +19,25 @@
 <table id="card-table" class="table table-striped">
     <thead>
       <tr>
-        <th>CLAVE</th>
-        <th>NOMBRE DE LA ASIGNATURA</th>
-        <th>PROFESOR</th>
-        <th>OPCIONES</th>
+        <th>idAsignatura</th>
+        <th>clave</th>
+        <th>nombre_as</th>
+        <th>idCarrera</th>
+        <th>idProfesor</th>
+        <th>idEstatus</th>
+        <th>Opciones</th>
       </tr>
     </thead>
     <tbody>
 <?php if($resultado){
       foreach($resultado->result() as $row){ ?>
         <tr>
+            <td><?= $row->idAsignatura; ?></td>
             <td><?= $row->clave; ?></td>
             <td><?= $row->nombre_as; ?></td>
+            <td><?= $row->idCarrera; ?></td>
             <td><?= $row->idProfesor; ?></td>
+            <td><?= $row->idEstatus; ?></td>
             <td>
             <a href='<?= base_url().'asignatura/modificar/'.$row->idAsignatura ?>'><button type='button' class='btn btn-warning' title="Modificar"><span class="glyphicon glyphicon-pencil"></span></button></a>
             <?php  if($row->idEstatus==3){ ?>

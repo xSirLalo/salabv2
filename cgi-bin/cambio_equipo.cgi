@@ -21,7 +21,7 @@ $ban = 1;
 # Conexion al Servidor de Java donde se encuentre iniciado.
 if($ban == 1){
 $sock = IO::Socket::INET->new(
-    PeerAddr    => "10.1.25.70",
+    PeerAddr    => "192.168.100.2",
     PeerPort    =>  3519,
     Proto       => "tcp",
     Timeout     =>  1,
@@ -31,7 +31,7 @@ print $sock $msj;
 $sock->close();
 }if($ban == 1){
 $sock = IO::Socket::INET->new(
-    PeerAddr    => "10.1.25.70",
+    PeerAddr    => "192.168.100.2",
     PeerPort    =>  3519,
     Proto       => "tcp",
     Timeout     =>  1,
@@ -40,7 +40,7 @@ $msj2.="OS1--".$NewComputer[1]."--".$AccionN[1]."--OS1";
 print $sock $msj2;
 $sock->close();
 }
-print "Location: http://10.1.25.30/salabv2/controllab\n\n"; 
+print "Location: http://192.168.100.200/salabv2/controllab\n\n"; 
 #Imprimir  variables en texto plano 
 print "Content-type: text/plain \n\n";
 print "Recibe:\n";

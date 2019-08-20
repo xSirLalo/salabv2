@@ -99,13 +99,12 @@ class Model_Alumno extends CI_Model
         $query = $this->db->get();
         return $query -> result();
     }
-    function getStudentDetails(){
+    function getUserDetails(){
 
     $response = array();
 
     // Select record
-    $this->db->select('*');
-    $this->db->join('Carrera', 'Alumno.idCarrera = Carrera.idCarrera', 'left');
+    $this->db->select('noControl,nombre_al,aPaterno_al,aMaterno_al,idCarrera');
     $q = $this->db->get('Alumno');
     $response = $q->result_array();
 

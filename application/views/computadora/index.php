@@ -3,7 +3,7 @@
     <div class="col-sm-6">
         <div class="btn-group btn-group-justified">
            <a href="<?php echo base_url(); ?>computadora/agregar" type='button' class='btn btn-primary' title="Agregar computadora" ><span class="glyphicon glyphicon-plus"></span> Agregar computadora</a>
-           <a href="<?php echo base_url(); ?>computadora/descargarPDF" type='button' class='btn btn-danger' title="PDF" ><span class="glyphicon glyphicon-book"></span> PDF</a>
+           <a href="<?php echo base_url(); ?>computadora/generate_pdf" type='button' class='btn btn-danger' title="PDF" ><span class="glyphicon glyphicon-book"></span> PDF</a>
         </div>
     </div>
     <div class="col-sm-6">

@@ -19,24 +19,24 @@
 <table id="card-table" class="table table-striped">
     <thead>
       <tr>
-        <th>NOMBRE</th>
-        <th>APELLIDO PATERNO</th>
-        <th>APELLIDO MATERNO</th>
-        <th>OPCIONES</th>
+        <th>idProfesor</th>
+        <th>nombre_pr</th>
+        <th>aPaterno_pr</th>
+        <th>aMaterno_pr</th>
+        <th>Opciones</th>
       </tr>
     </thead>
     <tbody>
 <?php if($resultado){
       foreach($resultado->result() as $row){ ?>
         <tr>
+            <td><?= $row->idProfesor; ?></td>
             <td><?= $row->nombre_pr; ?></td>
             <td><?= $row->aPaterno_pr; ?></td>
             <td><?= $row->aMaterno_pr; ?></td>
             <td>
-                <div class="btn-group">
-                <a href="<?= base_url().'profesor/modificar/'.$row->idProfesor ?>" class='btn btn-warning' title="Editar"><i class="glyphicon glyphicon-edit"></i></a>
-                <a href="#" data-href='<?= base_url().'profesor/eliminar/'.$row->idProfesor ?>' data-toggle="modal" data-target="#confirm-delete" class='btn btn-danger' title="Eliminar"><i class="glyphicon glyphicon-remove"></i></a>
-                </div>
+            <a href='<?= base_url().'profesor/modificar/'.$row->idProfesor ?>'><button type='button' class='btn btn-warning' title="Modificar"><span class="glyphicon glyphicon-pencil"></span></button></a>
+            <a href="#" data-href='<?= base_url().'profesor/eliminar/'.$row->idProfesor ?>' data-toggle="modal" data-target="#confirm-delete"><button type='button' class='btn btn-danger' title="Eliminar"><span class="glyphicon glyphicon-remove"></span></button></a>
             </td>
 		</tr>
 <?php  }	

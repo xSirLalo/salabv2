@@ -41,18 +41,6 @@ class Home extends CI_Controller {
         );
 		$this->model_opciones->guardar($opciones);
 	}
-	function ControlServerDownload(){
-	    $this->load->helper('download');
-	    $data = file_get_contents( base_url() . 'downloads/ControlServer_setup.exe'); // Read the file's contents
-	    $name = $this->uri->segment(3);
-	    force_download($name, $data);
-	}
-	function ControlClientDownload(){
-	    $this->load->helper('download');
-	    $data = file_get_contents( base_url() . 'downloads/ControlClient_setup.exe'); // Read the file's contents
-	    $name = $this->uri->segment(3);
-	    force_download($name, $data);
-	}
 }
 
 ?>

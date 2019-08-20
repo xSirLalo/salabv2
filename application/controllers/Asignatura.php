@@ -9,7 +9,6 @@ class Asignatura extends CI_Controller
 		$this->load->library('pagination');
         $this->load->helper('form');
 		$this->load->model('model_asignatura');
-        $this->load->model('model_alumno');
 	}
 
 	public function Index()
@@ -66,7 +65,7 @@ class Asignatura extends CI_Controller
 
     public function agregar(){
         $titulo['titulo']   = 'Agregar asignatura';
-        $data['carreras']   = $this->model_alumno->Carreras();
+        $data['carreras']   = $this->model_asignatura->Carreras();
         $data['profesores'] = $this->model_asignatura->Profesores();
 
         $this->load->view("template/header", $titulo);
@@ -98,7 +97,7 @@ class Asignatura extends CI_Controller
     {
         $titulo['titulo']     = 'Modificar asignatura';
         $data['idAsignatura'] = $this->uri->segment(3);
-        $data['carreras']     = $this->model_alumno->Carreras();
+        $data['carreras']     = $this->model_asignatura->Carreras();
         $data['profesores']   = $this->model_asignatura->Profesores();
         if (!$data['idAsignatura']) {
             redirect('home');

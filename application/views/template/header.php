@@ -38,16 +38,7 @@ html {
     width:100vw;
     overflow-x:hidden;
 }
-#popup{
-	display: block;
-	position: absolute;
-	top: 50px;
-	left: 50px;
-	/*margin-top:10px;
-	position: fixed;
-	z-index:9999;
-	border-radius:0px;*/
-}
+
 </style>
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -82,7 +73,7 @@ html {
 	    <div id="navbar" class="navbar-collapse collapse">
 	      <ul class="nav navbar-nav">
 		      <li class=""><a href="<?=base_url();?>">Home</a></li>
-		      <!-- <li class=""><a href="<?=base_url();?>incidencia">Incidencias (<?= $incidencias?>)</a></li> -->
+		      <li class=""><a href="<?=base_url();?>incidencia">Incidencias (<?= $incidencias?>)</a></li>
 		      <li class=""><a href="<?=base_url();?>controllab">Control</a></li>
 			<li class="dropdown">
 		        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Menu
@@ -190,7 +181,7 @@ html {
 }
 </style>
 		<!-- Control de Mensajes -->	
-		<div id="popup">
+		<div  style="margin-top:10px;position: fixed;z-index:9999;border-radius:0px">
 			<?php if ($this->session->flashdata('success')) { ?>
 			        <?=$this->session->flashdata('success'); ?>
 			<?php } ?>

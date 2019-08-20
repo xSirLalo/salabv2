@@ -189,21 +189,21 @@ class Computadora extends CI_Controller
             redirect('computadora');
         }
     }
-
-    public function descargarPDF(){
+    public function generate_pdf() {
         //load pdf library
         $this->load->library('Pdf');
-
-        $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $this->load->library('table');
+        
+        $pdf = new Pdf(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         // set document information
         $pdf->SetCreator(PDF_CREATOR);
-        $pdf->SetAuthor('SALAB');
-        $pdf->SetTitle('Reporte');
-        $pdf->SetSubject('TCPDF Tutorial');
-        $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
+        $pdf->SetAuthor('https://www.roytuts.com');
+        $pdf->SetTitle('Equipos de Computo');
+        $pdf->SetSubject('Report generated using Codeigniter and TCPDF');
+        $pdf->SetKeywords('TCPDF, PDF, MySQL, Codeigniter');
 
         // set default header data
-        $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE.' del '.date('d-m-Y'), PDF_HEADER_STRING);
+        //$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
 
         // set header and footer fonts
         $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
@@ -223,67 +223,44 @@ class Computadora extends CI_Controller
         // set image scale factor
         $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
-        // set some language-dependent strings (optional)
-        if (@file_exists(dirname(__FILE__).'/lang/spa.php')) {
-            require_once(dirname(__FILE__).'/lang/spa.php');
-            $pdf->setLanguageArray($l);
-        }
-
-        // ---------------------------------------------------------
-
         // set font
-        $pdf->SetFont('times', '', 10);
+        $pdf->SetFont('times', 'BI', 12);
+        
+        // ---------------------------------------------------------
+        
+        
+        //Generate HTML table data from MySQL - start
+        $template = array(
+            'table_open' => '<table border="1" cellpadding="2" cellspacing="1">'
+        );
 
+        $this->table->set_template($template);
+
+        $this->table->set_heading('ID', 'Serie', 'Fecha', 'Estatus', 'Aula');
+        
+        $salesinfo = $this->model_computadora->computadoras();
+            
+        foreach ($salesinfo as $sf):
+            $this->table->add_row($sf->idComputadora, $sf->numeroSerie, $sf->fechaAlta, $sf->idEstatus, $sf->aula);
+        endforeach;
+        
+        $html = $this->table->generate();
+        //Generate HTML table data from MySQL - end
+        
         // add a page
         $pdf->AddPage();
-
-        // set cell padding
-        $pdf->setCellPaddings(1, 1, 1, 1);
-
-        // set cell margins
-        $pdf->setCellMargins(1, 1, 1, 1);
-
-        // set color for background
-        $pdf->SetFillColor(255, 255, 127);
-
-        // MultiCell($w, $h, $txt, $border=0, $align='J', $fill=0, $ln=1, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0)
-        $title = '<h1>Equipos de Computo</h1>';
-        $computadorasInfo = $this->model_computadora->Computadoras();
-        $pdf->writeHTMLCell(0, 0, '', '', $title, 0, 1, 0, true, 'C', true);
-        $table = '<table style="border:1px solid #000; padding:6px;" class="table" >';
-        $table .= ' <tr>
-                        <th width="35%" style="border:1px solid #000;">SERIE</th>
-                        <th width="35%" style="border:1px solid #000;">ALTA</th>
-                        <th width="13%" style="border:1px solid #000;">ESTATUS</th>
-                        <th width="12%" style="border:1px solid #000;">AULA</th>
-                    </tr>';
-        $no = 1;
-        foreach ($computadorasInfo as $computadora) {
-        $table .=   '<tr>
-                        <td style="border:1px solid #000;">'.$computadora->numeroSerie.'</td>
-                        <td style="border:1px solid #000;">'.$computadora->fechaIngreso.'</td>
-                        <td style="border:1px solid #000;">'.$computadora->nombre_estatus.'</td>
-                        <td style="border:1px solid #000;">'.$computadora->nombre_au.'</td>
-                    </tr>';
-        }
-        $table .= '</table>';
-        $pdf->writeHTMLCell(0, 0, '', '', $table, 0, 1, 0, true, 'C', true);
-
-        // move pointer to last page
+        
+        // output the HTML content
+        $pdf->writeHTML($html, true, false, true, false, '');
+        
+        // reset pointer to the last page
         $pdf->lastPage();
 
-        // ---------------------------------------------------------
-
         //Close and output PDF document
-        ob_clean();
-        //$pdf->Output('example_005.pdf', 'I');
-        $pdf->Output('computadoras_'.date('dmY').'.pdf', 'D');
-        //============================================================+
-        // END OF FILE
-        //============================================================+
-
+        // 'alumnos_'.date('Ymd')
+        // $pdf->Output(md5(time()).'.pdf', 'D');
+        $pdf->Output('computadoras_'.date('Ymd').'.pdf', 'D');
     }
-
 }
 
 ?>

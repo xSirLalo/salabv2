@@ -86,10 +86,7 @@ class Model_Computadora extends CI_Model
         return $query -> result();
     }
     function Computadoras(){
-        $this->db->select('*, DATE_FORMAT(fechaAlta, "%d-%m-%Y %h:%i %p") as fechaIngreso');
         $this->db->from('Computadora');
-        $this->db->join('Aula', 'Aula.idAula = Computadora.idAula');
-        $this->db->join('Estatus', 'Estatus.idEstatus = Computadora.idEstatus', 'left');
         $this->db->order_by("idComputadora", "asc");
         $query = $this->db->get();
         return $query -> result();

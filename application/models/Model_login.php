@@ -89,8 +89,8 @@ class Model_login extends CI_Model {
 		   'mailpath' => 'C:\xampp\sendmail',
 		   'smtp_host' => 'smtp-mail.outlook.com',
 		   'smtp_port' => '587',
-		   'smtp_user' => 'funsoftware@outlook.com',
-		   'smtp_pass' => 'software123',
+		   'smtp_user' => 'xsirlalo@outlook.com',
+		   'smtp_pass' => 'caminando15',
 		   'mailtype' => 'html',
 		   'wordwrap' => FALSE,
 		   'charset' => 'utf-8'
@@ -101,7 +101,7 @@ class Model_login extends CI_Model {
 		$this->email->set_crlf( "\r\n" );
 
 		//Email content
-		$this->email->from('funsoftware@outlook.com', 'Admin');
+		$this->email->from('xsirlalo@outlook.com', 'Admin');
 		$this->email->to($email);
 		$this->email->subject('SALAB Password reset request');//En el mensaje que llega a tu correo tiene un problema no te lo envia con simbolos = tiene UF-8
 		$mail_message = '
@@ -120,26 +120,22 @@ class Model_login extends CI_Model {
 		//Send email
 		$link = sprintf('<center><h1><a href="%s">Clic Aqui</a></h1></center>', $url, $url);
 		// $this->email->send(); // Esto lo envia directo a correo no tiene un validador si falla la conexion
-		$debug = $this->email->print_debugger(); 
+		// $debug = $this->email->print_debugger(); 
 		// print_r($debug);
 		// echo $this->email->print_debugger();
 		// echo $validator;
 		// echo $selector;
 		// print_r($_POST);
 		// var_dump($_POST);
-		//echo $mail_message;
+		//var_dump($result);
+		//echo $result[0]->nombre_usr .' '. $result[0]->aPaterno_usr .' '. $result[0]->aMaterno_usr;
 		//exit; 
-
-		if($this->email->send()){
-		   //Success email Sent
-		   echo $this->email->print_debugger();
-		   echo '<script>alert("Email sent successfully")</script>';
-		   redirect('login','refresh');
-		}else{
-		   //Email Failed To Send
-		   echo $this->email->print_debugger();
-		}
-		return true;
+		if($this->email->send()) {
+		            echo '<script>alert("Email sent successfully")</script>';
+		            redirect('login','refresh');
+		            } else {$debug = $this->email->print_debugger();}
+		//echo $mail_message;
+		return $debug;
 		} else {
 		return false;
 		}

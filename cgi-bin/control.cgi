@@ -1,5 +1,5 @@
-#!/usr/bin/perl -w
 #!"C:\xampp\perl\bin\perl.exe" -w -T
+#!/usr/bin/perl -w
 
 # Ajustado por por Eduardo Cauich Herrera
 use IO::Socket;
@@ -20,7 +20,7 @@ $ban = 1;
 # Conexion al Servidor de Java donde se encuentre iniciado.
 if($ban == 1){
 $sock = IO::Socket::INET->new(
-    PeerAddr    => "10.1.25.70",
+    PeerAddr    => "192.168.8.200",
     PeerPort    =>  3519,
     Proto       => "tcp",
     Timeout     =>  1,
@@ -30,7 +30,7 @@ print $sock $msj;
 $sock->close();
 }
 
-print "Location: http://10.1.25.30/salabv2/controllab\n\n";
+print "Location: http://192.168.8.200/salabv2/controllab\n\n";
 #Imprimir  variables en texto plano 
 print "Content-type: text/plain \n\n";
 print "Recibe:\n";
