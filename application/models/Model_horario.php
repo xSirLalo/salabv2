@@ -65,38 +65,38 @@ class Model_Horario extends CI_Model
             $HoraInicio = date("H:i", $horaI);
             $HoraTermino = date("H:i", $horaF);
 
-            echo $Hora1."<br>";
-            echo $Hora2."<br>";
-            echo $HoraInicio."<br>";
-            echo $HoraTermino."<br>";
+            // echo $Hora1."<br>";
+            // echo $Hora2."<br>";
+            // echo $HoraInicio."<br>";
+            // echo $HoraTermino."<br>";
 
             if($HoraInicio >= $Hora1 AND $HoraInicio <= $Hora2 AND $HoraTermino >= $Hora1 AND $HoraTermino <= $Hora2) {
                 $this->session->set_flashdata('error', $mensajeE);
-                echo '1, ';
+                // echo '1, ';
                 return false;
                     }elseif($HoraInicio < $Hora1 AND $HoraTermino > $Hora1) {
                     $this->session->set_flashdata('error', $mensajeE);
-                    echo '2, ';
+                    // echo '2, ';
                     return false;
                         }elseif($HoraInicio < $Hora2 AND $HoraTermino > $Hora2) {
                         $this->session->set_flashdata('error', $mensajeE);
-                        echo '3, ';
+                        // echo '3, ';
                         return false;
                             }else{
                             $this->db->insert('Horario',$data);
                             $this->session->set_flashdata('success', $mensajeC);
-                            echo '4';
+                            // echo '4';
                             return true;
             }
         }// FIN foreach
             }else{
                 if(!$this->db->insert('Horario',$data)) {
                     $this->session->set_flashdata('error', $mensajeE);
-                    echo '5';
+                    // echo '5';
                     return false;
                         } else {
                         $this->session->set_flashdata('success', $mensajeC);
-                        echo '6';
+                        // echo '6';
                         return true;
                         }
             }
@@ -110,6 +110,8 @@ class Model_Horario extends CI_Model
         $this->db->join('Aula', 'Aula.idAula = Horario.idAula');
         $this->db->join('Profesor', 'Profesor.idProfesor = Horario.idProfesor');
         $this->db->join('Asignatura', 'Asignatura.idAsignatura = Horario.idAsignatura');
+        $this->db->order_by('STR_TO_DATE(horaInicio,"%H:%i")');
+        //$this->db->query('SELECT * FROM Horario WHERE horaInicio = TIME_FORMAT(CURTIME(),"%H:00:00")');
         $this->db->where('horario.idAula',$id);
         // $query = $this->db->get();
         // return $query->row();
@@ -192,22 +194,27 @@ class Model_Horario extends CI_Model
         $this->db->select('Horario.idAsignatura');
         $this->db->from('Horario');
         $result =  $this->db->get();
-        $query_result = $result->result();
-        $asig_id = array();
-            foreach ($query_result as $key) {
-                $asig_id[] = $key->idAsignatura;
-            }
+
+        if ($result->num_rows() > 0){
+            $query_result = $result->result();
+            $asig_id = array();
+                foreach ($query_result as $key) {
+                    $asig_id[] = $key->idAsignatura;
+                }
+            $ignore = $asig_id;
+        }else{
+            $ignore = NULL;
+        }
         //$room = implode(",",$room_id);
-        $room2 = $asig_id;
         //echo $room;
         $this->db->select("*");
         $this->db->from('Asignatura');
-        $this->db->where_not_in('Asignatura.idAsignatura',$room2);
-        $this->db->where('idEstatus', 3 );
+        $this->db->where_not_in('Asignatura.idAsignatura',$ignore);
+        $this->db->where('Asignatura.idEstatus', 3 );
         $query = $this->db->get();
         return $query->result();
     }
-    function Asignaturas2(){
+    function Asignaturas1(){
         $ignore = array(3, 4,);
         $this->db->where_not_in('idAsignatura', $ignore);
         $this->db->where('idEstatus', 3 );

@@ -178,26 +178,6 @@ class Controllab extends CI_Controller
         $this->load->view('controllab/reporte', $data);
         $this->load->view('template/footer');
     }
-    public function exportCSV(){
-    // file name
-    $filename = 'botacora_'.date('Ymd').'.csv';
-    header("Content-Description: File Transfer");
-    header("Content-Disposition: attachment; filename=$filename");
-    header("Content-Type: application/csv; ");
-    // get data
-    $controllabData = $this->model_controllab->obtenerDetallesControlLab();
-
-    // file creation
-    $file = fopen('php://output', 'w');
-
-    $header = array("ID", "Fecha/Hora Inicial", "Fecha/Hora Final", "noControl", "Computadora");
-    fputcsv($file, $header);
-    foreach ($controllabData as $key=>$line){
-     fputcsv($file,$line);
-    }
-    fclose($file);
-    exit;
-    }
 }
 
 ?>

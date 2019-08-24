@@ -1,6 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+
 class Alumno extends CI_Controller
 {
 	function __construct()
@@ -149,26 +154,60 @@ class Alumno extends CI_Controller
             redirect('alumno');
         }
     }
-    // Export data in CSV format
-    public function exportCSV(){
-    // file name
-    $filename = 'alumnos_'.date('Ymd').'.csv';
-    header("Content-Description: File Transfer");
-    header("Content-Disposition: attachment; filename=$filename");
-    header("Content-Type: application/csv; ");
-    // get data
-    $usersData = $this->model_alumno->getUserDetails();
+    
+    public function descargarEXCEL(){
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setTitle('Alumnos Registrados');
+        //$sheet->getDefaultStyle()->getFont()->setName('Times New Roman');
+        $sheet->setCellValue('A1', 'Alumnos Registrados');
+        $sheet->getStyle("A1")->getFont()->setSize(16);
+        $sheet->getStyle('A3:E3')->applyFromArray(
+           array(
+              'fill' => array(
+                  'type' => Fill::FILL_SOLID,
+                  'color' => array('rgb' => 'E5E4E2' )
+              ),
+              'font'  => array(
+                  'bold'  =>  true
+              )
+           )
+         );
+        // get data
+        $alumnoData = $this->model_alumno->getStudentDetails();
+        $sheet->setCellValue('A3', 'noControl');
+        $sheet->setCellValue('B3', 'Nombre');
+        $sheet->setCellValue('C3', 'Apellido Paterno');
+        $sheet->setCellValue('D3', 'Apellido Materno');
+        $sheet->setCellValue('E3', 'Carrera');
+        $rows = 4;
+        foreach ($alumnoData as $val){
+            $sheet->setCellValue('A' . $rows, $val['noControl']);
+            $sheet->setCellValue('B' . $rows, $val['nombre_al']);
+            $sheet->setCellValue('C' . $rows, $val['aPaterno_al']);
+            $sheet->setCellValue('D' . $rows, $val['aMaterno_al']);
+            $sheet->setCellValue('E' . $rows, $val['nombre_ca']);
+            $rows++;
+        foreach (range('B','E') as $col) {
+          $sheet->getColumnDimension($col)->setAutoSize(true);  
+        }
+        } 
 
-    // file creation
-    $file = fopen('php://output', 'w');
 
-    $header = array("noControl","nombre_al","aPaterno_al","aMaterno_al","idCarrera");
-    fputcsv($file, $header);
-    foreach ($usersData as $key=>$line){
-     fputcsv($file,$line);
-    }
-    fclose($file);
-    exit;
+
+
+        $writer = new Xlsx($spreadsheet);
+        // file name
+        $filename = 'alumnos_'.date('dmY');
+
+        // file creation
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header("Content-Disposition: attachment;filename=$filename"); 
+        header("Cache-Control: max-age=0");
+
+        ob_end_clean();
+        $writer->save('php://output'); // download file 
+        exit;
     }
 }
 

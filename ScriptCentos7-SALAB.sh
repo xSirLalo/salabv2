@@ -50,12 +50,14 @@ systemctl start mariadb
 systemctl status mariadb
 
 #IPTABLES
+sudo iptables -A INPUT -p tcp -m state --state NEW -m tcp --dport 3309 -j ACCEPT
+iptables-save
 -A INPUT -p tcp -m state --state NEW -m tcp --dport 3306 -j ACCEPT
 #FIREWALLD
 firewall-cmd --permanent --zone=public --add-service=mysql
 firewall-cmd --reload
 
-#	Configurar Mysql con una contraseña y asignar todos las opciones en Si(Y).
+#       Configurar Mysql con una contraseña y asignar todos las opciones en Si(Y).
 mysql_secure_installation
 
 cd /var/www/html
@@ -72,24 +74,21 @@ grant all on salabv2.* to salab@localhost;
 
 # Puerto y Usuario para conexiones externas 
 
-sudo iptables -A INPUT -p tcp -m state --state NEW -m tcp --dport 3309 -j ACCEPT
-iptables-save
-
 grant all privileges on *.* to 'administrador' identified by 'sudovimetc' with grant option;
 show databases;
 quit
 
-#	Para importar la base de datos al servidor Mysql necesario la configuracion de usuario y contraseña
+#       Para importar la base de datos al servidor Mysql necesario la configuracion de usuario y contraseña
 mysql -u root -p salabv2 < /var/www/html/salabv2/salabv2.sql
 
-#	Agregar al Final del archivo o ejecutar el echo
-#	vim /etc/httpd/conf/httpd.conf
+#       Agregar al Final del archivo o ejecutar el echo
+#       vim /etc/httpd/conf/httpd.conf
 #INICIO
 echo '<Directory /var/www/html/salabv2>
-	Options -Indexes +Multiviews +FollowSymLinks
-		DirectoryIndex index.php index.html
-	AllowOverride All
-	Allow from All
+        Options -Indexes +Multiviews +FollowSymLinks
+                DirectoryIndex index.php index.html
+        AllowOverride All
+        Allow from All
 </Directory>' >> /etc/httpd/conf/httpd.conf
 #FIN
 
@@ -114,9 +113,9 @@ yum install shellinabox
 
 # vim /etc/httpd/conf.d/shellinabox.conf
 <Location /shell>
- 	ProxyPass  http://localhost:4200/
- 	Order      allow,deny
- 	Allow      from all
+        ProxyPass  http://localhost:4200/
+        Order      allow,deny
+        Allow      from all
  </Location>
 
 #Redireccionar la ip del servidor al Sistema Web "SALAB", borrar todo el contenido de welcome.conf y sustituir por lo siguiente
@@ -129,88 +128,26 @@ echo '<VirtualHost *:80>
         RedirectMatch ^/$ http://[IP DEL SERVIDOR]/salabv2/login
 </VirtualHost>'> /etc/httpd/conf.d/welcome.conf
 
-# Crear el archivos con el SElinux disabled
-touch /var/www/cgi-bin/control.cgi
-vim /var/www/cgi-bin/control.cgi
-chmod +x /var/www/cgi-bin/control.cgi
-
-
-
-
-
-# Contenido del CGI y pegar los siguientes parametros
-# SALAB CONTROL POR POR JAVA Y ESTE ARCHIVO CGI
-###################################
-
-## Ambiente WINDOWS Con XAMMP##
-
-
-
-
-#!"C:\xampp\perl\bin\perl.exe" -w -T
-
-## Ambiente LINUX ###
-
-#!/usr/bin/perl -w
-
-###################################
-
-# INICIO - COPIA Y PEGA #
-#########################
-
-#!/usr/bin/perl -w
-
-use IO::Socket;
-
-#argumento="http://192.168.100.200/cgi-bin/control.pl?pc=2&acc=1"; De Prueba
-
-#Obtiene las variables del enlace
-$argumento=$ENV{"QUERY_STRING"};
-
-#Comparador
-$ban = 1;
-
-#Separa los argumentos del enlacie
-@pares = split(/&/, $argumento);
-@PC = split(/=/, $pares[0]);
-@Acc = split(/=/, $pares[1]);
-
-$ban = 1;
-# Conexion al Servidor de Java donde se encuentre iniciado.
-if($ban == 1){
-$sock = IO::Socket::INET->new(
-    PeerAddr    => "192.168.100.2",
-    PeerPort    =>  3519,
-    Proto       => "tcp",
-    Timeout     =>  1,
-);
-$msj.="OS1--".$PC[1]."--".$Acc[1]."--OS1";
-print $sock $msj;
-$sock->close();
-}
-#print "Location: http://192.168.100.200/salabv2/controllab\n\n"; 
-#Imprimir  variables en texto plano 
-print "Content-type: text/plain \n\n";
-print "$argumento\n";
-print "pc  = $PC[1]\n";
-print "acc = $Acc[1]\n";
-print "$msj";
-
-######################
-# FIN - COPIA Y PEGA #
-
-# Monitoriear Errores 
-screen  tail -f /var/log/httpd/error_log
+# Crear y dar permisos a los archivos CGI con el SElinux disabled
+chmod +x /var/www/html/salabv2/cgi-bin/control.cgi
+chmod  0705 /var/www/html/salabv2/cgi-bin/control.cgi
 
 # Permisos al Archivo CGI
-chmod  0705 /var/www/cgi-bin/control.cgi
+chmod +x /var/www/html/salabv2/cgi-bin/cambio_equipo.cgi
+chmod  0705 /var/www/html/salabv2/cgi-bin/cambio_equipo.cgi
+
+#Modificar el CGI dependiendo donde se este ejecutando PERL la primera linea de los CGI
+#Solo intercambiar el orden
+
+Para Centos #!/usr/bin/perl -w
+Para Windows con XAMPP #!"C:\xampp\perl\bin\perl.exe" -w -T
+
+# Monitoriear Errores 
+screen tail -f /var/log/httpd/error_log
 
 # Se procede a reiniciar servidor Apache
 systemctl restart http
 
-touch /var/www/cgi-bin/cambio_equipo.cgi
-vim /var/www/cgi-bin/cambio_equipo.cgi
-chmod +x /var/www/cgi-bin/cambio_equipo.cgi
 
 #SAMBA
 yum install samba samba-client samba-common

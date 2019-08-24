@@ -3,7 +3,7 @@
     <div class="col-sm-6">
      <div class="btn-group btn-group-justified">
             <a href="<?php echo base_url(); ?>alumno/agregar" class='btn btn-primary' title="Agregar alumno"><i class="glyphicon glyphicon-plus"></i> Agregar Alumno</a>
-            <a href="<?php echo base_url(); ?>alumno/exportCSV" class='btn btn-success' title="Exportar a Excel"><i class="glyphicon glyphicon-list-alt"></i> Exportar</a>
+            <a href="<?php echo base_url(); ?>alumno/descargarEXCEL" class='btn btn-success' title="Exportar a Excel"><i class="glyphicon glyphicon-list-alt"></i> Exportar</a>
     </div>
     </div>
         <div class="col-sm-6">
@@ -19,12 +19,12 @@
 <table id="card-table" class="table table-striped">
     <thead>
       <tr>
-        <th>noControl</th>
-        <th>nombre_al</th>
-        <th>aPaterno_al</th>
-        <th>aMaterno_al</th>
-		<th>idCarrera</th>
-        <th>Opciones</th>
+        <th>noCONTROL</th>
+        <th>NOMBRE</th>
+        <th>APELLIDO PATERNO</th>
+        <th>APELLIDO MATERNO</th>
+		<th>CARRERA</th>
+        <th>OPCIONES</th>
       </tr>
     </thead>
     <tbody>

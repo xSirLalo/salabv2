@@ -123,6 +123,7 @@
               <label class="radio-inline">
                 <input type="radio" name="control" value="1" <?=($resultado->control == '1' ?'checked':'')?> >LIBRE
               </label>
+              <br>
               <label class="radio-inline">
                 <input type="radio" name="control" value="2" <?=($resultado->control == '2' ?'checked':'')?> >OCUPADA
               </label><?php echo form_error('control'); ?>
@@ -135,7 +136,7 @@
         </div>
         
         <div class="col-lg-2">
-          <label for="comp_numero" class="control-label">Computadora N°</label>
+          <label for="comp_numero" class="control-label">N° Computadora</label>
           <input type='text' class="form-control" id='comp_numero' name='comp_numero' value="<?=$resultado->comp_numero?>"/>
           <?php echo form_error('comp_numero'); ?>
         </div>
