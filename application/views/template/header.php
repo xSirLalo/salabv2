@@ -39,14 +39,12 @@ html {
     overflow-x:hidden;
 }
 #popup{
-	display: block;
-	position: absolute;
-	top: 50px;
-	left: 50px;
-	/*margin-top:10px;
-	position: fixed;
-	z-index:9999;
-	border-radius:0px;*/
+    position:fixed; 
+    top: 10%; 
+    left: 0px; 
+    width: 10%;
+    z-index:9999;
+    border-radius:0px
 }
 </style>
 	<meta charset="utf-8">

@@ -12,7 +12,7 @@
 }
 .centrado{
     position: absolute;
-    top: 30%;
+    top: 35%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
@@ -49,7 +49,7 @@
                     echo '<a href='.base_url().'controllab/modificar/'.$PC->comp_numero.'>';
                 } 
             }    
-            echo '<img src="'.base_url().'assets/img/pc.png" alt="'.$PC->comp_numero.'" width="160" height="160"></a>';
+            echo '<img src="'.base_url().'assets/img/pc.png" alt="'.$PC->comp_numero.'" width="128" height="128"></a>';
                 echo '<div class="texto-encima centrado"><h1>';// texto-encima centrado
                             if($PC->control==2){echo '<b class="text-primary"';}
                             if($PC->idEstatus==3){echo '<b class="text-success"';}

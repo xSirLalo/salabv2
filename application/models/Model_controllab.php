@@ -138,8 +138,12 @@ class Model_ControlLab extends CI_Model
         $off = array('control' => '2');
         $on  = array('control' => '1');
         $New = array('comp_numero' => $Computadora['NewComputer']);
+        $bitacora = array (
+            'ControlLab.comp_numero' => $Computadora['PC'],
+            'ControlLab.idEstatus' => 1
+        );
 
-        $this->db->where('comp_numero', $Computadora['PC']);
+        $this->db->where($bitacora);
         $this->db->update('ControlLab', $New);
 
         $this->db->where('comp_numero', $Computadora['NewComputer']);
