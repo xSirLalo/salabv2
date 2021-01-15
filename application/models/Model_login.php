@@ -84,13 +84,14 @@ class Model_login extends CI_Model {
        //SMTP & mail configuration
 		$config = array(
 		   'smtp_crypto' => 'tls',
-		   'smtp_timeout'=>'6',
+		   'smtp_timeout'=>'30',
 		   'protocol' => 'smtp',
 		   'mailpath' => 'C:\xampp\sendmail',
 		   'smtp_host' => 'smtp-mail.outlook.com',
-		   'smtp_port' => '587',
-		   'smtp_user' => 'funsoftware@outlook.com',
-		   'smtp_pass' => 'software123',
+		   //'smtp_port' => '587', // Outlook
+		   'smtp_port' => '465', // Google
+		   'smtp_user' => 'sirlalito.hl@gmail.com',
+		   'smtp_pass' => 'hvnkpwcqkndkdugf',
 		   'mailtype' => 'html',
 		   'wordwrap' => FALSE,
 		   'charset' => 'utf-8'

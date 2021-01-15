@@ -275,7 +275,8 @@ class Computadora extends CI_Controller
         // ---------------------------------------------------------
 
         //Close and output PDF document
-        ob_clean();
+        if (ob_get_contents()) ob_end_clean();
+		
         //$pdf->Output('example_005.pdf', 'I');
         $pdf->Output('computadoras_'.date('dmY').'.pdf', 'D');
         //============================================================+
